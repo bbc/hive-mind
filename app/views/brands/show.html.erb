@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @brand.alternative == "" ? "Brand" : @brand.alternative -%>: <%= @brand.name -%></h1>
+<h1><code><%= @brand.code -%></code></h1>
+
+<p>
+  <strong>Code:</strong>
+  <%= @brand.code %>
+</p>
+
+
+
+<div class="row">
+  <% @brand.models.each do |model| %>
+    <div class="panel panel-default col-sm-4">
+      <div class="panel-body">
+      <h1><%= model.name -%></h1>
+      <p class="lead"><code><%= model.code -%></code></p>
+      <p><%= model.devices.count -%> associated models</p>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-default"><%= link_to 'Show', model %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_model_path(model) %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Destroy', model, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+      </div>
+    </div>
+    </div>
+  <% end %>
+
+</div>
+  
+
+
+<%= link_to 'Edit', edit_brand_path(@brand) %> |
+<%= link_to 'Back', brands_path %>

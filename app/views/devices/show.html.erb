@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @device.name %>
+</p>
+
+<p>
+  <strong>Serial:</strong>
+  <%= @device.serial %>
+</p>
+
+<p>
+  <strong>Asset:</strong>
+  <%= @device.asset_id %>
+</p>
+
+<p>
+  <strong>Alternative:</strong>
+  <%= @device.alternative %>
+</p>
+
+<p>
+  <strong>Model:</strong>
+  <%= @device.model.name %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_device_path(@device) %> |
+<%= link_to 'Back', devices_path %>
