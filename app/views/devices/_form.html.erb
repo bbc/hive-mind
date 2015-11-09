@@ -1,0 +1,46 @@
+<%= form_for(@device) do |f| %>
+  <% if @device.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@device.errors.count, "error") %> prohibited this device from being saved:</h2>
+
+      <ul>
+      <% @device.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :model_id %><br>
+    <%= f.collection_select(:model_id, Model.all, :id, :name) %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :serial %><br>
+    <%= f.text_field :serial %>
+  </div>
+  <div class="field">
+    <%= f.label :asset_id %><br>
+    <%= f.text_field :asset_id %>
+  </div>
+  
+    
+  <hr />
+  <div class="field form-group row">
+    <%= f.label :groups, class: "col-sm-2" %>
+    <div class="col-sm-10">
+      <%= f.collection_check_boxes( :group_ids, Group.all, :id, :value, {}, {:class => 'form-control'} )  %>
+    </div>
+  </div>
+  
+  
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

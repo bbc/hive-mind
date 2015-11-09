@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-md-6">
+    <h1><%= @model.alternative == "" ? "Model" : @model.alternative -%>: <%= @model.name -%></h1>
+    <h1><code><%= @model.code -%></code></h1>
+  </div>
+  <div class="col-md-6 well">
+    <ul class="list-unstyled">
+    <% @model.all_groups.group_by{ |group| group.name }.each do |name, groups| %>
+      <li><strong><%= name -%></strong> <%= link_to( "(All)", model_path(@model.id)) -%></li>
+      <ul>
+      <% groups.each do |group| %>
+        <li><%= link_to( group.value, model_path( @model.id, group: group.id) ) -%></li>
+      <% end %>
+      </ul>
+        
+    <% end %>
+    </ul>
+  </div>
+</div>
+
+<hr />
+
+<div class="row">
+  <div>
+    <% if @group %>
+      <h2><%= @group.name -%>: <%= @group.value -%></h2>
+      <p class="lead"><%= @group.description %></p>
+    <% else %>
+      <h1>Devices:</h1>
+    <% end %>
+  </div>
+    
+  </div>
+  <% @devices.each do |device| %>
+    <div class="panel panel-default col-sm-4">
+      <div class="panel-body">
+      <h1><%= device.name -%></h1>
+      <p class="lead"><code><%= device.serial -%></code></p>
+      <p>
+      <ul class="list-unstyled">
+        <% device.groups.each do |group| %>
+        <li><%= group.name %>: <strong><%= group.value %></strong></li>
+        <% end %>
+      </li>
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-default"><%= link_to 'Show', device %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_device_path(device) %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+      </div>
+    </div>
+    </div>
+  <% end %>
+
+</div>
+  
+
+<%= link_to 'Edit', edit_model_path(@model) %> |
+<%= link_to 'Back', models_path %>

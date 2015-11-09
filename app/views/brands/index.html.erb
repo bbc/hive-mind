@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+
+  <% @brands.each do |brand| %>
+    <div class="panel panel-default col-sm-4">
+      <div class="panel-body">
+      <h1><%= brand.name -%></h1>
+      <p class="lead"><code><%= brand.code -%></code></p>
+      <p><%= brand.models.count -%> associated models</p>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-default"><%= link_to 'Show', brand %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_brand_path(brand) %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Destroy', brand, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+      </div>
+    </div>
+    </div>
+    <% end %>
+
+</div>
+
+<br />
+<hr>
+<br />
+  
+
+<div class="row">
+
+<%= link_to 'New Brand', new_brand_path %>
+</div>
