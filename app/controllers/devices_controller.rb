@@ -61,6 +61,21 @@ class DevicesController < ApplicationController
     end
   end
 
+  # POST /register
+  def register
+    @device = Device.find_or_create_by(device_params)
+
+    respond_to do |format|
+      if @device.save
+        format.html { redirect_to @device, notice: 'Device was successfully created.' }
+        format.json { render :show, status: :created, location: @device }
+      else
+        format.html { render :new }
+        format.json { render json: @device.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
