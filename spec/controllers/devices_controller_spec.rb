@@ -151,18 +151,62 @@ RSpec.describe DevicesController, type: :controller do
       }.to change(Device, :count).by(0)
     end
 
-    context 'hive device type' do
-      let(:hive_device) {
+    context 'unknown device type' do
+      let(:unknown_device_type) {
         {
-          device_type: :hive,
-          hostname: 'Device 1',
-          ip: '10.10.10.10'
+          device_type: :unknown,
+          hostname: 'Unknown device'
         }
       }
-      it 'registers a new hive' do
+
+      it 'registeres the unknown device' do
         expect {
-          post :register, {device: hive_device}, valid_session
+          post :register, {device: unknown_device_type}, valid_session
         }.to change(Device, :count).by(1)
+      end
+
+      it 'sets the device type' do
+        post :register, {device: unknown_device_type}, valid_session
+        expect(Device.last.device_type).to eq 'unknown'
+      end
+
+      it 'sets the device data id as null' do
+        post :register, {device: unknown_device_type}, valid_session
+        expect(Device.last.device_data_id).to be_nil
+      end
+    end
+
+    context 'known device type' do
+      let(:known_device_type) {
+        {
+          device_type: :mock,
+          hostname: 'Known device',
+          extra_data_one: 'Data one',
+          extra_data_two: 2
+        }
+      }
+
+      it 'registeres the known device' do
+        expect {
+          post :register, {device: known_device_type}, valid_session
+        }.to change(Device, :count).by(1)
+      end
+
+      it 'sets the device type' do
+        post :register, {device: known_device_type}, valid_session
+        expect(Device.last.device_type).to eq 'mock'
+      end
+
+      it 'sets the device data id' do
+        post :register, {device: known_device_type}, valid_session
+        expect(Device.last.device_data_id).to_not be_nil
+      end
+
+      it 'passes through attributes' do
+        post :register, {device: known_device_type}, valid_session
+        expect(DeviceOramaMock.data_set[0]).to be_truthy
+        expect(DeviceOramaMock.data_set[1]).to be_truthy
+        expect(DeviceOramaMock.data_set[2]).to be_falsy
       end
     end
   end

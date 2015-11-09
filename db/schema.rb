@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151109102458) do
+ActiveRecord::Schema.define(version: 20151109214132) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -27,8 +27,10 @@ ActiveRecord::Schema.define(version: 20151109102458) do
     t.string   "asset_id"
     t.string   "alternative"
     t.integer  "model_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "device_type"
+    t.integer  "device_data_id"
   end
 
   add_index "devices", ["model_id"], name: "index_devices_on_model_id"

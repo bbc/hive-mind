@@ -90,3 +90,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+$LOAD_PATH << File.expand_path('../lib', __FILE__)
