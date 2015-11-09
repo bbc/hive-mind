@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :devices do
+    collection do
+      post 'register'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
