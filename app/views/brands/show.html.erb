@@ -1,29 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @brand.alternative == "" ? "Brand" : @brand.alternative -%>: <%= @brand.name -%></h1>
-<h1><code><%= @brand.code -%></code></h1>
-
-<p>
-  <strong>Code:</strong>
-  <%= @brand.code %>
-</p>
-
+<div class="row">
+  <% if @device_type %>
+  <%= render("shared/device_type_card", device_type: @device_type, size: :condensed ) -%>
+  <% end %>
+  <%= render("shared/brand_card", brand: @brand, size: :condensed ) -%>
+</div>
 
 
 <div class="row">
   <% @brand.models.each do |model| %>
-    <div class="panel panel-default col-sm-4">
-      <div class="panel-body">
-      <h1><%= model.name -%></h1>
-      <p class="lead"><code><%= model.code -%></code></p>
-      <p><%= model.devices.count -%> associated models</p>
-      <div class="btn-group">
-        <button class="btn btn-sm btn-default"><%= link_to 'Show', model %></button>
-        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_model_path(model) %></button>
-        <button class="btn btn-sm btn-default"><%= link_to 'Destroy', model, method: :delete, data: { confirm: 'Are you sure?' } %></button>
-      </div>
-    </div>
-    </div>
+    <%= render("shared/model_card", model: model, size: :full ) -%>
   <% end %>
 
 </div>
