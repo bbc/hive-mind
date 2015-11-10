@@ -92,3 +92,4 @@ RSpec.configure do |config|
 end
 
 $LOAD_PATH << File.expand_path('../lib', __FILE__)
+require 'device_orama_mock'
