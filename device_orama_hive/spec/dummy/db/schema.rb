@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20151110102253) do
 
-  create_table "attributes", force: :cascade do |t|
+  create_table "device_orama_hive_attributes", force: :cascade do |t|
     t.string   "hostname"
     t.string   "ip"
     t.string   "mac"
