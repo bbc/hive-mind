@@ -5,11 +5,19 @@ class BrandsController < ApplicationController
   # GET /brands.json
   def index
     @brands = Brand.all
+    if params[:device_type] && params[:device_type] != ''
+      @device_type = DeviceType.find(params[:device_type].to_i)
+      
+      @brands = @brands.select { |b| b.models.collect { |m| m.device_type }.include? @device_type }
+    end
   end
 
   # GET /brands/1
   # GET /brands/1.json
   def show
+    if params[:device_type] && params[:device_type] != ''
+      @device_type = DeviceType.find(params[:device_type].to_i)
+    end
   end
 
   # GET /brands/new

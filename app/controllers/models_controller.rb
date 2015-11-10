@@ -15,6 +15,16 @@ class ModelsController < ApplicationController
       @group = Group.find(params[:group].to_i)
       @devices = @devices.select { |device| device.groups.include?(@group) }
     end
+    
+    if params[:brand] && params[:brand] != ""
+      @brand = Brand.find(params[:brand].to_i)
+    end
+    
+    
+    if params[:device_type] && params[:device_type] != ""
+      @device_type = DeviceType.find(params[:device_type].to_i)
+    end
+    
   end
 
   # GET /models/new

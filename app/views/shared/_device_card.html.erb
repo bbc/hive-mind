@@ -1,0 +1,18 @@
+    <div class="card card-device panel panel-default col-sm-4">
+      <div class="panel-body">
+      <h1><%= device.name -%></h1>
+      <p class="lead"><code><%= device.serial -%></code></p>
+      <p>
+      <ul class="list-unstyled">
+        <% device.groups.each do |group| %>
+        <li><%= group.name %>: <strong><%= group.value %></strong></li>
+        <% end %>
+      </li>
+      </p>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-default"><%= link_to 'Show', device %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_device_path(device) %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+      </div>
+    </div>
+    </div>
