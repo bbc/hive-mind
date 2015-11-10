@@ -70,6 +70,7 @@ class DevicesController < ApplicationController
         require "device_orama_#{device_params[:device_type]}"
         device_data = Object.const_get("DeviceOrama#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
         extra_options[:device_data_id] = device_data.id
+        extra_options[:name] = device_data.name
       rescue LoadError
         puts "Unknown device type"
       end

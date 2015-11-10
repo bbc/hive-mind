@@ -26,4 +26,8 @@ class DeviceOramaMock
   def self.find_or_create_by options
     data = self.new(1, options)
   end
+
+  def name
+    "Mock device name"
+  end
 end

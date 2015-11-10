@@ -155,7 +155,7 @@ RSpec.describe DevicesController, type: :controller do
       let(:unknown_device_type) {
         {
           device_type: :unknown,
-          hostname: 'Unknown device'
+          name: 'Unknown device'
         }
       }
 
@@ -180,9 +180,22 @@ RSpec.describe DevicesController, type: :controller do
       let(:known_device_type) {
         {
           device_type: :mock,
-          hostname: 'Known device',
+          name: 'Known device',
           extra_data_one: 'Data one',
           extra_data_two: 2
+        }
+      }
+
+      let(:device_without_name) {
+        {
+          device_type: :mock
+        }
+      }
+
+      let(:device_with_name) {
+        {
+          device_type: :mock,
+          name: 'User defined device name'
         }
       }
 
@@ -208,7 +221,18 @@ RSpec.describe DevicesController, type: :controller do
         expect(DeviceOramaMock.data_set[1]).to be_truthy
         expect(DeviceOramaMock.data_set[2]).to be_falsy
       end
+
+      it 'generates a name from engine' do
+        post :register, {device: device_without_name}, valid_session
+        expect(Device.last.name).to eq 'Mock device name'
+      end
+
+      it 'overrides name set by engine' do
+        post :register, {device: device_with_name}, valid_session
+        expect(Device.last.name).to eq 'User defined device name'
+      end
     end
+
   end
 
 end
