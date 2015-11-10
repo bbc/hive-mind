@@ -1,0 +1,14 @@
+<div class="card card-model panel panel-default col-sm-4">
+  <div class="panel-body">
+    <h1><%= model.name -%></h1>
+    <% if size != :condensed %>
+    <p class="lead"><code><%= model.code -%></code></p>
+    <p><%= model.devices.count -%> associated models</p>
+    <div class="btn-group">
+      <button class="btn btn-sm btn-default"><%= link_to 'Show', model_path(model.id, device_type: params[:device_type], brand: params[:id] ) %></button>
+      <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_model_path(model) %></button>
+      <button class="btn btn-sm btn-default"><%= link_to 'Destroy', model, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+    </div>
+    <% end %>
+  </div>
+</div>

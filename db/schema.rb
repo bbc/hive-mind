@@ -29,6 +29,13 @@ ActiveRecord::Schema.define(version: 20151110102253) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "device_types", force: :cascade do |t|
+    t.string   "classification"
+    t.text     "description"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "devices", force: :cascade do |t|
     t.string   "name"
     t.string   "serial"
@@ -61,10 +68,12 @@ ActiveRecord::Schema.define(version: 20151110102253) do
     t.string   "code"
     t.string   "alternative"
     t.integer  "brand_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "device_type_id"
   end
 
   add_index "models", ["brand_id"], name: "index_models_on_brand_id"
+  add_index "models", ["device_type_id"], name: "index_models_on_device_type_id"
 
 end
