@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Classification:</strong>
+  <%= @device_type.classification %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @device_type.description %>
+</p>
+
+<%= link_to 'Edit', edit_device_type_path(@device_type) %> |
+<%= link_to 'Back', device_types_path %>

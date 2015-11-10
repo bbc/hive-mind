@@ -1,0 +1,12 @@
+<div class="card card-device-type panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12">
+  <div class="panel-body">
+    <h1><%= device_type.classification -%></h1>
+    <% if size != :condensed %>
+      <p><%= device_type.description -%></p>
+      <div class="btn-group">
+        <button class="btn btn-sm btn-default"><%= link_to 'Show', brands_path( device_type: device_type.id ) %></button>
+        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_brand_path(device_type) %></button>
+      </div>
+    <% end %>
+  </div>
+</div>
