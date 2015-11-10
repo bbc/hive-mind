@@ -217,9 +217,9 @@ RSpec.describe DevicesController, type: :controller do
 
       it 'passes through attributes' do
         post :register, {device: known_device_type}, valid_session
-        expect(DeviceOramaMock.data_set[0]).to be_truthy
-        expect(DeviceOramaMock.data_set[1]).to be_truthy
-        expect(DeviceOramaMock.data_set[2]).to be_falsy
+        expect(DeviceoramaMock.data_set[0]).to be_truthy
+        expect(DeviceoramaMock.data_set[1]).to be_truthy
+        expect(DeviceoramaMock.data_set[2]).to be_falsy
       end
 
       it 'generates a name from engine' do

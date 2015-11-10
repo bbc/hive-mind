@@ -67,7 +67,7 @@ class DevicesController < ApplicationController
     extra_options = {}
     if device_params.has_key?(:device_type)
       begin
-        device_data = Object.const_get("DeviceOrama#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
+        device_data = Object.const_get("Deviceorama#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
         extra_options[:device_data_id] = device_data.id
         extra_options[:name] = device_data.name
       rescue NameError
