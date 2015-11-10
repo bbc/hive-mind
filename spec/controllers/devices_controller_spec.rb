@@ -233,6 +233,28 @@ RSpec.describe DevicesController, type: :controller do
       end
     end
 
+    context 'hive device type (integration test)' do
+      let(:hive) {
+        {
+          device_type: :hive,
+          hostname: 'hive_host',
+          ip: '10.10.10.10'
+        }
+      }
+
+      it 'registers a hive' do
+        expect {
+          post :register, {device: hive}, valid_session
+        }.to change(Device, :count).by(1)
+      end
+
+      it 'gets the name from the hive hostname' do
+        post :register, {device: hive}, valid_session
+        expect(Device.last.name).to eq 'hive_host'
+      end
+
+    end
+
   end
 
 end
