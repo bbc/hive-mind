@@ -92,4 +92,4 @@ RSpec.configure do |config|
 end
 
 $LOAD_PATH << File.expand_path('../lib', __FILE__)
-require 'deviceorama_mock'
+require 'hive_mind_mock'

@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20151110102253) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "deviceorama_hive_attributes", force: :cascade do |t|
+  create_table "hive_mind_hive_attributes", force: :cascade do |t|
     t.string   "hostname"
     t.string   "ip"
     t.string   "mac"
