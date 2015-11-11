@@ -12,10 +12,17 @@
   <% @brand.models.each do |model| %>
     <%= render("shared/model_card", model: model, size: :full ) -%>
   <% end %>
-
 </div>
-  
+
+<br />
+<hr />
+
+<% if @devices %>
+<div class="row">
+  <% @devices.each do |device| %>
+    <%= render("shared/device_card", device: device, size: :full ) -%>  
+  <% end %>
+</div>
+<% end %>
 
 
-<%= link_to 'Edit', edit_brand_path(@brand) %> |
-<%= link_to 'Back', brands_path %>
