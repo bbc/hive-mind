@@ -16,6 +16,9 @@
     <% if @group %>
       <h2><%= @group.name -%>: <%= @group.value -%></h2>
       <p class="lead"><%= @group.description %></p>
+    <% else %>
+      <h2>All <%= @brand.name -%> Devices</h2>
+      <p class="lead">All devices under the <%= @brand.name -%> brand</p>      
     <% end %>
   </div>
 
@@ -34,10 +37,8 @@
   </div>
 </div>
 
+<br />
 
-<div class="row">
-</div>
-    
 <div class="row">
   <% @devices.each do |device| %>
     <%= render("shared/device_card", device: device, size: :full ) -%>  

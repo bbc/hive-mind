@@ -61,6 +61,33 @@ class DevicesController < ApplicationController
     end
   end
 
+  # POST /register
+  def register
+    # TODO Move this into the model 'find_or_create_by' method
+    extra_options = {}
+    if device_params.has_key?(:device_type)
+      begin
+        device_data = Object.const_get("Deviceorama#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
+        extra_options[:device_data_id] = device_data.id
+        extra_options[:name] = device_data.name
+      rescue NameError
+        puts "Unknown device type"
+      end
+    end
+
+    @device = Device.find_or_create_by(extra_options.merge(device_params))
+
+    respond_to do |format|
+      if @device.save
+        format.html { redirect_to @device, notice: 'Device was successfully created.' }
+        format.json { render :show, status: :created, location: @device }
+      else
+        format.html { render :new }
+        format.json { render json: @device.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
@@ -69,6 +96,6 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:name, :serial, :asset_id, :alternative, :model_id, { group_ids: [] } )
+      params.require(:device).permit(:name, :serial, :asset_id, :alternative, :model_id, :device_type, { group_ids: [] } )
     end
 end
