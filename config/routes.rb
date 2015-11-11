@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   end
   resources :models
   resources :brands
+
+  # Omniauth callbacks
+  post '/auth/:provider/callback' => 'application#auth_callback'
+  get '/auth/:provider/callback' => 'application#auth_callback'
 end

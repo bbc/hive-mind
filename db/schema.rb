@@ -76,4 +76,11 @@ ActiveRecord::Schema.define(version: 20151110102253) do
   add_index "models", ["brand_id"], name: "index_models_on_brand_id"
   add_index "models", ["device_type_id"], name: "index_models_on_device_type_id"
 
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "provider"
+    t.string "uid"
+  end
+
 end
