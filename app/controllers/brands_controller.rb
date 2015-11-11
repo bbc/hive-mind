@@ -18,6 +18,7 @@ class BrandsController < ApplicationController
     if params[:device_type] && params[:device_type] != ''
       @device_type = DeviceType.find(params[:device_type].to_i)
     end
+    @devices = @brand.models.collect {|m| m.devices }.flatten.uniq
   end
 
   # GET /brands/new

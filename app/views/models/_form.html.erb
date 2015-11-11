@@ -17,6 +17,11 @@
   </div>
   
   <div class="field">
+    <%= f.label :device_type_id %><br>
+    <%= f.collection_select(:device_type_id, DeviceType.all, :id, :classification) -%>
+  </div>
+  
+  <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </div>

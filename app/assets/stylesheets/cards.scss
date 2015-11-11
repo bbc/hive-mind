@@ -4,14 +4,17 @@
 
 .card {
   border-color: white;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  margin-bottom: 0px;
+}
+
+.card h1 {
+  margin: 0px;
 }
 
 .card-brand {
   background-color: rgb(230,210,210);  
-}
-
-.card-device-type {
-  background-color: rgb(210,230,230);  
 }
 
 .card-model {
@@ -19,5 +22,25 @@
 }
 
 .card-device {
-  background-color: rgb(230,230,230);  
+  background-color: rgb(240,240,240);
+}
+
+.card-device-type {
+  background-color: rgb(210,230,230);
+}
+
+.card-mobile {
+  background: url('/assets/mobile_pale.png');
+}
+
+.card-tv {
+  background: url('/assets/tv_pale.png');
+}
+
+.card-device-type {
+  background-color: rgb(210,230,230);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
