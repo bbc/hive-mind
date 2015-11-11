@@ -44,4 +44,4 @@ group :development do
   gem 'spring'
 end
 
-gem 'deviceorama_hive', path: 'deviceorama_hive'
+gem 'hive_mind_hive', path: 'hive_mind_hive'
