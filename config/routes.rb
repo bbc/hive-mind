@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   resources :device_types
   resources :groups
-  resources :devices
+  resources :devices do
+    collection do
+      post 'register'
+    end
+  end
   resources :models
   resources :brands
 

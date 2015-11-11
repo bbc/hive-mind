@@ -1,3 +1,9 @@
+PATH
+  remote: deviceorama_hive
+  specs:
+    deviceorama_hive (0.0.1)
+      rails (~> 4.2.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -160,6 +166,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   byebug
+  deviceorama_hive!
   jbuilder (~> 2.0)
   jquery-rails
   omniauth
