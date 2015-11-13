@@ -13,20 +13,20 @@
 
 ActiveRecord::Schema.define(version: 20151110102253) do
 
+  create_table "attributes", force: :cascade do |t|
+    t.string   "hostname"
+    t.string   "ip"
+    t.string   "mac"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "brands", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
     t.string   "alternative"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-  end
-
-  create_table "hive_mind_hive_attributes", force: :cascade do |t|
-    t.string   "hostname"
-    t.string   "ip"
-    t.string   "mac"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "device_types", force: :cascade do |t|

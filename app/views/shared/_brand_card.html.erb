@@ -1,11 +1,12 @@
-<div class="card card-brand panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12">
+<div class="card card-brand card-brand-<%=brand.name.downcase-%> panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12"
+     href=<%=card_link-%> >                                                            
   <div class="panel-body">
     <h1><%= brand.name -%></h1>
     <% if size != :condensed %>
     <p class="lead"><code><%= brand.code -%></code></p>
     <p><%= brand.models.count -%> associated models</p>
     <div class="btn-group">
-      <button class="btn btn-sm btn-default"><%= link_to 'Show', brand_path(brand.id, device_type: params[:device_type]) %></button>
+      <button class="btn btn-sm btn-default"><%= link_to 'Show', brand_path(brand) %></button>
       <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_brand_path(brand) %></button>
       <button class="btn btn-sm btn-default"><%= link_to 'Delete', brand, method: :delete, data: { confirm: 'Are you sure?' } %></button>
     </div>
