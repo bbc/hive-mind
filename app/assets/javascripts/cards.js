@@ -11,3 +11,16 @@ function add_links_to_cards() {
     event.stopImmediatePropagation();
   });
 };
+
+function equalize_card_heights(selector) {
+  maxHeight = 0;
+  $(selector).each( function() {
+    height = $(this).height();
+    if(height > maxHeight)
+    {
+      maxHeight = height;
+    }
+  });
+  $(selector).height(maxHeight);
+  return true;
+};
