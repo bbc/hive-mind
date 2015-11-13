@@ -2,15 +2,17 @@
 
 <div class="row">
   <% if @device_type %>
-  <%= render("shared/device_type_card", device_type: @device_type, size: :condensed ) -%>
+  <%= render("shared/device_type_card", device_type: @device_type, size: :condensed, card_link: '/browse?' ) -%>
   <% end %>
-  <%= render("shared/brand_card", brand: @brand, size: :condensed ) -%>
+</div>
+<div class="row">
+  <%= render("shared/brand_card", brand: @brand, size: :condensed, card_link: brands_path( device_type: @device_type) ) -%>
 </div>
 
 
 <div class="row">
   <% @brand.models.each do |model| %>
-    <%= render("shared/model_card", model: model, size: :full ) -%>
+    <%= render("shared/model_card", model: model, size: :full, card_link: model_path(model.id, device_type: @device_type, brand: @brand) )  -%>
   <% end %>
 </div>
 
@@ -26,3 +28,6 @@
 <% end %>
 
 
+<script>
+  add_links_to_cards();
+</script>

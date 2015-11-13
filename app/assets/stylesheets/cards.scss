@@ -7,34 +7,37 @@
   background-position: center bottom;
   background-repeat: no-repeat;
   margin-bottom: 0px;
+  box-shadow:none;
+}
+.card:hover, .card:active {
+  box-shadow: inset 0 0 10px rgb(50,50,200);
 }
 
-.card h1 {
+.card h1,
+.card h2 {
   margin: 0px;
 }
 
+
+.card-model { background-color: rgb(210,210,210); }
+.card-device { background-color: rgb(240,240,240); }
+.card-device-type { background-color: rgb(210,230,230); }
+
+.card-mobile { background: url('/assets/mobile_pale.png'); }
+.card-tv { background: url('/assets/tv_pale.png'); }
+.card-hive { background: url('/assets/hive_pale.png'); }
+
+.card-brand-apple { background: url('/assets/brand_apple.png');}
+.card-brand-amazon { background: url('/assets/brand_amazon.png');}
+.card-brand-panasonic { background: url('/assets/brand_panasonic.png');}
+
+
 .card-brand {
   background-color: rgb(230,210,210);  
-}
-
-.card-model {
-  background-color: rgb(210,210,210);  
-}
-
-.card-device {
-  background-color: rgb(240,240,240);
-}
-
-.card-device-type {
-  background-color: rgb(210,230,230);
-}
-
-.card-mobile {
-  background: url('/assets/mobile_pale.png');
-}
-
-.card-tv {
-  background: url('/assets/tv_pale.png');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .card-device-type {
@@ -43,4 +46,9 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+li.list-group-item {
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
