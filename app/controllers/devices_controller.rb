@@ -67,9 +67,9 @@ class DevicesController < ApplicationController
     extra_options = {}
     if device_params.has_key?(:device_type)
       begin
-        device_data = Object.const_get("HiveMind#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
-        extra_options[:device_data_id] = device_data.id
-        extra_options[:name] = device_data.name
+        obj = Object.const_get("HiveMind#{device_params[:device_type].capitalize}::Plugin")
+        extra_options[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
+        extra_options[:name] = extra_options[:plugin].name
       rescue NameError
         puts "Unknown device type"
       end
