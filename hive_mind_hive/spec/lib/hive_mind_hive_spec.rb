@@ -4,8 +4,7 @@ describe HiveMindHive do
   describe '#find_or_create_by' do
     let(:valid_options) {
       ActionController::Parameters.new({
-        hostname: 'hive_host',
-        ip: '10.10.10.10'
+        hostname: 'hive_host'
       })
     }
 

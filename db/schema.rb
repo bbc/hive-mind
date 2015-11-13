@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113111252) do
+ActiveRecord::Schema.define(version: 20151113112326) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -38,8 +38,6 @@ ActiveRecord::Schema.define(version: 20151113111252) do
     t.datetime "updated_at",     null: false
     t.string   "device_type"
     t.integer  "device_data_id"
-    t.string   "mac_id"
-    t.string   "ip_id"
   end
 
   add_index "devices", ["model_id"], name: "index_devices_on_model_id"
@@ -59,22 +57,20 @@ ActiveRecord::Schema.define(version: 20151113111252) do
 
   create_table "hive_mind_hive_attributes", force: :cascade do |t|
     t.string   "hostname"
-    t.string   "ip"
-    t.string   "mac"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "ips", force: :cascade do |t|
+    t.integer  "device_id"
     t.string   "ip"
-    t.string   "device_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "macs", force: :cascade do |t|
-    t.string   "mac"
     t.integer  "device_id"
+    t.string   "mac"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

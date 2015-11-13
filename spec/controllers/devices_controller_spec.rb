@@ -139,6 +139,7 @@ RSpec.describe DevicesController, type: :controller do
 
   describe 'POST #register' do
     it 'registers a new device without unique identifier' do
+p valid_attributes
       expect {
         post :register, {:device => valid_attributes}, valid_session
       }.to change(Device, :count).by(1)
@@ -237,8 +238,7 @@ RSpec.describe DevicesController, type: :controller do
       let(:hive) {
         {
           device_type: :hive,
-          hostname: 'hive_host',
-          ip: '10.10.10.10'
+          hostname: 'hive_host'
         }
       }
 
