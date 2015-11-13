@@ -20,7 +20,7 @@
 <hr />
 
 <% if @devices %>
-<div class="row">
+<div class="row device-row">
   <% @devices.each do |device| %>
     <%= render("shared/device_card", device: device, size: :full ) -%>  
   <% end %>
@@ -30,4 +30,5 @@
 
 <script>
   add_links_to_cards();
+  equalize_card_heights('.card-device');
 </script>
