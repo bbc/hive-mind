@@ -65,9 +65,9 @@ class DevicesController < ApplicationController
   def register
     # TODO Move this into the model 'find_or_create_by' method
     extra_options = {}
-    if device_params.has_key?(:device_type)
+    if params[:device].has_key?(:device_type)
       begin
-        obj = Object.const_get("HiveMind#{device_params[:device_type].capitalize}::Plugin")
+        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
         extra_options[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
         extra_options[:name] = extra_options[:plugin].name
       rescue NameError
@@ -96,6 +96,6 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:name, :serial, :asset_id, :alternative, :model_id, :device_type, { group_ids: [] } )
+      params.require(:device).permit(:name, :serial, :asset_id, :alternative, :model_id, { group_ids: [] } )
     end
 end

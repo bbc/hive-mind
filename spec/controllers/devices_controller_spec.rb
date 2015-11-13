@@ -165,14 +165,14 @@ RSpec.describe DevicesController, type: :controller do
         }.to change(Device, :count).by(1)
       end
 
-      it 'sets the device type' do
+      it 'sets the device type as nil' do
         post :register, {device: unknown_device_type}, valid_session
-        expect(Device.last.device_type).to eq 'unknown'
+        expect(Device.last.plugin_type).to be_nil
       end
 
-      it 'sets the device data id as null' do
+      it 'sets the device data id as nil' do
         post :register, {device: unknown_device_type}, valid_session
-        expect(Device.last.device_data_id).to be_nil
+        expect(Device.last.plugin_id).to be_nil
       end
     end
 

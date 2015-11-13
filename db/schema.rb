@@ -34,10 +34,8 @@ ActiveRecord::Schema.define(version: 20151113225327) do
     t.string   "asset_id"
     t.string   "alternative"
     t.integer  "model_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "device_type"
-    t.integer  "device_data_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.integer  "plugin_id"
     t.string   "plugin_type"
   end
