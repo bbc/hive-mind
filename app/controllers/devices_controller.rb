@@ -65,11 +65,11 @@ class DevicesController < ApplicationController
   def register
     # TODO Move this into the model 'find_or_create_by' method
     create_parameters = device_params
-    if device_params.has_key?(:device_type)
+    if params[:device].has_key?(:device_type)
       begin
-        device_data = Object.const_get("HiveMind#{device_params[:device_type].capitalize}").find_or_create_by(params[:device])
-        create_parameters[:device_data_id] = device_data.id
-        create_parameters[:name] ||= device_data.name
+        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
+        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
+        create_parameters[:name] ||= create_parameters[:plugin].name
       rescue NameError
         puts "Unknown device type"
       end
@@ -102,7 +102,6 @@ class DevicesController < ApplicationController
         :asset_id,
         :alternative,
         :model_id,
-        :device_type,
         { group_ids: [] },
         macs: [],
         ips: [],
