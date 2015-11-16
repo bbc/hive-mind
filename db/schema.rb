@@ -55,6 +55,20 @@ ActiveRecord::Schema.define(version: 20151113225327) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "ips", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "macs", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "mac"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hive_mind_hive_plugins", force: :cascade do |t|
     t.string   "hostname"
     t.integer  "device_id"

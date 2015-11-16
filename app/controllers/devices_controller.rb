@@ -64,18 +64,18 @@ class DevicesController < ApplicationController
   # POST /register
   def register
     # TODO Move this into the model 'find_or_create_by' method
-    extra_options = {}
+    create_parameters = device_params
     if params[:device].has_key?(:device_type)
       begin
         obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-        extra_options[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
-        extra_options[:name] = extra_options[:plugin].name
+        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
+        create_parameters[:name] ||= create_parameters[:plugin].name
       rescue NameError
         puts "Unknown device type"
       end
     end
 
-    @device = Device.find_or_create_by(extra_options.merge(device_params))
+    @device = Device.find_or_create_by(create_parameters)
 
     respond_to do |format|
       if @device.save
@@ -96,6 +96,15 @@ class DevicesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(:name, :serial, :asset_id, :alternative, :model_id, { group_ids: [] } )
+      params.require(:device).permit(
+        :name,
+        :serial,
+        :asset_id,
+        :alternative,
+        :model_id,
+        { group_ids: [] },
+        macs: [],
+        ips: [],
+      )
     end
 end
