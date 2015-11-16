@@ -3,6 +3,7 @@ class Device < ActiveRecord::Base
   has_many :macs
   has_many :ips
   has_and_belongs_to_many :groups
+  belongs_to :plugin, polymorphic: true
   
   accepts_nested_attributes_for :groups
 
