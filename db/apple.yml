@@ -1,0 +1,179 @@
+iPad:
+  A1219:
+    description: Wifi only
+    identifier: iPad1,1
+    models:
+      MB292: 16GB Black
+      MB293: 32GB Black
+      MB294: 64GB Black
+  A1337:
+    description: Wifi + Mobile
+    models:
+      MC349: 16GB Black
+      MC496: 32GB Black
+      MC497: 64GB Black
+
+iPad 2:
+  A1395:
+    description: Wifi only
+    identifier: iPad2,1
+    models:
+      MC769: 16GB Black
+      MC770: 32GB Black
+      MC916: 64GB Black
+      MC979: 16GB White
+      MC980: 32GB White
+      MC981: 64GB White
+  A1396:
+    description: Wifi + Mobile
+    identifier: iPad2,2
+    models:
+      MC773: 16GB Black
+      MC774: 32GB Black
+      MC775: 64GB Black
+      MC982: 16GB White
+      MC983: 32GB White
+      MC984: 64GB White
+  A1397:
+    description: CDMA
+    identifier: iPad2,3
+    models:
+      MC755: 16GB Black
+      MC763: 32GB Black
+      MC764: 64GB Black
+      MC985: 16GB White
+      MC986: 32GB White
+      MC987: 64GB White
+
+iPad 3:
+  A1416:
+    description: Wifi
+    identifier: iPad3,1
+    models:
+      MC705,MD333: 16GB Black
+      MC706,MC334: 32GB Black
+      MC707: 64GB Black
+
+      
+iPad Mini 4:
+  A1538:
+    description: Wifi only
+    identifier: iPad5,1
+    models:
+      MK6L2: 16GB Gold
+      MK9J2: 64GB Gold
+      MK9Q2: 128GB Gold
+      MK6K2: 16GB Silver
+      MK9H2: 64GB Silver
+      MK9P2: 128GB Silver
+      MK6J2: 16GB Space Gray
+      MK9G2: 64GB Space Gray
+      MK9N2: 128GB Space Gray
+  A1550:
+    description: Wifi + Mobile
+    identifier: iPad5,2
+    models:
+      MK882: 16GB Gold
+      MK8C2: 64GB Gold
+      MK8F2: 128GB Gold
+      MK872: 16GB Silver
+      MK8A2: 64GB Silver
+      MK8E2: 128GB Silver
+      MK862: 16GB Space Gray
+      MK892: 64GB Space Gray
+      MK8D2: 128GB Space Gray
+
+
+iPhone 5s:
+  A1453,A1533:
+    description:
+    identifier: iPhone6,1
+    models:
+      ME298,ME307,ME325,ME343: 16GB Gold
+      ME301,ME310,ME328,ME346: 32GB Gold
+      ME304,ME313,ME331,ME349: 64GB Gold
+      ME297,ME306,ME324,ME342: 16GB Silver
+      ME300,ME309,ME327,ME345: 32GB Silver
+      ME303,ME312,ME436,ME348: 64GB Silver
+      ME296,ME305,ME323,ME341: 16GB Space Gray
+      ME299,ME308,ME326,ME344: 32GB Space Gray
+      ME302,ME311,ME329,ME347: 64GB Space Gray
+  A1457,A1518,A1528,A1530:
+    description:
+    identifier: iPhone6,2
+    models:
+      ME434: 16GB Gold
+      ME437: 32GB Gold
+      ME440: 64GB Gold
+      ME433: 16GB Silver
+      ME436: 32GB Silver
+      ME439: 64GB Silver
+      ME432: 16GB Space Gray
+      ME435: 32GB Space Gray
+      ME438: 64GB Space Gray
+
+iPhone 6:
+  A1549,A1586:
+    description:
+    identifier: iPhone7,2
+    models:
+      MG492,MG3D2: 16GB Gold
+      MG4J2,MG3L2: 64GB Gold
+      MG4E2,MG3G2: 128GB Gold
+      MG3C2,MG482: 16GB Silver
+      MG3K2,MG4H2: 64GB Silver
+      MG3F2,MG4C2: 128GB Silver
+      MG3A2,MG472: 16GB Space Gray
+      MG3H2,MG4F2,MG5A2: 64GB Space Gray
+      MG3E2,MG4A2: 128GB Space Gray
+
+iPhone 6 Plus:
+  A1522,A1524:
+    description:
+    identifier: iPhone7,1
+    models:
+      MGAA2: 16GB Gold
+      MGAK2: 64GB Gold
+      MGAF2: 128GB Gold
+      MGA92,MGC92: 16GB Silver
+      MGAJ2: 64GB Silver
+      MGAE2: 128GB Silver
+      MGA82: 16GB Space Gray
+      MGAH2,MGC52,MGAU2: 64GB Space Gray
+      MGAC2: 128GB Space Gray
+
+iPhone 6s:
+  A1633,A1688,A1691,A1700:
+    description:
+    identifier: iPhone8,1
+    models:
+      MKQL2,ML7E2: 16GB Gold
+      MKQQ2,ML7J2: 64GB Gold
+      MKQV2,ML7N2: 128GB Gold
+      MKQM2,ML7F2: 16GB Rose Gold
+      MKQR2,ML7K2: 64GB Rose Gold
+      MKQW2,ML7P2: 128GB Rose Gold
+      MKQK2,ML7D2: 16GB Silver
+      MKQP2,ML7H2: 64GB Silver
+      MKQU2,ML7M2: 128GB Silver
+      MKQJ2,ML7C2: 16GB Space Gray
+      MKQN2,ML7G2: 64GB Space Gray
+      MKQT2,ML7L2: 128GB Space Gray
+
+iPhone 6s Plus:
+  A1634,A1687,A1690,A1699:
+    description:
+    identifier: iPhone8,2
+    models:
+      MKU32,ML6D2: 16GB Gold
+      MKU82,ML6H2: 64GB Gold
+      MKUF2,ML6M2: 128GB Gold
+      MKU52,ML6E2: 16GB Rose Gold
+      MKU92,ML6J2: 64GB Rose Gold
+      MKUG2,ML6N2: 128GB Rose Gold
+      MKU22,ML6C2: 16GB Silver
+      MKU72,ML6G2: 64GB Silver
+      MKUE2,ML6L2: 128GB Silver
+      MKU12,ML6A2: 16GB Space Gray
+      MKU62,ML6F2: 64GB Space Gray
+      MKUD2,ML6K2: 128GB Space Gray
