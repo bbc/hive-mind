@@ -83,6 +83,64 @@ iPad Mini 4:
       MK892: 64GB Space Gray
       MK8D2: 128GB Space Gray
 
+iPhone 4s:
+  A1387,A1431:
+    description:
+    identifier: iPhone4,1
+    models:
+      ME259,MF257,MF261,MF263,MF265,MF269: 8GB Black
+      MC918,MC922,MD234,MD235,MD276,MD377,MD865,ME804: 16GB Black
+      MC919,MC923,MD241,MD278,MD379: 32GB Black
+      MD257,MD258,MD269,MD280,MD381: 64GB Black
+      MF258,MF260,MF262,MF264,MF266,MF270: 8GB White
+      MC920,MC924,MD237,MD239,MD277,MD378,MD866,ME805: 16GB White
+      MC921,MD244,MD279,MD380,MD246: 32GB White
+      MD260,MD271,MD272,MD281,MD382: 64GB White
+
+iPhone 5:
+  A1428:
+    description:
+    identifier: iPhone5,1
+    models:
+      MD293,MD634,MD638,ME486,ME486: 16GB Black
+      MD295,MD636,ME488,MD295: 32GB Black
+      MD642,MD644,ME490: 64GB Black
+      MD294,MD635,ME487: 16GB White
+      MD296,MD637,ME489: 32GB White
+      MD643,MD645,ME491: 64GB White
+
+iPhone 5c:
+  A1456,A1532:
+    description:
+    identifier: iPhone5,3
+    models:
+      ME507: 16GB Blue
+      MF136: 32GB Blue
+      ME508: 16GB Green
+      MF137: 32GB Green
+      ME509: 16GB Pink
+      MF138,MF133: 32GB Pink
+      ME505: 16GB White
+      MF134: 32GB White
+      ME506: 16GB Yellow
+      MF135: 32GB Yellow
+  A1507,A1516,A1526,A1529:
+    description:
+    identifier: iPhone5,4
+    models:
+      MG0T2,MG1U2,MG902: 8GB Blue
+      ME555: 16GB Blue
+      MF156: 32GB Blue
+      MG0V2,MG1W2,MG912: 8GB Green
+      ME556: 16GB Green
+      MF157: 32GB Green
+      MG0V2,MG1W2,MG922: 8GB White
+      ME553: 16GB White
+      MF154: 32GB White
+      MG0R2,MG1R2,MG8Y2: 8GB Yellow
+      ME554: 16GB Yellow
+      MF155: 32GB Yellow
+
 
 iPhone 5s:
   A1453,A1533:
