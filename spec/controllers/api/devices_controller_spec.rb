@@ -135,5 +135,86 @@ RSpec.describe Api::DevicesController, type: :controller do
         expect(Device.last.name).to eq 'User defined device name'
       end
     end
+
+    context 'device models and brands' do
+      let(:brand1_model1) {
+        {
+          name: 'Device 1',
+          model: 'Model 1',
+          brand: 'Brand 1',
+        }
+      }
+
+      let(:brand1_model2) {
+        {
+          name: 'Device 2',
+          model: 'Model 2',
+          brand: 'Brand 1',
+        }
+      }
+
+      let(:brand2_model1) {
+        {
+          name: 'Device 3',
+          model: 'Model 1',
+          brand: 'Brand 2',
+        }
+      }
+
+      let(:brand2_model2) {
+        {
+          name: 'Device 4',
+          model: 'Model 2',
+          brand: 'Brand 2',
+        }
+      }
+
+      it 'creates a new model' do
+        expect {
+          post :register, {device: brand1_model1}, valid_session
+        }.to change(Model, :count).by(1)
+      end
+
+      it 'creates a new brand' do
+        expect {
+          post :register, {device: brand1_model1}, valid_session
+        }.to change(Brand, :count).by(1)
+      end
+
+      it 'creates a new model for an existing brand' do
+        post :register, {device: brand1_model1}, valid_session
+        expect {
+          post :register, {device: brand1_model2}, valid_session
+        }.to change(Model, :count).by(1)
+      end
+
+      it 'creates a new brand with an existing model name' do
+        post :register, {device: brand1_model1}, valid_session
+        expect {
+          post :register, {device: brand2_model1}, valid_session
+        }.to change(Brand, :count).by(1)
+      end
+
+      it 'it does not recreate a known model' do
+        post :register, {device: brand1_model1}, valid_session
+        expect {
+          post :register, {device: brand1_model1}, valid_session
+        }.to change(Model, :count).by(0)
+      end
+
+      it 'it does not recreate a known brand for a known model' do
+        post :register, {device: brand1_model1}, valid_session
+        expect {
+          post :register, {device: brand1_model1}, valid_session
+        }.to change(Brand, :count).by(0)
+      end
+
+      it 'it does not recreate a known brand for a new model' do
+        post :register, {device: brand1_model1}, valid_session
+        expect {
+          post :register, {device: brand1_model2}, valid_session
+        }.to change(Brand, :count).by(0)
+      end
+    end
   end
 end

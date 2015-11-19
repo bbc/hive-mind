@@ -28,6 +28,13 @@ class Api::DevicesController < ApplicationController
       end
     end
 
+    if params[:device][:brand] and params[:device][:model]
+      create_parameters[:model] = Model.find_or_create_by(
+        name: params[:device][:model],
+        brand: Brand.find_or_create_by(name: params[:device][:brand])
+      )
+    end
+
     device_id ||= params['device']['id']
     if device_id and @device = Device.find(device_id)
       @device.update(create_parameters)
