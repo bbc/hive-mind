@@ -61,33 +61,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  # POST /register
-  def register
-    # TODO Move this into the model 'find_or_create_by' method
-    create_parameters = device_params
-    if params[:device].has_key?(:device_type)
-      begin
-        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
-        create_parameters[:name] ||= create_parameters[:plugin].name
-      rescue NameError
-        puts "Unknown device type"
-      end
-    end
-
-    @device = Device.find_or_create_by(create_parameters)
-
-    respond_to do |format|
-      if @device.save
-        format.html { redirect_to @device, notice: 'Device was successfully created.' }
-        format.json { render :show, status: :created, location: @device }
-      else
-        format.html { render :new }
-        format.json { render json: @device.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
