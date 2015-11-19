@@ -28,10 +28,12 @@ class Api::DevicesController < ApplicationController
       end
     end
 
+    device_type = params[:device][:device_type] || 'unknown'
     if params[:device][:brand] and params[:device][:model]
       create_parameters[:model] = Model.find_or_create_by(
         name: params[:device][:model],
-        brand: Brand.find_or_create_by(name: params[:device][:brand])
+        brand: Brand.find_or_create_by(name: params[:device][:brand]),
+        device_type: DeviceType.find_or_create_by(classification: device_type),
       )
     end
 

@@ -136,7 +136,7 @@ RSpec.describe Api::DevicesController, type: :controller do
       end
     end
 
-    context 'device models and brands' do
+    context 'device models, types and brands' do
       let(:brand1_model1) {
         {
           name: 'Device 1',
@@ -166,6 +166,24 @@ RSpec.describe Api::DevicesController, type: :controller do
           name: 'Device 4',
           model: 'Model 2',
           brand: 'Brand 2',
+        }
+      }
+
+      let(:brand1_model1_type1) {
+        {
+          name: 'Device 5',
+          model: 'Model 1',
+          brand: 'Brand 1',
+          device_type: 'Type 1',
+        }
+      }
+
+      let(:brand1_model1_type2) {
+        {
+          name: 'Device 6',
+          model: 'Model 1',
+          brand: 'Brand 1',
+          device_type: 'Type 2',
         }
       }
 
@@ -214,6 +232,33 @@ RSpec.describe Api::DevicesController, type: :controller do
         expect {
           post :register, {device: brand1_model2}, valid_session
         }.to change(Brand, :count).by(0)
+      end
+
+      it 'creates a new type' do
+        expect {
+          post :register, {device: brand1_model1_type1}, valid_session
+        }.to change(DeviceType, :count).by(1)
+      end
+
+      it 'does not recreate an existing type' do
+        post :register, {device: brand1_model1_type1}, valid_session
+        expect {
+          post :register, {device: brand1_model1_type1}, valid_session
+        }.to change(DeviceType, :count).by(0)
+      end
+
+      it 'creates a new type for an existing model and brand' do
+        post :register, {device: brand1_model1_type1}, valid_session
+        expect {
+          post :register, {device: brand1_model1_type2}, valid_session
+        }.to change(DeviceType, :count).by(1)
+      end
+
+      it 'creates a new model for an existing model/brand with a new type' do
+        post :register, {device: brand1_model1_type1}, valid_session
+        expect {
+          post :register, {device: brand1_model1_type2}, valid_session
+        }.to change(Model, :count).by(1)
       end
     end
   end
