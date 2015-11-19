@@ -1,3 +1,48 @@
+Apple TV 2G:
+  A1378:
+    description:
+    identifier: AppleTV2,1
+    models:
+      MC572: 8GB Black
+
+Apple TV 3G:
+  A1427:
+    description:
+    identifier: AppleTV3,1
+    models:
+      MD199: 8GB Black
+  A1469:
+    description:
+    identifier: AppleTV3,2
+    models:
+      MD199: 8GB Black
+
+Apple TV 4G:
+  A1625:
+    description:
+    identifier: AppleTV5,3
+    models:
+      MGY52: 32GB Black
+      MLNC2: 64GB Black
+
+Apple Watch:
+  A1553:
+    description:
+    identifier: Watch1,1
+    models:
+      MJ2T2,MJ2V2,MJ2U2,MJ2W2: 8GB Silver Aluminium
+      MJ2X2: 8GB Space Black Aluminium
+      MJ302,MJ2Y2,MJ312,MJ322,MJYK2,MJ332,MJ362,MJ3A2,MJ3E2: 8GB Stainless Steel
+      MJ3F2: 8GB Space Black Stainless Steel
+  A1554,A1638:
+    description:
+    identifier: Watch1,2
+    models:
+      MJ3N2,MJ3Q2,MJ3P2,MJ3R2: 8GB Silver Aluminium
+      MJ3T2: 8GB Space Black Aluminium
+      MJ3V2,MJ3U2,MJ3X2,MJ3Y2,MJYN2,MJ452,MJ432,MJ402,MJ472: 8GB Stainless Steel
+      MJ482: 8GB Space Black Stainless Steel
+
 iPad:
   A1219:
     description: Wifi only
@@ -68,11 +113,226 @@ iPad 4:
       MD515: 64GB White
       ME393: 128GB White
   A1459:
-    description Wifi + Mobile
+    description: Wifi + Mobile
     identifier: iPad3,5
     models:
+      MD516: 16GB Black
+      MD517: 32GB Black
+      MD518: 64GB Black
+      ME400: 128GB Black
+      MD519: 16GB White
+      MD520: 32GB White
+      MD521: 64GB White
+      ME401: 128GB White
+  A1460:
+    description: CDMA
+    identifier: iPad3,6
+    models:
+      MD522,ME195: 16GB Black
+      MD523,ME196: 32GB Black
+      MD524,ME197: 64GB Black
+      ME406,ME410: 128GB Black
+      MD525,ME198: 16GB White
+      MD526,ME199: 32GB White
+      MD527,ME200: 64GB White
+      ME407,ME411: 128GB White
 
-      
+iPad Air:
+  A1474:
+    description: Wifi only
+    identifier: iPad4,1
+    models:
+      MD788: 16GB Silver
+      MD789: 32GB Silver
+      MD790: 64GB Silver
+      ME906: 128GB Silver
+      MD785: 16GB Space Gray
+      MD786: 32GB Space Gray
+      MD787: 64GB Space Gray
+      ME898: 128GB Space Gray
+  A1475:
+    description: Wifi + Mobile
+    identifier: iPad4,2
+    models:
+      MD794,ME997,ME999,MF021,MF502: 16GB Silver
+      MD795,MF025,MF527,MF529,MF532: 32GB Silver
+      MD796,MF012,MF013,MF027,MF539: 64GB Silver
+      ME988,MF018,MF019,MF029,MF563: 128GB Silver
+      MD791,ME991,ME993,MF020,MF496: 16GB Space Gray
+      MD792,MF003,MF004,MF024,MF520: 32GB Space Gray
+      MD793,MF009,MF010,MF026,MF534: 64GB Space Gray
+      ME987,MF015,MF016,MF028,MF558: 128GB Space Gray
+  A1476:
+    description: Wifi + Mobile (China)
+    identifier: iPad4,3
+    models:
+      MF230: 16GB Silver
+      MF233: 32GB Silver
+      MF234: 64GB Silver
+      MF236: 128GB Silver
+      MD797: 16GB Space Gray
+      MD798: 32GB Space Gray
+      MD799: 64GB Space Gray
+      MF235: 128GB Space Gray
+
+iPad Air 2:
+  A1566:
+    description: Wifi only
+    identifier: iPad5,3
+    models:
+      MH0W2: 16GB Gold
+      MH182: 64GB Gold
+      MH1J2: 128GB Gold
+      MGLW2: 16GB Silver
+      MGKM2: 64GB Silver
+      MGTY2: 128GB Silver
+      MGL12: 16GB Space Gray
+      MGKL2: 64GB Space Gray
+      MGTX2: 128GB Space Gray
+  A1567:
+    description: Wifi + Mobile
+    identifier: iPad5,4
+    models:
+      MH2W2: 16GB Gold
+      MH2P2: 64GB Gold
+      MH332: 128GB Gold
+      MH2V2: 16GB Silver
+      MH2N2: 64GB Silver
+      MH322: 128GB Silver
+      MGGX2F,MH2U2: 16GB Space Gray
+      MH2M2: 64GB Space Gray
+      MH312: 128GB Space Gray
+
+iPad Pro:
+  A1584:
+    description: Wifi only
+    identifer: iPad6,7
+    models:
+      ML0H2: 32GB Gold
+      ML0R2: 128GB Gold
+      ML0G2: 32GB Silver
+      ML0Q2: 128GB Silver
+      ML0F2: 32GB Space Gray
+      ML0N2: 128GB Space Gray
+  A1652:
+    description: Wifi + Mobile
+    identifier: iPad6,8
+    models:
+      ML3Q2: 128GB Gold
+      ML3N2: 128GB Silver
+      ML3K2: 128GB Space Gray
+
+iPad Mini:
+  A1432:
+    description: Wifi only
+    identifier: iPad2,5
+    models:
+      MD528: 16GB Black
+      MD529: 32GB Black
+      MD530: 64GB Black
+      MD531: 16GB White
+      MD532: 32GB White
+      MD533: 64GB White
+  A1454:
+    description: Wifi + Mobile
+    identifier: iPad2,6
+    models:
+      MD534: 16GB Black
+      MD535: 32GB Black
+      MD536: 64GB Black
+      MD537: 16GB White
+      MD538: 32GB White
+      MD539: 64GB White
+  A1455:
+    description: CDMA
+    identifier: iPad2,7
+    models:
+      MD540,ME215: 16GB Black
+      MD541,ME216: 32GB Black
+      MD542,ME217: 64GB Black
+      MD543,ME218: 16GB White
+      MD544,ME219: 32GB White
+      MD545,ME220: 64GB White
+
+iPad Mini 2:
+  A1489:
+    description: Wifi only
+    identifier: iPad4,4
+    models:
+      ME279: 16GB Silver
+      ME280: 32GB Silver
+      ME281: 64GB Silver
+      ME860: 128GB Silver
+      ME276: 16GB Space Gray
+      ME277: 32GB Space Gray
+      ME278: 64GB Space Gray
+      ME856: 128GB Space Gray
+  A1490:
+    description: Wifi + Mobile
+    identifier: iPad4,5
+    models:
+      ME814: 16GB Silver
+      ME824: 32GB Silver
+      ME832: 64GB Silver
+      ME840: 128GB Silver
+      ME800: 16GB Space Gray
+      ME820: 32GB Space Gray
+      ME828: 64GB Space Gray
+      ME836: 128GB Space Gray
+  A1491:
+    description: CDMA
+    identifier: iPad4,6
+    models:
+      MF248: 16GB Silver
+      MF252: 32GB Silver
+      MF246: 64GB Silver
+      MF244: 128GB Silver
+      MF247: 16GB Space Gray
+      MF251: 32GB Space Gray
+      MF245: 64GB Space Gray
+      MF243: 128GB Space Gray
+
+iPad Mini 3:
+  A1599:
+    description: Wifi only
+    identifier: iPad4,7
+    models:
+      MGYE2: 16GB Gold
+      MGY92: 64GB Gold
+      MGYK2: 128GB Gold
+      MGNV2: 16GB Silver
+      MGGT2: 64GB Silver
+      MGP42: 128GB Silver
+      MGNR2: 16GB Space Gray
+      MGGQ2: 64GB Space Gray
+      MGP32: 128GB Space Gray
+  A1600:
+    description: Wifi + Mobile
+    identifier: iPad4,8
+    models:
+      MH3G2: 16GB Gold
+      MH392: 64GB Gold
+      MH3N2: 128GB Gold
+      MH3F2: 16GB Silver
+      MH382: 64GB Silver
+      MH3M2: 128GB Silver
+      MH3E2: 16GB Space Gray
+      MH372: 64GB Space Gray
+      MH3L2: 128GB Space Gray
+  A1601:
+    description: CDMA
+    identifier: iPad4,9
+    models:
+      MGYR2,MGYY2: 16GB Gold
+      MGYN2,MGYW2: 64GB Gold
+      MGYU2,MH012: 128GB Gold
+      MGHW2,MGPW2: 16GB Silver
+      MGJ12,MGQ12: 64GB Silver
+      MGJ32,MGQ32: 128GB Silver
+      MGHV2,MGPV2: 16GB Space Gray
+      MGJ02,MGQ02: 64GB Space Gray
+      MGJ22,MGQ22: 128GB Space Gray
+
 iPad Mini 4:
   A1538:
     description: Wifi only
@@ -100,6 +360,67 @@ iPad Mini 4:
       MK862: 16GB Space Gray
       MK892: 64GB Space Gray
       MK8D2: 128GB Space Gray
+
+iPhone:
+  A1203:
+    description:
+    identifier: iPhone1,1
+    models:
+      MA501: 4GB Black
+      MA712: 8GB Black
+      MV384: 16GB Black
+
+iPhone 3G:
+  A1241,A1324:
+    description:
+    identifier: iPhone1,2
+    MB046,MB489,MB639,MB702,MC176: 8GB Black
+    MB048,MB496,MB497,MB704: 16GB Black
+    MB499,MB500,MB501,MB632,MB705: 16GB White
+
+iPhone 3GS:
+  A1303,A1325:
+    description:
+    identifer: iPhone2,1
+    models:
+      MB715,MB735,MC135: 16GB Black
+      MB717,MB737: 32GB Black
+      MB716,MB736,MC136: 16GB White
+      MB718,MB738: 32GB White
+      MC555,MC640: 8GB Black
+      MB715,MC131,MC135: 16GB Black
+      MB717,MC133,MC137: 32GB Black
+      MB716,MC132,MC136: 16GB White
+      MC134,MC138: 32GB White
+
+iPhone 4:
+  A1332:
+    description:
+    identifier: iPhone3,1
+    models:
+      MD126,MD128: 8GB Black
+      MC318,MC603,MC608: 16GB Black
+      MC319,MC605,MC610: 32GB Black
+      MD196,MD197,MD198: 8GB White
+      MC604,MC536: 16GB White
+      MC606: 32GB White
+  A1332:
+    description:
+    identifier: iPhone3,2
+    models:
+      MD128,ME798: 8GB Black
+      ME799: 8GB White
+
+  A1349:
+    description:
+    identifier: iPhone3,3
+    models:
+      MD146,MD439,MD873: 8GB Black
+      MC676: 16GB Black
+      MC678: 32GB Black
+      MD200,MD874: 8GB White
+      MC677: 16GB White
+      MC679: 32GB White
 
 iPhone 4s:
   A1387,A1431:
