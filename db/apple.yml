@@ -374,9 +374,10 @@ iPhone 3G:
   A1241,A1324:
     description:
     identifier: iPhone1,2
-    MB046,MB489,MB639,MB702,MC176: 8GB Black
-    MB048,MB496,MB497,MB704: 16GB Black
-    MB499,MB500,MB501,MB632,MB705: 16GB White
+    models:
+      MB046,MB489,MB639,MB702,MC176: 8GB Black
+      MB048,MB496,MB497,MB704: 16GB Black
+      MB499,MB500,MB501,MB632,MB705: 16GB White
 
 iPhone 3GS:
   A1303,A1325:
@@ -410,7 +411,6 @@ iPhone 4:
     models:
       MD128,ME798: 8GB Black
       ME799: 8GB White
-
   A1349:
     description:
     identifier: iPhone3,3
