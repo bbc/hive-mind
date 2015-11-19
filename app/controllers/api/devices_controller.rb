@@ -15,8 +15,25 @@ class Api::DevicesController < ApplicationController
         puts "Unknown device type"
       end
     end
+    create_parameters[:ips] ||= []
+    create_parameters[:ips] = create_parameters[:ips].map{|i| Ip.find_or_create_by(ip: i)}
 
-    @device = Device.find_or_create_by(create_parameters)
+    # Uniquely identify by (first) MAC address
+    device_id = nil
+    if create_parameters[:macs]
+      create_parameters[:macs] = create_parameters[:macs].map do |m|
+        mac = Mac.find_or_create_by(mac: m)
+        device_id ||= mac.device_id
+        mac
+      end
+    end
+
+    device_id ||= params['device']['id']
+    if device_id and @device = Device.find(device_id)
+      @device.update(create_parameters)
+    else
+      @device= Device.create(create_parameters)
+    end
 
     if @device.save
       render json: @device, status: :created

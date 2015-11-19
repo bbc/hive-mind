@@ -7,19 +7,47 @@ RSpec.describe Api::DevicesController, type: :controller do
     }
   }
 
+  let(:device_with_mac1) {
+    {
+      name: 'Device 1',
+      macs: [ 'aa:bb:cc:dd:ee:01' ]
+    }
+  }
+
+  let(:device_with_mac2) {
+    {
+      name: 'Device 2',
+      macs: [ 'aa:bb:cc:dd:ee:02' ]
+    }
+  }
+
   let(:valid_session) { {} }
 
   describe 'POST #register' do
     it 'registers a new device without unique identifier' do
       expect {
-        post :register, {:device => valid_attributes}, valid_session
+        post :register, {device: valid_attributes}, valid_session
       }.to change(Device, :count).by(1)
     end
 
     it 'does not reregister a known device' do
       device = Device.create! valid_attributes
       expect {
-        post :register, {:device => valid_attributes.merge(id: device.id)}, valid_session
+        post :register, {device: valid_attributes.merge(id: device.id)}, valid_session
+      }.to change(Device, :count).by(0)
+    end
+
+    it 'registers two devices with different MACs' do
+      post :register, {device: device_with_mac1}, valid_session
+      expect {
+        post :register, {device: device_with_mac2}, valid_session
+      }.to change(Device, :count).by(1)
+    end
+
+    it 'identifies device by MAC' do
+      post :register, {device: device_with_mac1}, valid_session
+      expect {
+        post :register, {device: device_with_mac1}, valid_session
       }.to change(Device, :count).by(0)
     end
 
