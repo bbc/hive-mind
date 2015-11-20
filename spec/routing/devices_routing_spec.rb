@@ -35,9 +35,5 @@ RSpec.describe DevicesController, type: :routing do
       expect(:delete => "/devices/1").to route_to("devices#destroy", :id => "1")
     end
 
-    it 'routes to #register' do
-      expect(post: '/devices/register').to route_to('devices#register')
-    end
-
   end
 end
