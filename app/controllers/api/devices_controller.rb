@@ -6,15 +6,7 @@ class Api::DevicesController < ApplicationController
   # POST /register
   def register
     create_parameters = device_params
-    if params[:device].has_key?(:device_type)
-      begin
-        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
-        create_parameters[:name] ||= create_parameters[:plugin].name
-      rescue NameError
-        puts "Unknown device type"
-      end
-    end
+
     create_parameters[:ips] ||= []
     create_parameters[:ips] = create_parameters[:ips].map{|i| Ip.find_or_create_by(ip: i)}
 
@@ -25,6 +17,17 @@ class Api::DevicesController < ApplicationController
         mac = Mac.find_or_create_by(mac: m)
         device_id ||= mac.device_id
         mac
+      end
+    end
+
+    params[:device][:device_id] = device_id
+    if params[:device].has_key?(:device_type)
+      begin
+        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
+        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
+        create_parameters[:name] ||= create_parameters[:plugin].name
+      rescue NameError
+        puts "Unknown device type"
       end
     end
 
