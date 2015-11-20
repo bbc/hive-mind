@@ -3,7 +3,9 @@
   <div class="panel-body">
     <h1><%= brand.name -%></h1>
     <% if size != :condensed %>
+    <% if brand.code %>
     <p class="lead"><code><%= brand.code -%></code></p>
+    <% end %>
     <p><%= brand.models.count -%> associated models</p>
     <div class="btn-group">
       <button class="btn btn-sm btn-default"><%= link_to 'Show', brand_path(brand) %></button>
