@@ -8,11 +8,11 @@ For a device called 'mydevice' create a device engine with:
 rails plugin new hive_mind_mydevice --full --dummy-path=spec/dummy --skip-test-unit
 ```
 
-Create a new model `Plugin` with at least a `device\_id` integer attribute:
+Create a new model `Plugin` with relevant attributes:
 
 ```
 cd hive_mind_mydevice
-rails generate model plugin device_id:integer <other attributes>
+rails generate model plugin <attributes>
 ```
 
 Modify the 'Plugin' model as follows:
