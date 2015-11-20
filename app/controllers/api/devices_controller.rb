@@ -20,17 +20,6 @@ class Api::DevicesController < ApplicationController
       end
     end
 
-    params[:device][:device_id] = device_id
-    if params[:device].has_key?(:device_type)
-      begin
-        obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-        create_parameters[:plugin] = obj.find_or_create_by(obj.plugin_params(params[:device]))
-        create_parameters[:name] ||= create_parameters[:plugin].name
-      rescue NameError
-        puts "Unknown device type"
-      end
-    end
-
     device_type = params[:device][:device_type] || 'unknown'
     if params[:device][:brand] and params[:device][:model]
       create_parameters[:model] = Model.find_or_create_by(
@@ -44,6 +33,15 @@ class Api::DevicesController < ApplicationController
     if device_id and @device = Device.find(device_id)
       @device.update(create_parameters)
     else
+      if params[:device].has_key?(:device_type)
+        begin
+          obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
+          create_parameters[:plugin] = obj.create(obj.plugin_params(params[:device]))
+          create_parameters[:name] ||= create_parameters[:plugin].name
+        rescue NameError
+          puts "Unknown device type"
+        end
+      end
       @device= Device.create(create_parameters)
     end
 
