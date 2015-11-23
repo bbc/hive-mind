@@ -1,17 +1,18 @@
 <div class="card card-brand card-brand-<%=brand.name.downcase-%> panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12"
      href=<%=card_link-%> >                                                            
   <div class="panel-body">
+    <span class="badge pull-right"><%= brand.device_count -%></span>
     <h1><%= brand.name -%></h1>
     <% if size != :condensed %>
     <% if brand.code %>
     <p class="lead"><code><%= brand.code -%></code></p>
     <% end %>
     <p><%= brand.models.count -%> associated models</p>
-    <div class="btn-group">
-      <button class="btn btn-sm btn-default"><%= link_to 'Show', brand_path(brand) %></button>
-      <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_brand_path(brand) %></button>
-      <button class="btn btn-sm btn-default"><%= link_to 'Delete', brand, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+    
+    <div class="card-buttons pull-right">
+      <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_brand_path(brand) %>
     </div>
+
     <% end %>
   </div>
 </div>

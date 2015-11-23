@@ -14,13 +14,14 @@
 }
 
 .card h1,
-.card h2 {
+.card h2,
+.card h3,
+.card h4 {
   margin: 0px;
 }
 
 
 .card-model { background-color: rgb(210,210,210); }
-.card-device { background-color: rgb(240,240,240); }
 .card-device-type { background-color: rgb(210,230,230); }
 
 .card-mobile { background: url('/assets/mobile_pale.png'); }
@@ -30,6 +31,11 @@
 .card-brand-apple { background: url('/assets/brand_apple.png');}
 .card-brand-amazon { background: url('/assets/brand_amazon.png');}
 .card-brand-panasonic { background: url('/assets/brand_panasonic.png');}
+
+.card-device {
+  background-color: rgb(30,30,30);
+  color: white;
+}
 
 
 .card-brand {
@@ -53,3 +59,6 @@ li.list-group-item {
   padding-bottom: 2px;
 }
 
+
+.card-buttons {
+}

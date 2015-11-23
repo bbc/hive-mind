@@ -6,4 +6,8 @@ class Model < ActiveRecord::Base
   def all_groups
     devices.collect { |d| d.groups }.flatten.uniq
   end
+  
+  def device_count
+    devices.count
+  end
 end
