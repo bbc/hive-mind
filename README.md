@@ -12,7 +12,7 @@ cd hive_mind_mydevice
 **Optional:** To use rspec for unit tests see the section below.
 
 Ensure that the tables created for the engine are correctly namespaced by
-editing `lib/hive\_mind\_mydevice/engine.rb`:
+editing `lib/hive_mind_mydevice/engine.rb`:
 
 ```
 module HiveMindMydevice
@@ -28,7 +28,7 @@ Create a new model `Plugin` with relevant attributes:
 rails generate model plugin <attributes>
 ```
 
-Modify the `app/model/hive\_mind\_mydevice/plugin.rb` model:
+Modify the `app/model/hive_mind_mydevice/plugin.rb` model:
 
 ```
 module HiveMindMydevice
@@ -58,13 +58,13 @@ To use rspec for unit tests add `--skip-test-unit` to the
 rails plugin new hive_mind_mydevice --full --dummy-path=spec/dummy --skip-test-unit
 ```
 
-Then add the following line to the file `hive\_mind\_mydevice.gemspec`:
+Then add the following line to the file `hive_mind_mydevice.gemspec`:
 
 ```
 s.add_development_dependency 'rspec-rails'
 ```
 
-Edit the `lib/hive\_mind\_mydevice/engine.rb` file to include rspec:
+Edit the `lib/hive_mind_mydevice/engine.rb` file to include rspec:
 
 ```
 module HiveMindMydevice
@@ -83,7 +83,7 @@ bundle install
 rails generate rails:install
 ```
 
-Finally, edit the `spec/rails\_helper.rb` file to find the environment for the
+Finally, edit the `spec/rails_helper.rb` file to find the environment for the
 dummy Rails:
 
 ```
