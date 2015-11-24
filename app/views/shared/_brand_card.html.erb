@@ -4,7 +4,7 @@
     <span class="badge pull-right"><%= brand.device_count -%></span>
     <h1><%= brand.name -%></h1>
     <% if size != :condensed %>
-    <% if brand.code %>
+    <% if brand.code && brand.code != '' %>
     <p class="lead"><code><%= brand.code -%></code></p>
     <% end %>
     <p><%= brand.models.count -%> associated models</p>

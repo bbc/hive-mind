@@ -11,15 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :classification %><br>
-    <%= f.text_field :classification %>
+  <div class="field form-group row">
+    <%= f.label :classification, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field( :classification, class: 'form-control' ) %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_area :description %>
+  <div class="field form-group row">
+    <%= f.label :description, class: 'col-sm-2 form-control-label' %><br>
+    <div class="col-sm-10">
+      <%= f.text_area( :description, class: 'form-control' ) %>
+    </div>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit( class: 'btn btn-default') %>
   </div>
 <% end %>
