@@ -36,7 +36,15 @@ class Api::DevicesController < ApplicationController
       if params[:device].has_key?(:device_type)
         begin
           obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-          create_parameters[:plugin] = obj.create(obj.plugin_params(params[:device]))
+
+          # Filter parameters for plugin
+          #   id removed (this is the id in Device)
+          #   plugin_id -> id
+          filtered_params = params[:device].clone
+          filtered_params.delete(:id)
+          filtered_params[:id] = filtered_params[:plugin_id] if filtered_params.has_key?(:plugin_id)
+
+          create_parameters[:plugin] = obj.create(obj.plugin_params(filtered_params))
           create_parameters[:name] ||= create_parameters[:plugin].name
         rescue NameError
           puts "Unknown device type"

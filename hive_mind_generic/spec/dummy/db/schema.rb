@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124110840) do
+ActiveRecord::Schema.define(version: 20151125093113) do
+
+  create_table "hive_mind_generic_characteristics", force: :cascade do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "plugin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "hive_mind_generic_plugins", force: :cascade do |t|
     t.datetime "created_at", null: false
