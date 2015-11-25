@@ -18,4 +18,8 @@ class Device < ActiveRecord::Base
   def device_type
     self.model and self.model.device_type.classification
   end
+  
+  def status
+    :unknown
+  end
 end

@@ -1,14 +1,16 @@
 <div class="card card-device-type card-<%=device_type.classification.downcase-%> panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12"
      href="<%= card_link -%>" >
   <div class="panel-body">
+    <span class="badge pull-right"><%= device_type.device_count -%></span>
     <h1><%= device_type.classification -%></h1>
     <% if size != :condensed %>
       <br />
       <p><%= device_type.description -%></p>
-      <div class="btn-group btn-group-small">
-        <button class="btn btn-sm btn-default"><%= link_to 'Show', device_type_path(device_type.id) %></button>
-        <button class="btn btn-sm btn-default"><%= link_to 'Edit', edit_brand_path(device_type) %></button>
+      
+      <div class="card-buttons pull-right">
+        <%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_device_type_path(device_type) ) %>
       </div>
+
     <% end %>
   </div>
 </div>

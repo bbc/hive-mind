@@ -1,12 +1,6 @@
 class ModelsController < ApplicationController
   before_action :set_model, only: [:show, :edit, :update, :destroy]
 
-  # GET /models
-  # GET /models.json
-  def index
-    @models = Model.all.order(:brand_id)
-  end
-
   # GET /models/1
   # GET /models/1.json
   def show
@@ -29,7 +23,7 @@ class ModelsController < ApplicationController
 
   # GET /models/new
   def new
-    @model = Model.new
+    @model = Model.new(brand_id: params[:brand], device_type_id: params[:device_type])
   end
 
   # GET /models/1/edit
@@ -43,7 +37,7 @@ class ModelsController < ApplicationController
 
     respond_to do |format|
       if @model.save
-        format.html { redirect_to @model, notice: 'Model was successfully created.' }
+        format.html { redirect_to models_url( brand: @model.brand, device_type: @model.device_type ), notice: 'Model was successfully created.' }
         format.json { render :show, status: :created, location: @model }
       else
         format.html { render :new }
@@ -84,6 +78,6 @@ class ModelsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def model_params
-      params.require(:model).permit(:name, :code, :alternative, :brand_id)
+      params.require(:model).permit(:name, :code, :alternative, :brand_id, :device_type_id)
     end
 end

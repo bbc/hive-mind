@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<% if @device_type %>
 <div class="row">
-  <% if @device_type %>
   <%= render("shared/device_type_card", device_type: @device_type, size: :condensed, card_link: '/browse?' ) -%>
-  <% end %>
+  <%= render("shared/hidden_cards", card_type: 'device-type') -%>
 </div>
+<% end %>
 <div class="row">
   <%= render("shared/brand_card", brand: @brand, size: :condensed, card_link: brands_path( device_type: @device_type) ) -%>
+  <%= render("shared/hidden_cards", card_type: :brand) -%>
 </div>
 
 
@@ -14,6 +16,7 @@
   <% @brand.models.each do |model| %>
     <%= render("shared/model_card", model: model, size: :full, card_link: model_path(model.id, device_type: @device_type, brand: @brand) )  -%>
   <% end %>
+<%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_model_path( brand: @brand, device_type: @device_type) ) %>
 </div>
 
 <br />
@@ -30,5 +33,8 @@
 
 <script>
   add_links_to_cards();
+  equalize_card_heights('.card-device-type');
   equalize_card_heights('.card-device');
+  equalize_card_heights('.card-brand');
+  equalize_card_heights('.card-model');
 </script>
