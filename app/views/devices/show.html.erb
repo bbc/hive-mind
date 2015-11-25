@@ -1,31 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @device.name %>
-</p>
-
-<p>
-  <strong>Serial:</strong>
-  <%= @device.serial %>
-</p>
-
-<p>
-  <strong>Asset:</strong>
-  <%= @device.asset_id %>
-</p>
-
-<p>
-  <strong>Alternative:</strong>
-  <%= @device.alternative %>
-</p>
-
-<p>
-  <strong>Model:</strong>
-  <%= @device.model.name %>
-</p>
+<div class="row">
+<%= render("shared/device_card", device: @device, size: :condensed, card_link: '' ) -%>  
+</div>
 
 
 
-<%= link_to 'Edit', edit_device_path(@device) %> |
-<%= link_to 'Back', devices_path %>
+
+<div class="row">
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="active"><a href="#info" role="tab" data-toggle="tab">Details</a></li>
+  <li><a href="#logs" role="tab" data-toggle="tab">Logs</a></li>
+  <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="info">
+  </div>
+</div>
+
+
+
+
+  <ul class="list-unstyled">
+  <% @device.groups.each do |group| %>
+  <li><%= group.name %>: <strong><%= group.value %></strong></li>
+  <% end %>
+  </li>
+  </ul>
+</div>
+
+<div class="row">
+<%= link_to 'Edit', edit_device_path(@device) %>
+</div>

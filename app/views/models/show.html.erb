@@ -1,19 +1,32 @@
 <p id="notice"><%= notice %></p>
 
+<% if @device_type %>
 <div class="row">
-  <% if @device_type %>
   <%= render("shared/device_type_card", device_type: @device_type, size: :condensed, card_link: '/browse?' ) -%>
-  <% end %>
+  <%= render("shared/hidden_cards", card_type: 'device-type') -%>
 </div>
+<% end %>
+
+<% if @brand %>
 <div class="row">
   <%= render("shared/brand_card", brand: @brand, size: :condensed, card_link: brands_path( device_type: @device_type) ) -%>
+  <%= render("shared/hidden_cards", card_type: 'brand') -%>
 </div>
 <div class="row">
   <%= render("shared/model_card", model: @model, size: :condensed, card_link: brand_path( @brand, device_type: @device_type ) ) -%>
+  <%= render("shared/hidden_cards", card_type: 'model') -%>
+  <div class="pull-right">
+  <%= link_to raw('<button class="btn btn-default">Edit <span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_model_path(@model.id) %>
+  </div>
 </div>
+<% else %>
+  <%= render("shared/model_card", model: @model, size: :condensed, card_link: '' ) -%>
+  <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_model_path(@model.id) %>
+<% end %>
+
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-8 col-sm-6">
     <% if @group %>
       <h2><%= @group.name -%>: <%= @group.value -%></h2>
       <p class="lead"><%= @group.description %></p>
@@ -21,14 +34,16 @@
       <p class="lead">All <%= @model.name -%> devices</p>      
     <% end %>
   </div>
+  
 
-  <div class="col-md-4">
+
+  <div class="col-md-4 col-sm-6">
   <ul class="list-unstyled list-group">
   <% @model.all_groups.group_by{ |group| group.name }.each do |name, groups| %>
-    <li class="list-group-item"><strong><%= name -%></strong> <%= link_to( "(All)", model_path(@model.id, brand: @brand.id, device_type: @device_type.id, card_link: '' )) -%></li>
+    <li class="list-group-item"><strong><%= name -%></strong> <%= link_to( "(All)", model_path(@model, brand: @brand, device_type: @device_type, card_link: '' )) -%></li>
     <ul class="list-unstyled list-group  card-control">
     <% groups.each do |group| %>
-    <li class="list-group-item"><%= link_to( group.value, model_path( @model.id, group: group.id, brand: @brand.id, device_type: @device_type.id, card_link: '') ) -%></li>
+    <li class="list-group-item"><%= link_to( group.value, model_path( @model, group: group.id, brand: @brand, device_type: @device_type, card_link: '') ) -%></li>
     <% end %>
   </ul>
 
@@ -47,10 +62,10 @@
 </div>
   
 
-<%= link_to 'Edit', edit_model_path(@model) %> |
-<%= link_to 'Back', models_path %>
-
 <script>
   add_links_to_cards();
+  equalize_card_heights('.card-device-type');
+  equalize_card_heights('.card-brand');
   equalize_card_heights('.card-device');
+  equalize_card_heights('.card-model');
 </script>

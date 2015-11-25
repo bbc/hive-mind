@@ -7,7 +7,6 @@ class BrandsController < ApplicationController
     @brands = Brand.all
     if params[:device_type] && params[:device_type] != ''
       @device_type = DeviceType.find(params[:device_type].to_i)
-      
       @brands = @brands.select { |b| b.models.collect { |m| m.device_type }.include? @device_type }
     end
   end
@@ -37,7 +36,7 @@ class BrandsController < ApplicationController
 
     respond_to do |format|
       if @brand.save
-        format.html { redirect_to @brand, notice: 'Brand was successfully created.' }
+        format.html { redirect_to brands_url, notice: 'Brand was successfully created.' }
         format.json { render :show, status: :created, location: @brand }
       else
         format.html { render :new }

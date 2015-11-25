@@ -1,17 +1,7 @@
 class DeviceTypesController < ApplicationController
   before_action :set_device_type, only: [:show, :edit, :update, :destroy]
 
-  # GET /device_types
-  # GET /device_types.json
-  def index
-    @device_types = DeviceType.all
-  end
-
-  # GET /device_types/1
-  # GET /device_types/1.json
-  def show
-  end
-  
+  # GET /browse
   def browse
     @device_types = DeviceType.all
   end
