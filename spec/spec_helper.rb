@@ -92,4 +92,3 @@ RSpec.configure do |config|
 end
 
 $LOAD_PATH << File.expand_path('../lib', __FILE__)
-require 'hive_mind_mock'

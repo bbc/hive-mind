@@ -78,9 +78,10 @@ RSpec.describe Api::DevicesController, type: :controller do
 
     context 'known device type' do
       let(:known_device_type) {
-        skip 'Mock broken'
         {
-          device_type: :mock,
+          model: :test_model,
+          brand: :test_brand,
+          device_type: :generic,
           name: 'Known device',
           extra_data_one: 'Data one',
           extra_data_two: 2
@@ -88,16 +89,18 @@ RSpec.describe Api::DevicesController, type: :controller do
       }
 
       let(:device_without_name) {
-        skip 'Mock broken'
         {
-          device_type: :mock
+          model: :test_model,
+          brand: :test_brand,
+          device_type: :generic
         }
       }
 
       let(:device_with_name) {
-        skip 'Mock broken'
         {
-          device_type: :mock,
+          model: :test_model,
+          brand: :test_brand,
+          device_type: :generic,
           name: 'User defined device name'
         }
       }
@@ -110,24 +113,20 @@ RSpec.describe Api::DevicesController, type: :controller do
 
       it 'sets the device type' do
         post :register, {device: known_device_type}, valid_session
-        expect(Device.last.device_type).to eq 'mock'
-      end
-
-      it 'sets the device data id' do
-        post :register, {device: known_device_type}, valid_session
-        expect(Device.last.device_data_id).to_not be_nil
+        expect(Device.last.device_type).to eq 'generic'
       end
 
       it 'passes through attributes' do
         post :register, {device: known_device_type}, valid_session
-        expect(HiveMindMock.data_set[0]).to be_truthy
-        expect(HiveMindMock.data_set[1]).to be_truthy
-        expect(HiveMindMock.data_set[2]).to be_falsy
+        plugin = Device.last.plugin
+        expect(plugin.details['extra_data_one']).to eq 'Data one'
+        expect(plugin.details['extra_data_two']).to eq '2'
+        expect(plugin.details['extra_data_three']).to be_nil
       end
 
       it 'generates a name from engine' do
         post :register, {device: device_without_name}, valid_session
-        expect(Device.last.name).to eq 'Mock device name'
+        expect(Device.last.name).to_not be_nil
       end
 
       it 'overrides name set by engine' do

@@ -45,3 +45,4 @@ group :development do
 end
 
 gem 'hive_mind_hive', path: 'hive_mind_hive'
+gem 'hive_mind_generic', path: 'hive_mind_generic'
