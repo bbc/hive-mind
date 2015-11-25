@@ -10,15 +10,14 @@ class Api::DevicesController < ApplicationController
     create_parameters[:ips] ||= []
     create_parameters[:ips] = create_parameters[:ips].map{|i| Ip.find_or_create_by(ip: i)}
 
-    # Uniquely identify by (first) MAC address
-    device_id = nil
+    # Find device if it already exists
     if create_parameters[:macs]
       create_parameters[:macs] = create_parameters[:macs].map do |m|
         mac = Mac.find_or_create_by(mac: m)
-        device_id ||= mac.device_id
-        mac
       end
     end
+    @device = Device.identify_existing(params[:device].merge(create_parameters))
+    device_id = @device ? @device.id : nil
 
     device_type = params[:device][:device_type] || 'unknown'
     if params[:device][:brand] and params[:device][:model]
@@ -36,7 +35,6 @@ class Api::DevicesController < ApplicationController
       if params[:device].has_key?(:device_type)
         begin
           obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
-
           # Filter parameters for plugin
           #   id removed (this is the id in Device)
           #   plugin_id -> id
