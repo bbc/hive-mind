@@ -14,4 +14,8 @@ class Device < ActiveRecord::Base
   def ip_addresses
     self.ips.map { |i| i.ip }
   end
+
+  def device_type
+    self.model and self.model.device_type.classification
+  end
 end
