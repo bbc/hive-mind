@@ -1,4 +1,10 @@
 PATH
+  remote: hive_mind_generic
+  specs:
+    hive_mind_generic (0.0.1)
+      rails (~> 4.2.4)
+
+PATH
   remote: hive_mind_hive
   specs:
     hive_mind_hive (0.0.1)
@@ -166,6 +172,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   byebug
+  hive_mind_generic!
   hive_mind_hive!
   jbuilder (~> 2.0)
   jquery-rails

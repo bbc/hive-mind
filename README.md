@@ -11,13 +11,22 @@ cd hive_mind_mydevice
 
 **Optional:** To use rspec for unit tests see the section below.
 
-Ensure that the tables created for the engine are correctly namespaced by
+Ensure that the tables created for the engine are correctly namespaced
+and make the migrations visible to the application by
 editing `lib/hive_mind_mydevice/engine.rb`:
 
 ```
 module HiveMindMydevice
   class Engine < ::Rails::Engine
     isolate_namespace HiveMindMydevice
+
+    initializer :append_migrations do |app|
+      unless app.root.to_s.match root.to_s
+        config.paths['db/migrate'].expanded.each do |expanded_path|
+          app.config.paths['db/migrate'] << expanded_path
+        end
+      end
+    end
   end
 end
 ```
