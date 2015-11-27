@@ -260,5 +260,60 @@ RSpec.describe Api::DevicesController, type: :controller do
         }.to change(Model, :count).by(1)
       end
     end
+
+    context 'plugin with device identifier method' do
+      let(:device) {
+        {
+          name: 'Device',
+          model: 'Model',
+          brand: 'Brand',
+          device_type: 'Controllermockone',
+        }
+      }
+
+      module HiveMindControllermockone
+        class Plugin < HiveMindGeneric::Plugin
+          def self.identify_existing options = {}
+            if identifier = HiveMindGeneric::Characteristic.find_by(key: 'id_key', value: options[:id_key])
+              identifier.plugin.device
+            else
+              nil
+            end
+          end
+        end
+      end
+
+      it 'identifies device based on plugin identifier method' do
+        post :register, {device: device.merge(
+                                   id_key: '12468',
+                                   macs: ['aa:aa:aa:aa:aa:01']
+                                 )}, valid_session
+        expect {
+          post :register, {device: device.merge(
+                                     id_key: '12468',
+                                     macs: ['aa:aa:aa:aa:aa:02']
+                                   )}, valid_session
+        }.to change(Device, :count).by(0)
+      end
+
+      it 'creates new device with different unique identifier' do
+        post :register, {device: device.merge(
+                                   id_key: '12468',
+                                   macs: ['aa:aa:aa:aa:aa:01']
+                                 )}, valid_session
+        expect {
+          post :register, {device: device.merge(
+                                   id_key: '12469',
+                                   macs: ['aa:aa:aa:aa:aa:02']
+                                 )}, valid_session
+        }.to change(Device, :count).by(1)
+        expect {
+          post :register, {device: device.merge(
+                                   id_key: '12470',
+                                   macs: ['aa:aa:aa:aa:aa:01']
+                                 )}, valid_session
+        }.to change(Device, :count).by(1)
+      end
+    end
   end
 end
