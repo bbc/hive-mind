@@ -150,4 +150,51 @@ RSpec.describe Device, type: :model do
       expect(Device.identify_existing(name: 'New name', macs: [ mac2 ], device_type: 'mockthree')).to be_nil
     end
   end
+
+  describe '#details' do
+    module HiveMindMockwithdetails
+      class Plugin < HiveMindGeneric::Plugin
+        def details
+          {
+            'key1' => 'value1',
+            'key2' => 'value2',
+          }
+        end
+      end
+    end
+    let(:plugin1) {
+      HiveMindMockwithdetails::Plugin.create()
+    }
+
+    let(:device) {
+      Device.create(
+        name: 'Test device',
+        macs: [Mac.create(mac: 'aa:bb:cc:dd:ee:01'), Mac.create(mac: 'aa:bb:cc:dd:ee:02'), Mac.create(mac: 'aa:bb:cc:dd:ee:03')],
+        ips: [Ip.create(ip: '10.10.10.1'), Ip.create(ip: '192.168.99.99'), Ip.create(ip: '8.8.8.8')],
+        plugin: plugin1
+      )
+    }
+
+    it 'returns an hash' do
+      expect(device.details).to be_a Hash
+    end
+
+    it 'returns a list of MAC addresses' do
+      expect(device.details[:macs]).to match_array(
+        [ 'aa:bb:cc:dd:ee:01', 'aa:bb:cc:dd:ee:02', 'aa:bb:cc:dd:ee:03' ]
+      )
+    end
+
+    it 'returns a list of IP addresses' do
+      expect(device.details[:ips]).to match_array(
+        [ '10.10.10.1', '192.168.99.99', '8.8.8.8' ]
+      )
+    end
+
+    it 'returns details from the plugin' do
+      expect(device.details).to include(
+        'key1' => 'value1', 'key2' => 'value2'
+      )
+    end
+  end
 end

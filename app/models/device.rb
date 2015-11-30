@@ -15,6 +15,14 @@ class Device < ActiveRecord::Base
     self.ips.map { |i| i.ip }
   end
 
+  def details
+    details = ( self.plugin && self.plugin.methods.include?(:details) ) ? self.plugin.details : {}
+    {
+      macs: mac_addresses,
+      ips: ip_addresses
+    }.merge(details)
+  end
+
   def device_type
     self.model and self.model.device_type.classification
   end
