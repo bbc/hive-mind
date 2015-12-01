@@ -4,9 +4,9 @@ module HiveMindHive
     has_many :runner_version_history
 
     def self.create(*args)
-      if args[0].keys.include? :version
-        version = args[0][:version]
-        args[0].delete(:version)
+      if args[0].keys.include? 'version'
+        version = args[0]['version']
+        args[0].delete('version')
       end
 
       hive = super(*args)
