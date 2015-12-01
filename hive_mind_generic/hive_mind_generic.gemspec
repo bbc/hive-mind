@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = HiveMindGeneric::VERSION
   s.authors     = ["Joe Haig"]
   s.email       = ["joe.haig@bbc.co.uk"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of HiveMindGeneric."
-  s.description = "TODO: Description of HiveMindGeneric."
+  s.homepage    = "http://github.com/bbc/hive_mind"
+  s.summary     = "Generic plugin for Hive Mind"
+  s.description = "Example plugin for a generic device in Hive Mind"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
