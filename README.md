@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/bbc/hive_mind.png?label=ready&title=Ready)](https://waffle.io/bbc/hive_mind)
 # Hive Mind
 
 ## Device Engines
