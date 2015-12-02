@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125093113) do
+ActiveRecord::Schema.define(version: 20151201094840) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -70,6 +70,21 @@ ActiveRecord::Schema.define(version: 20151125093113) do
 
   create_table "hive_mind_hive_plugins", force: :cascade do |t|
     t.string   "hostname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_hive_runner_version_histories", force: :cascade do |t|
+    t.integer  "plugin_id"
+    t.integer  "runner_version_id"
+    t.datetime "start_timestamp"
+    t.datetime "end_timestamp"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "hive_mind_hive_runner_versions", force: :cascade do |t|
+    t.string   "version"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
