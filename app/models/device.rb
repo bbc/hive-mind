@@ -1,7 +1,7 @@
 class Device < ActiveRecord::Base
   belongs_to :model
-  has_many :macs
-  has_many :ips
+  has_many :macs, dependent: :delete_all
+  has_many :ips, dependent: :delete_all
   has_and_belongs_to_many :groups
   belongs_to :plugin, polymorphic: true
   

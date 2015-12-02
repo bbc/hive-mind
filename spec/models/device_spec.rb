@@ -197,4 +197,36 @@ RSpec.describe Device, type: :model do
       )
     end
   end
+
+  describe 'database constraints' do
+    let(:device) {
+      Device.create(
+        name: 'Test device',
+        macs: [Mac.create(mac: 'aa:bb:cc:dd:ee:01'), Mac.create(mac: 'aa:bb:cc:dd:ee:02'), Mac.create(mac: 'aa:bb:cc:dd:ee:03')],
+        ips: [Ip.create(ip: '10.10.10.1'), Ip.create(ip: '192.168.99.99'), Ip.create(ip: '8.8.8.8')]
+      )
+    }
+
+    before(:each) do
+      # 'let' is lazy-evaluated.
+      # Without this save the expects will get the count wrong.
+      device.save
+    end
+
+    it 'deletes IP address when a device is deleted' do
+      expect{device.destroy}.to change(Ip, :count).by -3
+      expect(Ip.where(ip: [
+        '10.10.10.1',
+        '192.168.99.99',
+        '8.8.8.8'])).to eq []
+    end
+
+    it 'deletes MAC address when a device is deleted' do
+      expect{device.destroy}.to change(Mac, :count).by -3
+      expect(Mac.where(mac: [
+        'aa:bb:cc:dd:ee:01',
+        'aa:bb:cc:dd:ee:02',
+        'aa:bb:cc:dd:ee:03'])).to eq []
+    end
+  end
 end
