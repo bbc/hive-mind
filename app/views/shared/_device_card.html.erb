@@ -13,6 +13,9 @@
         <p class="lead"><code><%= device.serial -%></code></p>
 
         <% if size == :full %>
+        <% if device.plugin %>
+        <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
+        <% end %>
         <p>
           <ul class="list-unstyled">
           <% device.groups.each do |group| %>
