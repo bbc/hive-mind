@@ -14,7 +14,7 @@
 
         <% if size == :full %>
         <% if device.plugin %>
-        <%= render("shared/#{device.device_type.downcase}_plugin_card", device: device) rescue nil -%>
+        <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
         <% end %>
         <p>
           <ul class="list-unstyled">

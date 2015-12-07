@@ -5,8 +5,8 @@ module HiveMindHive
     describe '#create' do
       it 'sets the version of the hive' do
         expect(Plugin.create(
-          hostname: 'test_host_name',
-          version: '2.3.4'
+          'hostname' => 'test_host_name',
+          'version' => '2.3.4'
         ).version).to eq '2.3.4'
       end
     end
@@ -14,8 +14,8 @@ module HiveMindHive
     describe '#update' do
       it 'updates the version of the hive' do
         hive = Plugin.create(
-          hostname: 'test_host_name',
-          version: '2.3.4'
+          'hostname' => 'test_host_name',
+          'version' => '2.3.4'
         )
         hive.update(version: '2.3.5')
         expect(hive.version).to eq '2.3.5'
