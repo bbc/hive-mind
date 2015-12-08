@@ -1,3 +1,9 @@
 <ul>
-  <li>Version: <%= device.plugin.version %></li>
+  <li>Version: <%= device.plugin.version -%></li>
+  <li>Plugins:
+  <ul>
+  <% device.plugin.runner_plugins.each_pair do |p, v| %>
+    <li><%= p -%> (<%= v -%>)</li>
+  <% end %>
+  </ul>
 </ul>
