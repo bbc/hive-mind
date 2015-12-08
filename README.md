@@ -89,7 +89,7 @@ Set up rspec with:
 
 ```
 bundle install
-rails generate rails:install
+rails generate rspec:install
 ```
 
 Finally, edit the `spec/rails_helper.rb` file to find the environment for the
