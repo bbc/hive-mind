@@ -76,7 +76,7 @@ module HiveMindHive
     end
 
     def self.plugin_params params
-      params.permit(:hostname, :version)
+      params.permit(:hostname, :version, runner_plugins: {})
     end
   end
 end
