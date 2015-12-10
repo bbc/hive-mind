@@ -5,17 +5,12 @@ module HiveMindHive
     has_many :runner_plugin_version_history
 
     def self.create(*args)
-      special = {}
-      ['version', 'runner_plugins'].each do |key|
-        if args[0].keys.include? key
-          special[key] = args[0][key]
-          args[0].delete(key)
-        end
-      end
+      copy = args[0].clone
+      args[0] = copy.permit(:hostname)
 
       hive = super(*args)
-      hive.update_version(special['version']) if special.has_key?('version')
-      hive.update_runner_plugins(special['runner_plugins']) if special.has_key?('runner_plugins')
+      hive.update_version(copy['version']) if copy.has_key?('version')
+      hive.update_runner_plugins(copy['runner_plugins']) if copy.has_key?('runner_plugins')
       hive
     end
 
@@ -76,7 +71,7 @@ module HiveMindHive
     end
 
     def self.plugin_params params
-      params.permit(:hostname, :version, runner_plugins: {})
+      params.permit(:hostname, :version).merge(params.select { |key, value| key.to_s.match(/^runner_plugins$/) })
     end
   end
 end
