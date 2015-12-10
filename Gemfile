@@ -18,7 +18,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'omniauth'
 
-group :development, :test do
+group :development, :test, :integration do
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.3'
 end
@@ -26,4 +26,9 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+end
+
+group :integration do
+  gem 'hive_mind_mobile', git: 'git@github.com:bbc/hive_mind_mobile'
+  #gem 'hive_mind_mobile', path: '../hive_mind_mobile'
 end

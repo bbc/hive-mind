@@ -99,6 +99,17 @@ dummy Rails:
 require File.expand_path('../dummy/config/environment', __FILE__)
 ```
 
+## Testing
+
+To execute the integration tests run:
+
+```
+RAILS_ENV=integration rspec spec_integration
+```
+
+Note that you may need to edit `Gemfile` to include the correct version of the
+plugin being tested.
+
 ## License
 
 Hive Mind is available to everyone under the terms of the MIT open source licence.

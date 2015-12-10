@@ -1,3 +1,10 @@
+GIT
+  remote: git@github.com:bbc/hive_mind_mobile
+  revision: 2dd6257d801dec7eb9ed8a8941a9a19127ec12b2
+  specs:
+    hive_mind_mobile (0.0.1)
+      rails (~> 4.2.4)
+
 PATH
   remote: hive_mind_generic
   specs:
@@ -185,6 +192,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   hive_mind_generic!
   hive_mind_hive!
+  hive_mind_mobile!
   jbuilder (~> 2.0)
   jquery-rails
   omniauth
