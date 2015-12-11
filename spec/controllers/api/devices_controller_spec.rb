@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'timecop'
 
 RSpec.describe Api::DevicesController, type: :controller do
   let(:valid_attributes) {
@@ -49,6 +50,13 @@ RSpec.describe Api::DevicesController, type: :controller do
       expect {
         post :register, {device: device_with_mac1}, valid_session
       }.to change(Device, :count).by(0)
+    end
+
+    it 'sets the heartbeat' do
+      post :register, {device: valid_attributes}, valid_session
+      Timecop.freeze(Time.now + 30) do
+        expect(Device.last.seconds_since_heartbeat).to eq 30
+      end
     end
 
     context 'unknown device type' do
@@ -314,6 +322,53 @@ RSpec.describe Api::DevicesController, type: :controller do
                                  )}, valid_session
         }.to change(Device, :count).by(1)
       end
+    end
+  end
+
+  describe 'PUT #poll' do
+    let(:device) { Device.create(name: 'Test device') }
+    let(:reporting_device) { Device.create(name: 'Reporting device') }
+
+    it 'adds a heartbeat for a known device' do
+      expect {
+        put :poll, { poll: { id: device.id } }
+      }.to change(Heartbeat, :count).by(1)
+    end
+
+    it 'sets the heartbeat for the correct device' do
+      put :poll, { poll: { id: device.id } }
+      expect(Heartbeat.last.device).to eq device
+    end
+
+    it 'sets the reporting device for a self reporting device' do
+      put :poll, { poll: { id: device.id } }
+      expect(Heartbeat.last.reporting_device).to eq device
+    end
+
+    it 'sets the device of a hearbeat when reported by a different device' do
+      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      expect(Heartbeat.last.device).to eq device
+    end
+
+    it 'sets the reporting device as different from the device' do
+      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      expect(Heartbeat.last.reporting_device).to eq reporting_device
+    end
+
+    it 'fails to set a heartbeat for an unknown device' do
+      expect {
+        put :poll, { poll: { id: -1 } }
+      }.to change(Heartbeat, :count).by(0)
+    end
+
+    it 'report an unknown device correctly' do
+      put :poll, { poll: { id: -1 } }
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'report an unknown reporting device correctly' do
+      put :poll, { poll: { id: device.id, reporting_device_id: -1 } }
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

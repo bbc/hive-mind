@@ -4,6 +4,7 @@ class Device < ActiveRecord::Base
   has_many :ips, dependent: :delete_all
   has_and_belongs_to_many :groups
   belongs_to :plugin, polymorphic: true
+  has_many :heartbeats, dependent: :delete_all
   
   accepts_nested_attributes_for :groups
 
@@ -29,6 +30,17 @@ class Device < ActiveRecord::Base
   
   def status
     :unknown
+  end
+
+  def heartbeat options = {}
+    Heartbeat.create(
+      device: self,
+      reporting_device: (options.has_key?(:reported_by) ? options[:reported_by] : self)
+    )
+  end
+
+  def seconds_since_heartbeat
+    (Time.now - self.heartbeats.last.created_at).to_i if self.heartbeats.length > 0
   end
 
   def self.identify_existing options = {}

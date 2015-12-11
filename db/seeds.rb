@@ -1,3 +1,5 @@
+require 'timecop'
+
 DeviceType.find_or_create_by(classification: 'TV')
 DeviceType.find_or_create_by(classification: 'Hive')
 
@@ -24,8 +26,25 @@ end
 register_devices(device_type, brand, devices)
 
 # Add a couple of iPad 4s
-Device.find_or_create_by(model: Model.where(name: 'iPad Mini 4').first, name: 'iPad Mini 4', serial: 'abcdefghij', asset_id: '12345') { |a| a.groups = [Group.where(value: 'A1550').first, Group.where(value: 'MK892').first] }
-Device.find_or_create_by(model: Model.where(name: 'iPad Mini 4').first, name: 'iPad Mini 4(ii)', serial: 'abcdefghik', asset_id: '54321') { |a| a.groups = [Group.where(value: 'A1538').first, Group.where(value: 'MK9N2').first] }
+d1 = Device.find_or_create_by(model: Model.where(name: 'iPad Mini 4').first, name: 'iPad Mini 4', serial: 'abcdefghij', asset_id: '12345') { |a| a.groups = [Group.where(value: 'A1550').first, Group.where(value: 'MK892').first] }
+d2 = Device.find_or_create_by(model: Model.where(name: 'iPad Mini 4').first, name: 'iPad Mini 4(ii)', serial: 'abcdefghik', asset_id: '54321') { |a| a.groups = [Group.where(value: 'A1538').first, Group.where(value: 'MK9N2').first] }
 
 # And a iPad 2
-Device.find_or_create_by(model: Model.where(name: 'iPad 2').first, name: 'iPad 2', serial: 'zyxwvutsr', asset_id: '11111') { |a| a.groups = [Group.where(value: 'A1396').first, Group.where(value: 'MC984').first] }
+d3 = Device.find_or_create_by(model: Model.where(name: 'iPad 2').first, name: 'iPad 2', serial: 'zyxwvutsr', asset_id: '11111') { |a| a.groups = [Group.where(value: 'A1396').first, Group.where(value: 'MC984').first] }
+
+# Some heartbeats
+[120, 90, 60, 30, 0].each do |t|
+  Timecop.freeze(Time.now - t) do
+    d1.heartbeat
+  end
+end
+[101, 3].each do |t|
+  Timecop.freeze(Time.now - t) do
+    d2.heartbeat
+  end
+end
+[999].each do |t|
+  Timecop.freeze(Time.now - t) do
+    d3.heartbeat
+  end
+end

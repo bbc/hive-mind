@@ -21,6 +21,7 @@ gem 'omniauth'
 group :development, :test, :integration do
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.3'
+  gem 'timecop'
 end
 
 group :development do
@@ -29,6 +30,6 @@ group :development do
 end
 
 group :integration do
-  gem 'hive_mind_mobile', git: 'git@github.com:bbc/hive_mind_mobile'
+  gem 'hive_mind_mobile', git: 'https://github.com/bbc/hive_mind_mobile'
   #gem 'hive_mind_mobile', path: '../hive_mind_mobile'
 end

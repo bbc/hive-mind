@@ -6,6 +6,8 @@
         <div class="pull-right">
         <span class="label label-default"><%= device.status -%></span>
         <br />
+        <span class="label label-primary">Last seen: <%= device.seconds_since_heartbeat or '?' -%> s</span>
+        <br />
         <span class="label label-primary"><%= device.asset_id -%></span>
         </div>
         <% end %>

@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'timecop'
 
 RSpec.describe Device, type: :model do
   describe '#mac_addresses' do
@@ -227,6 +228,49 @@ RSpec.describe Device, type: :model do
         'aa:bb:cc:dd:ee:01',
         'aa:bb:cc:dd:ee:02',
         'aa:bb:cc:dd:ee:03'])).to eq []
+    end
+  end
+
+  describe '#heartbeat' do
+    let(:device) { Device.create }
+    let(:reporting_device) { Device.create }
+
+    it 'sets a heartbeat' do
+      expect{ device.heartbeat }.to change(Heartbeat, :count).by 1
+      expect(Heartbeat.last.device).to eq device
+      expect(Heartbeat.last.reporting_device).to eq device
+    end
+
+    it 'sets a heartbeat reported by another device' do
+      expect{ device.heartbeat(reported_by: reporting_device) }.to change(Heartbeat, :count).by 1
+      expect(Heartbeat.last.device).to eq device
+      expect(Heartbeat.last.reporting_device).to eq reporting_device
+    end
+  end
+
+  describe '#seconds_since_heartbeat' do
+    let(:device) { Device.create }
+
+    it 'gets the number of seconds since heartbeat' do
+      device.heartbeat
+      Timecop.freeze(Time.now + 30) do
+        expect(device.seconds_since_heartbeat).to eq 30
+      end
+    end
+
+    it 'gets the number of seconds since the most recent heartbeat' do
+      Timecop.freeze(Time.now - 30) do
+        device.heartbeat
+      end
+      device.heartbeat
+      Timecop.freeze(Time.now + 30) do
+        expect(device.seconds_since_heartbeat).to eq 30
+      end
+    end
+
+    it 'returns nil for no heartbeat' do
+      device.save
+      expect(device.seconds_since_heartbeat).to be_nil
     end
   end
 end

@@ -52,9 +52,24 @@ class Api::DevicesController < ApplicationController
     end
 
     if @device.save
+      @device.heartbeat
       render json: @device, status: :created
     else
       render json: @device.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PUT /poll
+  def poll
+    @response = {}
+    begin
+      device = Device.find(params[:poll][:id])
+      args = {}
+      args[:reported_by] = Device.find(params[:poll][:reporting_device_id]) if params[:poll][:reporting_device_id].present?
+      device.heartbeat(args)
+      render json: @response, status: :success
+    rescue ActiveRecord::RecordNotFound
+      render json: {}, status: :not_found
     end
   end
 
