@@ -10,8 +10,10 @@
         </div>
         <% end %>
         <h2><%= device.name -%></h2>
+        <% if device.serial && device.serial != '' %>
         <p class="lead"><code><%= device.serial -%></code></p>
-
+        <% end %>
+        
         <% if size == :full %>
         <% if device.plugin %>
         <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
