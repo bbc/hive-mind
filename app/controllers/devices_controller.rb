@@ -6,6 +6,11 @@ class DevicesController < ApplicationController
   def index
     @devices = Device.all
   end
+  
+  def search
+    @search_string = params[:name_cont]
+    @devices = Device.search(params).result.distinct(:true)
+  end
 
   # GET /devices/1
   # GET /devices/1.json

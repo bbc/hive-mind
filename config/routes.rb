@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   get '/' => "device_types#browse"
+  get '/devices/search' => "devices#search"
   get 'browse' => "device_types#browse"
 
   resources :device_types
