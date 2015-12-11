@@ -18,8 +18,14 @@
         <li class="<%= "active" if controller_name == "brands" %>"><%= link_to 'Brands', brands_path %></li>
         <li class="<%= "active" if controller_name == "devices" %>"><%= link_to 'Devices', devices_path %></li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
-        <li><a>Not signed in</a></li>
+      <form class="navbar-form navbar-left" role="search" action='/devices/search'>
+        <div class="form-group">
+          <input type="text" name="name_cont" class="form-control" placeholder="Device name">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
       </ul>
     </div>
     <!-- /.navbar-collapse -->

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Searching for: <%= @search_string -%></h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Serial</th>
+      <th>Asset</th>
+      <th>Alternative</th>
+      <th>Model</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= device.name %></td>
+        <td><%= device.serial %></td>
+        <td><%= device.asset_id %></td>
+        <td><%= device.alternative %></td>
+        <td><%= device.model.name %></td>
+        <td><%= link_to 'Show', device %></td>
+        <td><%= link_to 'Edit', edit_device_path(device) %></td>
+        <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Device', new_device_path %>
