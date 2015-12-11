@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources :devices do
       collection do
         post 'register'
+        put 'poll'
       end
     end
   end
