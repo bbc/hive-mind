@@ -3,7 +3,7 @@
   <div class="panel-body">
     
     <span class="badge pull-right"><%= model.device_count -%></span>
-    <h2><%= model.name -%></h2>
+    <h2><%= link_to model.name, card_link -%></h2>
     <% if size != :condensed %>
   
     <% if model.code %>

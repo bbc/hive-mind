@@ -2,7 +2,7 @@
      href="<%= card_link -%>" >
   <div class="panel-body">
     <span class="badge pull-right"><%= device_type.device_count -%></span>
-    <h1><%= device_type.classification -%></h1>
+    <h1><%=link_to device_type.classification, card_link -%></h1>
     <% if size != :condensed %>
       <br />
       <p><%= device_type.description -%></p>
