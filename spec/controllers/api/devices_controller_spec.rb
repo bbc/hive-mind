@@ -346,12 +346,12 @@ RSpec.describe Api::DevicesController, type: :controller do
     end
 
     it 'sets the device of a hearbeat when reported by a different device' do
-      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      put :poll, { poll: { devices: [ device.id ], id: reporting_device.id } }
       expect(Heartbeat.last.device).to eq device
     end
 
     it 'sets the reporting device as different from the device' do
-      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      put :poll, { poll: { devices: [ device.id ], id: reporting_device.id } }
       expect(Heartbeat.last.reporting_device).to eq reporting_device
     end
 
@@ -367,7 +367,7 @@ RSpec.describe Api::DevicesController, type: :controller do
     end
 
     it 'report an unknown reporting device correctly' do
-      put :poll, { poll: { id: device.id, reporting_device_id: -1 } }
+      put :poll, { poll: { devices: [ device.id ], id: -1 } }
       expect(response).to have_http_status(:not_found)
     end
   end
