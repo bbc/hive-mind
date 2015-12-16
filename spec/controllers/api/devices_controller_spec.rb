@@ -327,6 +327,8 @@ RSpec.describe Api::DevicesController, type: :controller do
 
   describe 'PUT #poll' do
     let(:device) { Device.create(name: 'Test device') }
+    let(:device2) { Device.create(name: 'Test device 2') }
+    let(:device3) { Device.create(name: 'Test device 3') }
     let(:reporting_device) { Device.create(name: 'Reporting device') }
 
     it 'adds a heartbeat for a known device' do
@@ -346,13 +348,20 @@ RSpec.describe Api::DevicesController, type: :controller do
     end
 
     it 'sets the device of a hearbeat when reported by a different device' do
-      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      put :poll, { poll: { devices: [ device.id ], id: reporting_device.id } }
       expect(Heartbeat.last.device).to eq device
     end
 
     it 'sets the reporting device as different from the device' do
-      put :poll, { poll: { id: device.id, reporting_device_id: reporting_device.id } }
+      put :poll, { poll: { devices: [ device.id ], id: reporting_device.id } }
       expect(Heartbeat.last.reporting_device).to eq reporting_device
+    end
+
+    it 'polls multiple devices' do
+      expect {
+        put :poll, { poll: { devices: [ device.id, device2.id, device3.id ], id: reporting_device.id } }
+      }.to change(Heartbeat, :count).by(3)
+      expect(Heartbeat.last(3).map{ |h| h.device }).to match [ device, device2, device3 ]
     end
 
     it 'fails to set a heartbeat for an unknown device' do
@@ -367,7 +376,7 @@ RSpec.describe Api::DevicesController, type: :controller do
     end
 
     it 'report an unknown reporting device correctly' do
-      put :poll, { poll: { id: device.id, reporting_device_id: -1 } }
+      put :poll, { poll: { devices: [ device.id ], id: -1 } }
       expect(response).to have_http_status(:not_found)
     end
   end

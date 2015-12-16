@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207145233) do
+ActiveRecord::Schema.define(version: 20151211135032) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -53,6 +53,12 @@ ActiveRecord::Schema.define(version: 20151207145233) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "heartbeats", force: :cascade do |t|
+    t.integer  "device_id"
+    t.integer  "reporting_device_id"
+    t.datetime "created_at"
   end
 
   create_table "hive_mind_generic_characteristics", force: :cascade do |t|
@@ -101,6 +107,14 @@ ActiveRecord::Schema.define(version: 20151207145233) do
 
   create_table "hive_mind_hive_runner_versions", force: :cascade do |t|
     t.string   "version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_mobile_plugins", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "imei"
+    t.string   "serial"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

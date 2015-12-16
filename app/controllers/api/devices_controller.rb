@@ -63,10 +63,15 @@ class Api::DevicesController < ApplicationController
   def poll
     @response = {}
     begin
-      device = Device.find(params[:poll][:id])
-      args = {}
-      args[:reported_by] = Device.find(params[:poll][:reporting_device_id]) if params[:poll][:reporting_device_id].present?
-      device.heartbeat(args)
+      reporting_device = Device.find(params[:poll][:id])
+      if params[:poll][:devices].present? and params[:poll][:devices].length > 0
+        args = { reported_by: reporting_device }
+        params[:poll][:devices].each do |d|
+          Device.find(d).heartbeat( reported_by: reporting_device )
+        end
+      else
+        reporting_device.heartbeat
+      end
       render json: @response, status: :success
     rescue ActiveRecord::RecordNotFound
       render json: {}, status: :not_found
