@@ -9,5 +9,9 @@ RSpec.describe Api::DevicesController, type: :routing do
     it 'routes to #poll' do
       expect(put: '/api/devices/poll').to route_to('api/devices#poll', format: :json)
     end
+
+    it 'routes to #action' do
+      expect(put: 'api/devices/action').to route_to('api/devices#action', format: :json)
+    end
   end
 end

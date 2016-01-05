@@ -65,17 +65,31 @@ class Api::DevicesController < ApplicationController
     begin
       reporting_device = Device.find(params[:poll][:id])
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
+        # Reporting a list of devices
         args = { reported_by: reporting_device }
         params[:poll][:devices].each do |d|
           Device.find(d).heartbeat( reported_by: reporting_device )
         end
       else
+        # Reporting a single device
         reporting_device.heartbeat
+        if action = reporting_device.execute_action
+          @response['action'] = {
+            action_type: action.action_type,
+            body: action.body
+          }
+        end
       end
-      render json: @response, status: :success
+      render json: @response, status: :ok
     rescue ActiveRecord::RecordNotFound
       render json: {}, status: :not_found
     end
+  end
+
+  # PUT /action
+  def action
+    action = DeviceAction.create(action_params)
+    render json: {}
   end
 
   private
@@ -90,6 +104,14 @@ class Api::DevicesController < ApplicationController
         { group_ids: [] },
         macs: [],
         ips: [],
+      )
+    end
+
+    def action_params
+      params.require(:device_action).permit(
+        :device_id,
+        :action_type,
+        :body
       )
     end
 end

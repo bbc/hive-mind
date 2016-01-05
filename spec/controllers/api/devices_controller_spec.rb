@@ -379,5 +379,54 @@ RSpec.describe Api::DevicesController, type: :controller do
       put :poll, { poll: { devices: [ device.id ], id: -1 } }
       expect(response).to have_http_status(:not_found)
     end
+
+    context 'with actions' do
+      let(:valid_options) {
+        {
+          device_id: device.id,
+          action_type: 'redirect',
+          body: 'http://test_url.com'
+        }
+      }
+
+      it 'returns an action with the poll response' do
+        put :action, { device_action: valid_options }
+        put :poll, { poll: { id: device.id } }
+        expect(JSON.parse(response.body)).to include('action' => { 'action_type' => 'redirect', 'body' => 'http://test_url.com' })
+      end
+    end
+  end
+
+  describe 'PUT #action' do
+    let(:device) { Device.create(name: 'Test device') }
+    let(:valid_options) {
+      {
+        device_id: device.id,
+        action_type: 'redirect',
+        body: 'http://test_url.com'
+      }
+    }
+
+    it 'adds an action' do
+      expect {
+        put :action, { device_action: valid_options }
+      }.to change(DeviceAction, :count).by 1
+    end
+
+    it 'adds an action for the given device' do
+      put :action, { device_action: valid_options }
+      expect(DeviceAction.last.device).to eq device
+    end
+
+    it 'sets the action type and body' do
+      put :action, { device_action: valid_options }
+      expect(DeviceAction.last.action_type).to eq 'redirect'
+      expect(DeviceAction.last.body).to eq 'http://test_url.com'
+    end
+
+    it 'sets the executed time to nil' do
+      put :action, { device_action: valid_options }
+      expect(DeviceAction.last.executed_at).to be_nil
+    end
   end
 end
