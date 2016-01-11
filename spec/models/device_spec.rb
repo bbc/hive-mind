@@ -273,4 +273,80 @@ RSpec.describe Device, type: :model do
       expect(device.seconds_since_heartbeat).to be_nil
     end
   end
+
+  describe '#execute_action' do
+    let(:device) { Device.create }
+    let(:action1) {
+      {
+        device_id: device.id,
+        action_type: 'first_type',
+        body: 'first action body'
+      }
+    }
+    let(:action2) {
+      {
+        device_id: device.id,
+        action_type: 'second_type',
+        body: 'second action body'
+      }
+    }
+    let(:action3) {
+      {
+        device_id: device.id,
+        action_type: 'third_type',
+        body: 'third action body'
+      }
+    }
+    let(:executed_action) {
+      {
+        device_id: device.id,
+        action_type: 'first_type',
+        body: 'first action body',
+        executed_at: Time.now
+      }
+    }
+
+    it 'returns an nil if there are not queued actions' do
+      expect(device.execute_action).to be_nil
+    end
+
+    it 'returns an action' do
+      ac = DeviceAction.create( action1 )
+      expect(device.execute_action).to eq ac
+    end
+
+    it 'returns the first action' do
+      ac1 = DeviceAction.create( action1 )
+      Timecop.freeze(Time.now + 30) do
+        ac2 = DeviceAction.create( action2 )
+      end
+      expect(device.execute_action).to eq ac1
+    end
+
+    it 'sets the executed time' do
+      ac = DeviceAction.create( action1 )
+      device.execute_action
+      expect(ac.reload.executed_at).to_not be_nil
+    end
+
+    it 'does not return an executed action' do
+      ac = DeviceAction.create( executed_action )
+      expect(device.execute_action).to be_nil
+    end
+
+    it 'returns several actions in order' do
+      ac1 = DeviceAction.create( action1 )
+      ac2 = ac3 = nil
+      Timecop.freeze(Time.now + 30) do
+        ac2 = DeviceAction.create( action2 )
+      end
+      Timecop.freeze(Time.now + 60) do
+        ac3 = DeviceAction.create( action3 )
+      end
+      expect(device.execute_action).to eq ac1
+      expect(device.execute_action).to eq ac2
+      expect(device.execute_action).to eq ac3
+      expect(device.execute_action).to be_nil
+    end
+  end
 end

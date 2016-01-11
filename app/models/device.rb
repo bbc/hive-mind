@@ -5,6 +5,7 @@ class Device < ActiveRecord::Base
   has_and_belongs_to_many :groups
   belongs_to :plugin, polymorphic: true
   has_many :heartbeats, dependent: :delete_all
+  has_many :device_actions
   
   accepts_nested_attributes_for :groups
 
@@ -41,6 +42,13 @@ class Device < ActiveRecord::Base
 
   def seconds_since_heartbeat
     (Time.now - self.heartbeats.last.created_at).to_i if self.heartbeats.length > 0
+  end
+
+  def execute_action
+    if ac = self.device_actions.where(executed_at: nil).first
+      ac.update(executed_at: Time.now)
+    end
+    ac
   end
 
   def self.identify_existing options = {}

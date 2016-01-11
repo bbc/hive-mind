@@ -11,12 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151211135032) do
+ActiveRecord::Schema.define(version: 20160104160529) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
     t.string   "alternative"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "device_actions", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "action_type"
+    t.string   "body"
+    t.datetime "executed_at"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -111,10 +120,10 @@ ActiveRecord::Schema.define(version: 20151211135032) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "hive_mind_mobile_plugins", force: :cascade do |t|
-    t.integer  "device_id"
-    t.string   "imei"
-    t.string   "serial"
+  create_table "hive_mind_tv_plugins", force: :cascade do |t|
+    t.string   "range"
+    t.string   "user_agent"
+    t.string   "name_seed"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
