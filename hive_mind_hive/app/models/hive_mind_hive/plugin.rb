@@ -5,8 +5,11 @@ module HiveMindHive
     has_many :runner_plugin_version_history
 
     def self.create(*args)
-      copy = args[0].clone
+      copy = ActionController::Parameters.new(args[0])
       args[0] = copy.permit(:hostname)
+      [:runner_version_history, :runner_plugin_version_history].each do |key|
+        args[0][key] = copy[key] if copy.has_key?(key)
+      end
 
       hive = super(*args)
       hive.update_version(copy['version']) if copy.has_key?('version')
