@@ -99,6 +99,21 @@ dummy Rails:
 require File.expand_path('../dummy/config/environment', __FILE__)
 ```
 
+## Run as production
+
+Edit the file `config/database.yml` to specify the correct database
+credentials. Set up the assets:
+
+```
+RAILS_ENV=production rake assets:precompile`
+```
+
+Then run the server as:
+
+```
+RAILS_ENV=production SECRET_KEY_BASE=YourSecret rails s -b 0.0.0.0
+```
+
 ## Testing
 
 To execute the integration tests run:

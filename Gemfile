@@ -9,7 +9,8 @@ gem 'hive_mind_generic', path: 'hive_mind_generic'
 # Do not change anything below this line
 ##############################################################################
 gem 'rails', '4.2.4'
-gem 'sqlite3'
+gem 'thin', '~> 1.6'
+gem 'mysql2', '~> 0.3.20'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'uglifier', '>= 1.3.0'
@@ -20,6 +21,7 @@ gem 'omniauth'
 gem 'ransack'
 
 group :development, :test, :integration do
+  gem 'sqlite3'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.3'
   gem 'timecop'
