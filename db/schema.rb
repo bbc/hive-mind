@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104160529) do
+ActiveRecord::Schema.define(version: 20160113111349) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20160104160529) do
     t.integer  "reporting_device_id"
     t.datetime "created_at"
   end
+
+  add_index "heartbeats", ["device_id"], name: "index_heartbeats_on_device_id"
 
   create_table "hive_mind_generic_characteristics", force: :cascade do |t|
     t.string   "key"
