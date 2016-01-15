@@ -1,5 +1,9 @@
 module HiveMindHive
   class ApiController < ApplicationController
+    # This turns off CSRF verification for the API
+    # TODO Provide other methods of authentication
+    skip_before_action :verify_authenticity_token
+
     def connect
       response = {}
       status = :ok
