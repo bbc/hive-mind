@@ -458,4 +458,39 @@ RSpec.describe Device, type: :model do
       expect(Relationship.find(id2)).to eq relation3
     end
   end
+
+  describe '#plugin_json_keys' do
+    module HiveMindMockjsonkeys1
+      class Plugin < HiveMindGeneric::Plugin
+        attr_accessor :json_keys
+        def initialize(arguments)
+          @json_keys = [ :key_one, :key_two ]
+          super
+        end
+      end
+    end
+    module HiveMindMockjsonkeys2
+      class Plugin < HiveMindGeneric::Plugin
+      end
+    end
+
+    let(:plugin1) { HiveMindMockjsonkeys1::Plugin.create }
+    let(:plugin2) { HiveMindMockjsonkeys2::Plugin.create }
+
+    let(:device1) { Device.create }
+    let(:device2) { Device.create(plugin: plugin1) }
+    let(:device3) { Device.create(plugin: plugin2) }
+
+    it 'returns an empty array for no plugin' do
+      expect(device1.plugin_json_keys).to eq([])
+    end
+
+    it 'returns an array of json keys for the plugin' do
+      expect(device2.plugin_json_keys).to eq([ :key_one, :key_two ])
+    end
+
+    it 'returns an empty array if plugin has no json_keys method' do
+      expect(device3.plugin_json_keys).to eq([])
+    end
+  end
 end

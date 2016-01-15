@@ -67,6 +67,10 @@ class Device < ActiveRecord::Base
     )
   end
 
+  def plugin_json_keys
+    ( self.plugin && self.plugin.methods.include?(:json_keys) ) ? self.plugin.json_keys : []
+  end
+
   def self.identify_existing options = {}
     if options.has_key?(:device_type)
       begin

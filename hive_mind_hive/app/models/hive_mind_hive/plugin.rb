@@ -73,8 +73,33 @@ module HiveMindHive
       }
     end
 
+    def json_keys
+      [ :version, :connected_devices ]
+    end
+
+    def connect device
+      if (h = Plugin.find_by_connected_device(device)) && (h != self)
+        h.plugin.disconnect device
+      end
+      self.device.add_relation 'connected', device
+    end
+
+    def disconnect device
+      self.device.delete_relation 'connected', device
+    end
+
+    def connected_devices
+      Relationship.where(primary: self.device).map { |r| r.secondary }
+    end
+
     def self.plugin_params params
       params.permit(:hostname, :version).merge(params.select { |key, value| key.to_s.match(/^runner_plugins$/) })
+    end
+
+    def self.find_by_connected_device device
+      if r = Relationship.where(secondary: device).first
+        r.primary
+      end
     end
   end
 end

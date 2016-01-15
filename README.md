@@ -50,6 +50,11 @@ module HiveMindMydevice
       # Required
     end
 
+    def json_keys
+      # Return array of keys to include in the api/devices/:id endpoint
+      # Optional
+    end
+
     def self.plugin_params params
       # Return valid parameters from the input list. For example,
       params.permit(:attribute_one, attribute_two)
