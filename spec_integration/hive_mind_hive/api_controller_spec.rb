@@ -38,8 +38,6 @@ RSpec.describe HiveMindHive::ApiController, type: :controller do
 
     it 'does not disconnect a device when the wrong hive is given' do
       hive.plugin.connect(device)
-puts hive.id
-puts hive2.id
       expect {
         put :disconnect, { connection: { hive_id: hive2.id, device_id: device.id } }
       }.to change(Relationship, :count).by 0
