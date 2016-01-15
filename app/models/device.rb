@@ -41,7 +41,9 @@ class Device < ActiveRecord::Base
   end
 
   def seconds_since_heartbeat
-    (Time.now - self.heartbeats.last.created_at).to_i if self.heartbeats.length > 0
+    if hb = self.heartbeats.last
+      (Time.now - hb.created_at).to_i
+    end
   end
 
   def execute_action
