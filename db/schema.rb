@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 20160112111730) do
     t.datetime "created_at"
   end
 
+  add_index "heartbeats", ["device_id"], name: "index_heartbeats_on_device_id"
+
   create_table "hive_mind_generic_characteristics", force: :cascade do |t|
     t.string   "key"
     t.string   "value"
