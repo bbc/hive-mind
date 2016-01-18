@@ -67,9 +67,11 @@ class Api::DevicesController < ApplicationController
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
         # Reporting a list of devices
         args = { reported_by: reporting_device }
-        params[:poll][:devices].each do |d|
-          Device.find(d).heartbeat( reported_by: reporting_device )
+        @devices = params[:poll][:devices].map { |d| Device.find(d) }
+        @devices.each do |d|
+          d.heartbeat( reported_by: reporting_device )
         end
+        render 'devices/index', status: :ok
       else
         # Reporting a single device
         reporting_device.heartbeat
@@ -79,8 +81,9 @@ class Api::DevicesController < ApplicationController
             body: action.body
           }
         end
+        @device = reporting_device
+        render 'devices/show', status: :ok
       end
-      render json: @response, status: :ok
     rescue ActiveRecord::RecordNotFound
       render json: {}, status: :not_found
     end
