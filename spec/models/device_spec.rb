@@ -349,4 +349,148 @@ RSpec.describe Device, type: :model do
       expect(device.execute_action).to be_nil
     end
   end
+
+  describe '#add_relation' do
+    let(:device1) { Device.create }
+    let(:device2) { Device.create }
+    let(:device3) { Device.create }
+
+    it 'adds a relationship' do
+      expect{
+        device1.add_relation('relationship type', device2)
+      }.to change(Relationship, :count).by 1
+    end
+
+    it 'sets the primary of a relationship' do
+      device1.add_relation('relationship type', device2)
+      expect(Relationship.last.primary).to eq device1
+    end
+
+    it 'sets the secondary of a relationship' do
+      device1.add_relation('relationship type', device2)
+      expect(Relationship.last.secondary).to eq device2
+    end
+
+    it 'sets the relation of a relationship' do
+      device1.add_relation('relationship type', device2)
+      expect(Relationship.last.relation).to eq 'relationship type'
+    end
+
+    it 'does not create a duplicate relationship' do
+      device1.add_relation('relationship type', device2)
+      expect{
+        device1.add_relation('relationship type', device2)
+      }.to change(Relationship, :count).by 0
+    end
+
+    it 'creates a second relation with the same devices' do
+      device1.add_relation('relationship type', device2)
+      expect{
+        device1.add_relation('relationship type 2', device2)
+      }.to change(Relationship, :count).by 1
+    end
+
+    it 'creates a relation with a second primary device' do
+      device1.add_relation('relationship type', device2)
+      expect{
+        device3.add_relation('relationship type', device2)
+      }.to change(Relationship, :count).by 1
+    end
+
+    it 'creates a relation with a second secondary device' do
+      device1.add_relation('relationship type', device2)
+      expect{
+        device1.add_relation('relationship type', device3)
+      }.to change(Relationship, :count).by 1
+    end
+  end
+
+  describe '#delete_relation' do
+    let(:device1) { Device.create }
+    let(:device2) { Device.create }
+    let(:device3) { Device.create }
+    let(:relation1) { Relationship.create(primary: device1, secondary: device2, relation: 'relation one') }
+    let(:relation2) { Relationship.create(primary: device1, secondary: device3, relation: 'relation two') }
+    let(:relation3) { Relationship.create(primary: device1, secondary: device2, relation: 'relation two') }
+
+    before(:each) do
+      # Preload
+      relation1
+      relation2
+      relation3
+    end
+
+    it 'removes a relation' do
+      expect{
+        device1.delete_relation('relation one', device2)
+      }.to change(Relationship, :count).by -1
+    end
+
+    it 'removes the correct relation' do
+      id = relation1.id
+      device1.delete_relation('relation one', device2)
+      expect{Relationship.find(id)}.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'does not remove a non-existant relation' do
+      expect{
+        device1.delete_relation('relation one', device3)
+      }.to change(Relationship, :count).by 0
+    end
+
+    it 'only removes correct relationship for device' do
+      id1 = relation1.id
+      id2 = relation3.id
+      expect{
+        device1.delete_relation('relation two', device2)
+      }.to change(Relationship, :count).by -1
+      expect(Relationship.find(id1)).to eq relation1
+      expect{Relationship.find(id2)}.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'only removes correct relationship for relation' do
+      id1 = relation2.id
+      id2 = relation3.id
+      expect{
+        device1.delete_relation('relation two', device3)
+      }.to change(Relationship, :count).by -1
+      expect{Relationship.find(id1)}.to raise_error(ActiveRecord::RecordNotFound)
+      expect(Relationship.find(id2)).to eq relation3
+    end
+  end
+
+  describe '#plugin_json_keys' do
+    module HiveMindMockjsonkeys1
+      class Plugin < HiveMindGeneric::Plugin
+        attr_accessor :json_keys
+        def initialize(arguments)
+          @json_keys = [ :key_one, :key_two ]
+          super
+        end
+      end
+    end
+    module HiveMindMockjsonkeys2
+      class Plugin < HiveMindGeneric::Plugin
+      end
+    end
+
+    let(:plugin1) { HiveMindMockjsonkeys1::Plugin.create }
+    let(:plugin2) { HiveMindMockjsonkeys2::Plugin.create }
+
+    let(:device1) { Device.create }
+    let(:device2) { Device.create(plugin: plugin1) }
+    let(:device3) { Device.create(plugin: plugin2) }
+
+    it 'returns an empty array for no plugin' do
+      expect(device1.plugin_json_keys).to eq([])
+    end
+
+    it 'returns an array of json keys for the plugin' do
+      expect(device2.plugin_json_keys).to eq([ :key_one, :key_two ])
+    end
+
+    it 'returns an empty array if plugin has no json_keys method' do
+      expect(device3.plugin_json_keys).to eq([])
+    end
+  end
 end
