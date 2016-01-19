@@ -4,3 +4,5 @@ json.extract! @device.plugin, *@device.plugin_json_keys
 
 json.model @device.model.name
 json.brand @device.model.brand.name
+
+json.action @device_action
