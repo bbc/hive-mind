@@ -53,6 +53,26 @@ class Device < ActiveRecord::Base
     ac
   end
 
+  def add_relation relation, secondary
+    Relationship.find_or_create_by(
+      primary: self,
+      secondary: secondary,
+      relation: relation
+    )
+  end
+
+  def delete_relation relation, secondary
+    Relationship.delete_all(
+      primary: self,
+      secondary: secondary,
+      relation: relation
+    )
+  end
+
+  def plugin_json_keys
+    ( self.plugin && self.plugin.methods.include?(:json_keys) ) ? self.plugin.json_keys : []
+  end
+
   def self.identify_existing options = {}
     if options.has_key?(:device_type)
       begin

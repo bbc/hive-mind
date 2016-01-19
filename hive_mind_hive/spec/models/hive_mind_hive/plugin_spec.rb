@@ -286,5 +286,13 @@ module HiveMindHive
         )
       end
     end
+
+    describe '#json_keys' do
+      let(:plugin) { Plugin.create }
+
+      it 'returns the correct array' do
+        expect(plugin.json_keys).to eq([:version, :connected_devices])
+      end
+    end
   end
 end
