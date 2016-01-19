@@ -53,7 +53,7 @@ class Api::DevicesController < ApplicationController
 
     if @device.save
       @device.heartbeat
-      render json: @device, status: :created
+      render 'devices/show', status: :created
     else
       render json: @device.errors, status: :unprocessable_entity
     end
@@ -61,7 +61,6 @@ class Api::DevicesController < ApplicationController
 
   # PUT /poll
   def poll
-    @response = {}
     begin
       reporting_device = Device.find(params[:poll][:id])
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
@@ -75,12 +74,7 @@ class Api::DevicesController < ApplicationController
       else
         # Reporting a single device
         reporting_device.heartbeat
-        if action = reporting_device.execute_action
-          @response['action'] = {
-            action_type: action.action_type,
-            body: action.body
-          }
-        end
+        @device_action = reporting_device.execute_action
         @device = reporting_device
         render 'devices/show', status: :ok
       end
