@@ -190,7 +190,7 @@ To poll multiple devices:
 ```json
 {
   "device_action: {
-    "device_id: 99,
+    "device_id": 99,
     "action_type": "Type of action",
     "body": "Body of the action"
   }

@@ -7,7 +7,7 @@ function add_links_to_cards() {
     }
     return false;
   });
-  $('.card .btn').click(function(event) {
+  $('.card a').click(function(event) {
     event.stopImmediatePropagation();
   });
 };
