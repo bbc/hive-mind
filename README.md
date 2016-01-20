@@ -130,6 +130,95 @@ RAILS_ENV=integration rspec spec_integration
 Note that you may need to edit `Gemfile` to include the correct version of the
 plugin being tested.
 
+## API
+
+Action | Method | Endpoint
+-------|--------|---------
+View device | GET | `api/devices/*id*`
+Register device | POST | `api/devices/register`
+Poll device | PUT | `api/devices/poll`
+Add device action | PUT | `api/devices/action`
+Connect device | PUT | `api/plugin/hive/connect`
+Disconnect device | PUT | `api/plugin/hive/disconnect`
+
+### View device
+
+### Register device
+
+```json
+{
+  "device": {
+    "name": "Device name",
+    "model": "Device model",
+    "brand": "Device brand",
+    "ips": [ "10.10.10.1", "192.168.99.99" ],
+    "macs": [ "aa:bb:cc:dd:ee:ff", "01:23:45:67:89:AB" ],
+    "device_type": "Device plugin"
+  }
+}
+```
+
+All parameters are optional although the `name` is required unless the
+`device_type` parameter is specified for a known Hive Mind plugin that
+provides a `name` method.
+
+### Poll device
+
+To poll a single device:
+
+```json
+{
+  "poll": {
+    "id": 99
+  }
+}
+```
+
+To poll multiple devices:
+
+```json
+{
+  "poll": {
+    "id": 99,
+    "devices": [ 1, 2, 3, 4 ]
+  }
+}
+```
+
+### Add device action
+
+```json
+{
+  "device_action: {
+    "device_id: 99,
+    "action_type": "Type of action",
+    "body": "Body of the action"
+  }
+}
+```
+
+### Connect device (Hive plugin)
+
+```json
+{
+  "connection": {
+    "hive_id": 3,
+    "device_id": 6
+  }
+}
+```
+
+### Disconnect device (Hive plugin)
+
+```json
+{
+  "connection": {
+    "hive_id": 3,
+    "device_id": 6
+  }
+}
+```
+
 ## License
 
 Hive Mind is available to everyone under the terms of the MIT open source licence.
