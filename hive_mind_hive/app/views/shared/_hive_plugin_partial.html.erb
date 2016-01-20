@@ -5,5 +5,16 @@
   <% device.plugin.runner_plugins.each_pair do |p, v| %>
     <li><%= p -%> (<%= v -%>)</li>
   <% end %>
+  </ul></li>
+  <li>Connected devices:
+  <ul>
+  <% device.plugin.connected_devices.each do |d| %>
+    <li><%= link_to d.name, device_path(d) %> (<%= d.device_type %>)</li>
+    <ul>
+      <li><%= d.model.brand.name %>
+      <li><%= d.model.name %>
+    </ul>
+  <% end %>
   </ul>
+  </li>
 </ul>
