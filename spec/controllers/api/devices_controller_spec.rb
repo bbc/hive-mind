@@ -326,7 +326,9 @@ RSpec.describe Api::DevicesController, type: :controller do
   end
 
   describe 'PUT #poll' do
-    let(:device) { Device.create(name: 'Test device') }
+    let(:brand) { Brand.create(name: 'Test brand') }
+    let(:model) { Model.create(name: 'Test model', brand: brand) }
+    let(:device) { Device.create(name: 'Test device', model: model) }
     let(:device2) { Device.create(name: 'Test device 2') }
     let(:device3) { Device.create(name: 'Test device 3') }
     let(:reporting_device) { Device.create(name: 'Reporting device') }
@@ -392,7 +394,7 @@ RSpec.describe Api::DevicesController, type: :controller do
       it 'returns an action with the poll response' do
         put :action, { device_action: valid_options }
         put :poll, { poll: { id: device.id } }
-        expect(JSON.parse(response.body)).to include('action' => { 'action_type' => 'redirect', 'body' => 'http://test_url.com' })
+        expect(assigns(:device_action)).to eq DeviceAction.last
       end
     end
   end

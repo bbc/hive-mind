@@ -76,6 +76,7 @@ class Api::DevicesController < ApplicationController
         reporting_device.heartbeat
         @device_action = reporting_device.execute_action
         @device = reporting_device
+puts @device.inspect
         render 'devices/show', status: :ok
       end
     rescue ActiveRecord::RecordNotFound
