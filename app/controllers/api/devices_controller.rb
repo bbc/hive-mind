@@ -5,6 +5,7 @@ class Api::DevicesController < ApplicationController
 
   # POST /register
   def register
+    status = :created
     create_parameters = device_params
 
     create_parameters[:ips] ||= []
@@ -30,7 +31,15 @@ class Api::DevicesController < ApplicationController
 
     device_id ||= params['device']['id']
     if device_id and @device = Device.find(device_id)
+      status = :accepted
       @device.update(create_parameters)
+      if @device.plugin
+        filtered_params = params[:device].clone
+        filtered_params.delete(:id)
+        filtered_params[:id] = filtered_params[:plugin_id] if filtered_params.has_key?(:plugin_id)
+        obj = @device.plugin.class
+        @device.plugin.update(obj.plugin_params(filtered_params))
+      end
     else
       if params[:device].has_key?(:device_type)
         begin
@@ -53,7 +62,7 @@ class Api::DevicesController < ApplicationController
 
     if @device.save
       @device.heartbeat
-      render 'devices/show', status: :created
+      render 'devices/show', status: status
     else
       render json: @device.errors, status: :unprocessable_entity
     end
