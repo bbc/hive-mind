@@ -18,12 +18,14 @@ module HiveMindHive
     end
 
     def update(*args)
-      if args[0].keys.include? :version
-        version = args[0][:version]
-        args[0].delete(:version)
+      copy = ActionController::Parameters.new(args[0])
+      args[0] = copy.permit(:hostname)
+      [:runner_version_history, :runner_plugin_version_history].each do |key|
+        args[0][key] = copy[key] if copy.has_key?(key)
       end
 
-      self.update_version(version) if version
+      self.update_version(copy['version']) if copy.has_key?('version')
+      self.update_runner_plugins(copy['runner_plugins']) if copy.has_key?('runner_plugins')
       super(*args)
     end
 
