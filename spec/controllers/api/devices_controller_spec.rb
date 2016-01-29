@@ -288,6 +288,9 @@ RSpec.describe Api::DevicesController, type: :controller do
               nil
             end
           end
+          def self.plugin_params params
+            params.permit(:id_key)
+          end
         end
       end
 
@@ -323,6 +326,66 @@ RSpec.describe Api::DevicesController, type: :controller do
         }.to change(Device, :count).by(1)
       end
     end
+
+    context 'plugin with existing device' do
+      let(:device_info) {
+        {
+          name: 'Device',
+          device_type: 'Controllermockupdating',
+          macs: [ 'aa:bb:cc:dd:ee:01' ]
+        }
+      }
+      let(:device_no_plugin_info) {
+        {
+          name: 'Device (no plugin)',
+          macs: [ 'aa:bb:cc:dd:ee:02' ]
+        }
+      }
+      module HiveMindControllermockupdating
+        class Plugin < HiveMindGeneric::Plugin
+          def update(*args)
+            @@indicator = 'updated'
+          end
+          def self.plugin_params args
+            {}
+          end
+          def self.indicator
+            @@indicator
+          end
+        end
+      end
+
+      let(:device_type) { DeviceType.new(classification: 'Controllermockupdating') }
+      let(:model) { Model.new(device_type: device_type) }
+
+      let(:device) {
+        Device.create(
+          name: 'Device',
+          model: model,
+          macs: [ Mac.new(mac:'aa:bb:cc:dd:ee:01')],
+          plugin: HiveMindControllermockupdating::Plugin.new,
+          plugin_type: 'HiveMindControllermockupdating::Plugin'
+        )
+      }
+
+      let(:device_no_plugin) {
+        Device.create(
+          name: 'Device (no plugin)',
+          macs: [ Mac.new(mac:'aa:bb:cc:dd:ee:02')],
+        )
+      }
+
+      it 'calls the plugin update method' do
+        post :register, {device: device_info.merge( device_id: device.id )}
+        expect(HiveMindControllermockupdating::Plugin.indicator).to eq 'updated'
+      end
+
+      it 'updates a devices with no plugin set' do
+        post :register, {device: device_no_plugin_info.merge( device_id: device_no_plugin.id )}
+        expect(response).to have_http_status(:accepted)
+
+      end
+    end
   end
 
   describe 'PUT #poll' do
@@ -332,7 +395,6 @@ RSpec.describe Api::DevicesController, type: :controller do
     let(:device2) { Device.create(name: 'Test device 2') }
     let(:device3) { Device.create(name: 'Test device 3') }
     let(:reporting_device) { Device.create(name: 'Reporting device') }
-
     it 'adds a heartbeat for a known device' do
       expect {
         put :poll, { poll: { id: device.id } }
