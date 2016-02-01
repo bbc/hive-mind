@@ -85,6 +85,11 @@ module HiveMindHive
           hive_no_history.update_version('1.2.4')
           expect(hive_no_history.version).to eq '1.2.4'
         end
+
+        it 'does not unecessarily update the version of the hive' do
+          hive # Preload
+          expect{hive.update_version('1.2.3')}.to change(HiveMindHive::RunnerVersionHistory, :count).by 0
+        end
       end
     end
 
@@ -146,7 +151,7 @@ module HiveMindHive
         )
       }
 
-    describe '#runner_plugins' do
+      describe '#runner_plugins' do
         it 'returns an empty list of plugins' do
           expect(hive_no_plugins.runner_plugins).to eq({})
         end
@@ -216,6 +221,21 @@ module HiveMindHive
         it 'sets the end timestamp of the previous version in the history' do
           hive_one_plugin.update_runner_plugins('plugin1' => '2.4.9')
           expect(hive_one_plugin.runner_plugin_version_history[0].end_timestamp).to_not be_nil
+        end
+
+        it 'does not unecessarily update the version of a plugin (single plugin)' do
+          hive_one_plugin # Preload
+          expect{hive_one_plugin.update_runner_plugins('plugin1' => '2.4.8')}.to change(HiveMindHive::RunnerPluginVersionHistory, :count).by 0
+        end
+
+        it 'does not unecessarily update the version of a plugin (multiple plugins)' do
+          hive_three_plugins # Preload
+          expect{hive_three_plugins.update_runner_plugins('plugin1' => '2.4.8', 'plugin2' => '6', 'plugin3' => '1.0b')}.to change(HiveMindHive::RunnerPluginVersionHistory, :count).by 2
+        end
+
+        it 'does not unecessarily update the version of a plugin (adding plugins)' do
+          hive_three_plugins # Preload
+          expect{hive_three_plugins.update_runner_plugins('plugin1' => '2.4.8', 'plugin2' => '5', 'plugin3' => '1.0a', 'plugin4' => '99')}.to change(HiveMindHive::RunnerPluginVersionHistory, :count).by 1
         end
       end
     end

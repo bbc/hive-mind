@@ -39,13 +39,15 @@ module HiveMindHive
     end
 
     def update_version version
-      if self.runner_version_history.length > 0
-        self.runner_version_history.last.end_timestamp = Time.now
+      if version != self.version
+        if self.runner_version_history.length > 0
+          self.runner_version_history.last.end_timestamp = Time.now
+        end
+        self.runner_version_history << RunnerVersionHistory.create(
+          runner_version: RunnerVersion.find_or_create_by(version: version),
+          start_timestamp: Time.now
+        )
       end
-      self.runner_version_history << RunnerVersionHistory.create(
-        runner_version: RunnerVersion.find_or_create_by(version: version),
-        start_timestamp: Time.now
-      )
     end
 
     def runner_plugins
@@ -53,10 +55,15 @@ module HiveMindHive
     end
 
     def update_runner_plugins plugins = {}
-      self.runner_plugin_version_history.each do |rpvh|
-        rpvh.end_timestamp = Time.now if rpvh.end_timestamp == nil
-        rpvh.save
+      self.runner_plugin_version_history.select{ |h| h.end_timestamp == nil }.each do |h|
+        if plugins.has_key? h.runner_plugin_version.name and plugins[h.runner_plugin_version.name] == h.runner_plugin_version.version
+          plugins.delete(h.runner_plugin_version.name)
+        else
+          h.end_timestamp = Time.now
+          h.save
+        end
       end
+
       plugins.each_pair do |p, v|
         self.runner_plugin_version_history << RunnerPluginVersionHistory.create(
           runner_plugin_version: RunnerPluginVersion.find_or_create_by(
