@@ -24,7 +24,7 @@ RSpec.describe DeviceTypesController, type: :controller do
   # DeviceType. As you add validations to DeviceType, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { classification: 'Device Type 1' }
   }
 
   let(:invalid_attributes) {
