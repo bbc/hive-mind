@@ -24,7 +24,7 @@ RSpec.describe BrandsController, type: :controller do
   # Brand. As you add validations to Brand, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: 'Brand 1' }
   }
 
   let(:invalid_attributes) {
