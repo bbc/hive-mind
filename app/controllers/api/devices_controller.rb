@@ -30,7 +30,7 @@ class Api::DevicesController < ApplicationController
     end
 
     device_id ||= params['device']['id']
-    if device_id and @device = Device.find(device_id)
+    if device_id and @device = Device.find_by(id: device_id)
       status = :accepted
       @device.update(create_parameters)
       if @device.plugin
