@@ -24,7 +24,9 @@ RSpec.describe ModelsController, type: :controller do
   # Model. As you add validations to Model, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: 'Model 1'
+    }
   }
 
   let(:invalid_attributes) {
