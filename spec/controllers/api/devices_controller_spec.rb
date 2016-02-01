@@ -8,6 +8,13 @@ RSpec.describe Api::DevicesController, type: :controller do
     }
   }
 
+  let(:valid_attributes_with_id) {
+    {
+      name: 'Device 1',
+      id: 987
+    }
+  }
+
   let(:device_with_mac1) {
     {
       name: 'Device 1',
@@ -57,6 +64,12 @@ RSpec.describe Api::DevicesController, type: :controller do
       Timecop.freeze(Time.now + 30) do
         expect(Device.last.seconds_since_heartbeat).to eq 30
       end
+    end
+
+    it 'registers a devices with an unknown id' do
+      expect {
+        post :register, {device: valid_attributes_with_id}, valid_session
+      }.to change(Device, :count).by(1)
     end
 
     context 'unknown device type' do
