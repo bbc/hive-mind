@@ -27,9 +27,9 @@ RSpec.describe BrandsController, type: :controller do
     { name: 'Brand 1' }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  #let(:invalid_attributes) {
+  #  skip("Add a hash of attributes invalid for your model")
+  #}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -87,17 +87,17 @@ RSpec.describe BrandsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved brand as @brand" do
-        post :create, {:brand => invalid_attributes}, valid_session
-        expect(assigns(:brand)).to be_a_new(Brand)
-      end
+    #context "with invalid params" do
+    #  it "assigns a newly created but unsaved brand as @brand" do
+    #    post :create, {:brand => invalid_attributes}, valid_session
+    #    expect(assigns(:brand)).to be_a_new(Brand)
+    #  end
 
-      it "re-renders the 'new' template" do
-        post :create, {:brand => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
+    #  it "re-renders the 'new' template" do
+    #    post :create, {:brand => invalid_attributes}, valid_session
+    #    expect(response).to render_template("new")
+    #  end
+    #end
   end
 
   describe "PUT #update" do
@@ -126,19 +126,19 @@ RSpec.describe BrandsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns the brand as @brand" do
-        brand = Brand.create! valid_attributes
-        put :update, {:id => brand.to_param, :brand => invalid_attributes}, valid_session
-        expect(assigns(:brand)).to eq(brand)
-      end
+    #context "with invalid params" do
+    #  it "assigns the brand as @brand" do
+    #    brand = Brand.create! valid_attributes
+    #    put :update, {:id => brand.to_param, :brand => invalid_attributes}, valid_session
+    #    expect(assigns(:brand)).to eq(brand)
+    #  end
 
-      it "re-renders the 'edit' template" do
-        brand = Brand.create! valid_attributes
-        put :update, {:id => brand.to_param, :brand => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
+    #  it "re-renders the 'edit' template" do
+    #    brand = Brand.create! valid_attributes
+    #    put :update, {:id => brand.to_param, :brand => invalid_attributes}, valid_session
+    #    expect(response).to render_template("edit")
+    #  end
+    #end
   end
 
   describe "DELETE #destroy" do
