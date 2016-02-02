@@ -27,6 +27,7 @@
   <%= render partial: "layouts/navigation" %>
 
   <div class="col-md-12">
+    <%= flash_messages(:close, :fade) %>
     <%= yield %>
   </div>
 

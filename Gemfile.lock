@@ -64,6 +64,7 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    bootstrap_flash_messages (1.0.2)
     builder (3.2.2)
     byebug (8.2.1)
     coderay (1.1.0)
@@ -207,6 +208,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
+  bootstrap_flash_messages (~> 1.0.1)
   hive_mind_generic!
   hive_mind_hive!
   hive_mind_mobile!
