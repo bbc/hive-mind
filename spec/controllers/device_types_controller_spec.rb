@@ -102,16 +102,16 @@ RSpec.describe DeviceTypesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      #let(:new_attributes) {
+      #  skip("Add a hash of attributes valid for your model")
+      #}
 
-      it "updates the requested device_type" do
-        device_type = DeviceType.create! valid_attributes
-        put :update, {:id => device_type.to_param, :device_type => new_attributes}, valid_session
-        device_type.reload
-        skip("Add assertions for updated state")
-      end
+      #it "updates the requested device_type" do
+      #  device_type = DeviceType.create! valid_attributes
+      #  put :update, {:id => device_type.to_param, :device_type => new_attributes}, valid_session
+      #  device_type.reload
+      #  skip("Add assertions for updated state")
+      #end
 
       it "assigns the requested device_type as @device_type" do
         device_type = DeviceType.create! valid_attributes

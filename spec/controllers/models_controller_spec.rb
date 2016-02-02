@@ -104,16 +104,16 @@ RSpec.describe ModelsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      #let(:new_attributes) {
+      #  skip("Add a hash of attributes valid for your model")
+      #}
 
-      it "updates the requested model" do
-        model = Model.create! valid_attributes
-        put :update, {:id => model.to_param, :model => new_attributes}, valid_session
-        model.reload
-        skip("Add assertions for updated state")
-      end
+      #it "updates the requested model" do
+      #  model = Model.create! valid_attributes
+      #  put :update, {:id => model.to_param, :model => new_attributes}, valid_session
+      #  model.reload
+      #  skip("Add assertions for updated state")
+      #end
 
       it "assigns the requested model as @model" do
         model = Model.create! valid_attributes
