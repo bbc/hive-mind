@@ -1,0 +1,4 @@
+authentication: 'authenticationkey'
+project: 'Titan'
+component: 'Hive Mind'
+suite: 'RSpec'
