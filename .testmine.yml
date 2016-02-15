@@ -1,0 +1,5 @@
+testmite_url: 'http://testmite.cloud.bbc.co.uk'
+authentication: 'authenticationkey'
+project: 'Titan'
+component: 'Hive Mind'
+suite: 'RSpec'
