@@ -27,9 +27,9 @@ RSpec.describe DeviceTypesController, type: :controller do
     { classification: 'Device Type 1' }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  #let(:invalid_attributes) {
+  #  skip("Add a hash of attributes invalid for your model")
+  #}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -87,31 +87,31 @@ RSpec.describe DeviceTypesController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved device_type as @device_type" do
-        post :create, {:device_type => invalid_attributes}, valid_session
-        expect(assigns(:device_type)).to be_a_new(DeviceType)
-      end
+    #context "with invalid params" do
+    #  it "assigns a newly created but unsaved device_type as @device_type" do
+    #    post :create, {:device_type => invalid_attributes}, valid_session
+    #    expect(assigns(:device_type)).to be_a_new(DeviceType)
+    #  end
 
-      it "re-renders the 'new' template" do
-        post :create, {:device_type => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
+    #  it "re-renders the 'new' template" do
+    #    post :create, {:device_type => invalid_attributes}, valid_session
+    #    expect(response).to render_template("new")
+    #  end
+    #end
   end
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      #let(:new_attributes) {
+      #  skip("Add a hash of attributes valid for your model")
+      #}
 
-      it "updates the requested device_type" do
-        device_type = DeviceType.create! valid_attributes
-        put :update, {:id => device_type.to_param, :device_type => new_attributes}, valid_session
-        device_type.reload
-        skip("Add assertions for updated state")
-      end
+      #it "updates the requested device_type" do
+      #  device_type = DeviceType.create! valid_attributes
+      #  put :update, {:id => device_type.to_param, :device_type => new_attributes}, valid_session
+      #  device_type.reload
+      #  skip("Add assertions for updated state")
+      #end
 
       it "assigns the requested device_type as @device_type" do
         device_type = DeviceType.create! valid_attributes
@@ -126,19 +126,19 @@ RSpec.describe DeviceTypesController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns the device_type as @device_type" do
-        device_type = DeviceType.create! valid_attributes
-        put :update, {:id => device_type.to_param, :device_type => invalid_attributes}, valid_session
-        expect(assigns(:device_type)).to eq(device_type)
-      end
+    #context "with invalid params" do
+    #  it "assigns the device_type as @device_type" do
+    #    device_type = DeviceType.create! valid_attributes
+    #    put :update, {:id => device_type.to_param, :device_type => invalid_attributes}, valid_session
+    #    expect(assigns(:device_type)).to eq(device_type)
+    #  end
 
-      it "re-renders the 'edit' template" do
-        device_type = DeviceType.create! valid_attributes
-        put :update, {:id => device_type.to_param, :device_type => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
+    #  it "re-renders the 'edit' template" do
+    #    device_type = DeviceType.create! valid_attributes
+    #    put :update, {:id => device_type.to_param, :device_type => invalid_attributes}, valid_session
+    #    expect(response).to render_template("edit")
+    #  end
+    #end
   end
 
   describe "DELETE #destroy" do

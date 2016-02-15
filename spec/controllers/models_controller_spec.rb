@@ -29,9 +29,9 @@ RSpec.describe ModelsController, type: :controller do
     }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  #let(:invalid_attributes) {
+  #  skip("Add a hash of attributes invalid for your model")
+  #}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -89,31 +89,31 @@ RSpec.describe ModelsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved model as @model" do
-        post :create, {:model => invalid_attributes}, valid_session
-        expect(assigns(:model)).to be_a_new(Model)
-      end
+    #context "with invalid params" do
+    #  it "assigns a newly created but unsaved model as @model" do
+    #    post :create, {:model => invalid_attributes}, valid_session
+    #    expect(assigns(:model)).to be_a_new(Model)
+    #  end
 
-      it "re-renders the 'new' template" do
-        post :create, {:model => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
+    #  it "re-renders the 'new' template" do
+    #    post :create, {:model => invalid_attributes}, valid_session
+    #    expect(response).to render_template("new")
+    #  end
+    #end
   end
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      #let(:new_attributes) {
+      #  skip("Add a hash of attributes valid for your model")
+      #}
 
-      it "updates the requested model" do
-        model = Model.create! valid_attributes
-        put :update, {:id => model.to_param, :model => new_attributes}, valid_session
-        model.reload
-        skip("Add assertions for updated state")
-      end
+      #it "updates the requested model" do
+      #  model = Model.create! valid_attributes
+      #  put :update, {:id => model.to_param, :model => new_attributes}, valid_session
+      #  model.reload
+      #  skip("Add assertions for updated state")
+      #end
 
       it "assigns the requested model as @model" do
         model = Model.create! valid_attributes
@@ -128,19 +128,19 @@ RSpec.describe ModelsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns the model as @model" do
-        model = Model.create! valid_attributes
-        put :update, {:id => model.to_param, :model => invalid_attributes}, valid_session
-        expect(assigns(:model)).to eq(model)
-      end
+    #context "with invalid params" do
+    #  it "assigns the model as @model" do
+    #    model = Model.create! valid_attributes
+    #    put :update, {:id => model.to_param, :model => invalid_attributes}, valid_session
+    #    expect(assigns(:model)).to eq(model)
+    #  end
 
-      it "re-renders the 'edit' template" do
-        model = Model.create! valid_attributes
-        put :update, {:id => model.to_param, :model => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
+    #  it "re-renders the 'edit' template" do
+    #    model = Model.create! valid_attributes
+    #    put :update, {:id => model.to_param, :model => invalid_attributes}, valid_session
+    #    expect(response).to render_template("edit")
+    #  end
+    #end
   end
 
   describe "DELETE #destroy" do

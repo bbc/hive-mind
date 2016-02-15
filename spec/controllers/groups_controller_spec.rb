@@ -27,9 +27,9 @@ RSpec.describe GroupsController, type: :controller do
     { name: 'Group 1' }
   }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  #let(:invalid_attributes) {
+  #  skip("Add a hash of attributes invalid for your model")
+  #}
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -87,31 +87,31 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved group as @group" do
-        post :create, {:group => invalid_attributes}, valid_session
-        expect(assigns(:group)).to be_a_new(Group)
-      end
+    #context "with invalid params" do
+    #  it "assigns a newly created but unsaved group as @group" do
+    #    post :create, {:group => invalid_attributes}, valid_session
+    #    expect(assigns(:group)).to be_a_new(Group)
+    #  end
 
-      it "re-renders the 'new' template" do
-        post :create, {:group => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
+    #  it "re-renders the 'new' template" do
+    #    post :create, {:group => invalid_attributes}, valid_session
+    #    expect(response).to render_template("new")
+    #  end
+    #end
   end
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      #let(:new_attributes) {
+      #  skip("Add a hash of attributes valid for your model")
+      #}
 
-      it "updates the requested group" do
-        group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => new_attributes}, valid_session
-        group.reload
-        skip("Add assertions for updated state")
-      end
+      #it "updates the requested group" do
+      #  group = Group.create! valid_attributes
+      #  put :update, {:id => group.to_param, :group => new_attributes}, valid_session
+      #  group.reload
+      #  skip("Add assertions for updated state")
+      #end
 
       it "assigns the requested group as @group" do
         group = Group.create! valid_attributes
@@ -126,19 +126,19 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns the group as @group" do
-        group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
-        expect(assigns(:group)).to eq(group)
-      end
+    #context "with invalid params" do
+    #  it "assigns the group as @group" do
+    #    group = Group.create! valid_attributes
+    #    put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+    #    expect(assigns(:group)).to eq(group)
+    #  end
 
-      it "re-renders the 'edit' template" do
-        group = Group.create! valid_attributes
-        put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
+    #  it "re-renders the 'edit' template" do
+    #    group = Group.create! valid_attributes
+    #    put :update, {:id => group.to_param, :group => invalid_attributes}, valid_session
+    #    expect(response).to render_template("edit")
+    #  end
+    #end
   end
 
   describe "DELETE #destroy" do
