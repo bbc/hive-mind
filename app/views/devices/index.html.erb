@@ -21,7 +21,7 @@
         <td><%= device.serial %></td>
         <td><%= device.asset_id %></td>
         <td><%= device.alternative %></td>
-        <td><%= device.model.name %></td>
+        <td><%= device.model ? device.model.name : '???' %></td>
         <td><%= link_to 'Show', device %></td>
         <td><%= link_to 'Edit', edit_device_path(device) %></td>
         <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>

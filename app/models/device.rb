@@ -98,7 +98,6 @@ class Device < ActiveRecord::Base
     os = OperatingSystem.find_or_create_by(name: options[:name], version: options[:version])
     if os != self.operating_system
       self.operating_system_histories.select{ |o| o.end_timestamp == nil }.each do |osh|
-puts self.operating_system_histories.last.operating_system.inspect
         osh.end_timestamp = Time.now
         osh.save
       end

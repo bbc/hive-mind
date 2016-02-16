@@ -17,6 +17,7 @@
         <% end %>
         
         <% if size == :full %>
+        <p>[<%= display_operating_system(device) %>]</p>
         <% if device.plugin %>
         <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
         <% end %>
