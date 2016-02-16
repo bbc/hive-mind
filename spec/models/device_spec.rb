@@ -493,4 +493,66 @@ RSpec.describe Device, type: :model do
       expect(device3.plugin_json_keys).to eq([])
     end
   end
+
+  describe '#operating_system' do
+    let(:device) { Device.create }
+
+    before(:each) do
+      device.set_os(name: 'OS name', version: '1.2.3')
+    end
+
+    it 'gets the current operating system' do
+      os = device.operating_system
+      expect(os.name).to eq 'OS name'
+      expect(os.version).to eq '1.2.3'
+    end
+  end
+
+  describe '#set_os' do
+    let(:device1) { Device.create }
+    let(:device2) { Device.create }
+
+    before(:each) do
+      device2.set_os(name: 'OS name', version: '1.2.3')
+    end
+
+    it 'sets the operating system' do
+      expect{
+        device1.set_os(name: 'OS name', version: '1.2.3')
+      }.to change(OperatingSystemHistory, :count).by 1
+      expect(device1.operating_system.name).to eq 'OS name'
+      expect(device1.operating_system.version).to eq '1.2.3'
+    end
+
+    it 'sets the start timestamp' do
+      device1.set_os(name: 'OS name', version: '1.2.3')
+      expect(device1.operating_system_histories.last.start_timestamp).to_not be_nil
+    end
+
+    it 'sets the end timestamp as nil' do
+      device1.set_os(name: 'OS name', version: '1.2.3')
+      expect(device1.operating_system_histories.last.end_timestamp).to be_nil
+    end
+
+    it 'updates the operating system' do
+      expect{
+        device2.set_os(name: 'OS name', version: '1.2.4')
+      }.to change(OperatingSystemHistory, :count).by 1
+      expect(device2.operating_system.name).to eq 'OS name'
+      expect(device2.operating_system.version).to eq '1.2.4'
+    end
+
+    it 'sets the end time of the previous version' do
+      last = device2.operating_system_histories.last
+      device2.set_os(name: 'OS name', version: '1.2.4')
+      last.reload
+      expect(last.end_timestamp).to_not be_nil
+    end
+
+    it 'does not update to the same operating system' do
+      expect{
+        device2.set_os(name: 'OS name', version: '1.2.3')
+      }.to change(OperatingSystemHistory, :count).by 0
+    end
+  end
 end

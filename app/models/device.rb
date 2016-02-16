@@ -6,6 +6,7 @@ class Device < ActiveRecord::Base
   belongs_to :plugin, polymorphic: true
   has_many :heartbeats, dependent: :delete_all
   has_many :device_actions
+  has_many :operating_system_histories
   
   accepts_nested_attributes_for :groups
 
@@ -91,5 +92,26 @@ class Device < ActiveRecord::Base
       end
     end
     return nil
+  end
+
+  def set_os options = {}
+    os = OperatingSystem.find_or_create_by(name: options[:name], version: options[:version])
+    if os != self.operating_system
+      self.operating_system_histories.select{ |o| o.end_timestamp == nil }.each do |osh|
+puts self.operating_system_histories.last.operating_system.inspect
+        osh.end_timestamp = Time.now
+        osh.save
+      end
+      OperatingSystemHistory.create(
+        device: self,
+        operating_system: os,
+        start_timestamp: Time.now
+      )
+      self.reload
+    end
+  end
+
+  def operating_system
+    self.operating_system_histories.last.operating_system if self.operating_system_histories.count > 0
   end
 end
