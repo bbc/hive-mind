@@ -33,6 +33,10 @@ class Api::DevicesController < ApplicationController
     if device_id and @device = Device.find_by(id: device_id)
       status = :accepted
       @device.update(create_parameters)
+      @device.set_os(
+        name: params[:device][:operating_system_name],
+        version: params[:device][:operating_system_version]
+      ) if params[:device].has_key?(:operating_system_name) || params[:device].has_key?(:operating_system_version)
       if @device.plugin
         filtered_params = params[:device].clone
         filtered_params.delete(:id)
@@ -58,6 +62,11 @@ class Api::DevicesController < ApplicationController
         end
       end
       @device= Device.create(create_parameters)
+      @device.set_os(
+        name: params[:device][:operating_system_name],
+        version: params[:device][:operating_system_version]
+      )
+
     end
 
     if @device.save

@@ -126,6 +126,13 @@ RSpec.describe Api::DevicesController, type: :controller do
         }
       }
 
+      let(:device_with_os) {
+        {
+          operating_system_name: 'Test OS',
+          operating_system_version: '1.2.3'
+        }
+      }
+
       it 'registeres the known device' do
         expect {
           post :register, {device: known_device_type}, valid_session
@@ -153,6 +160,33 @@ RSpec.describe Api::DevicesController, type: :controller do
       it 'overrides name set by engine' do
         post :register, {device: device_with_name}, valid_session
         expect(Device.last.name).to eq 'User defined device name'
+      end
+
+      it 'sets the operating system' do
+        post :register, {device: device_with_os}, valid_session
+        expect(Device.last.operating_system.name).to eq 'Test OS'
+        expect(Device.last.operating_system.version).to eq '1.2.3'
+      end
+
+      context 'existing device' do
+        let(:device_instance) { Device.new }
+        before(:each) {
+          device_instance.set_os(name: 'Old OS', version: '1.2.3')
+        }
+
+        it 'updates the operating system' do
+          post :register, {device: { id: device_instance.id, operating_system_name: 'New OS', operating_system_version: '2.4.6' } }
+          device_instance.reload
+          expect(device_instance.operating_system.name).to eq 'New OS'
+          expect(device_instance.operating_system.version).to eq '2.4.6'
+        end
+
+        it 'does not modify the operating system' do
+          post :register, {device: { id: device_instance.id } }
+          device_instance.reload
+          expect(device_instance.operating_system.name).to eq 'Old OS'
+          expect(device_instance.operating_system.version).to eq '1.2.3'
+        end
       end
     end
 

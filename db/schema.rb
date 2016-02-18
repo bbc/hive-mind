@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112111730) do
+ActiveRecord::Schema.define(version: 20160215102206) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -122,14 +122,6 @@ ActiveRecord::Schema.define(version: 20160112111730) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "hive_mind_tv_plugins", force: :cascade do |t|
-    t.string   "range"
-    t.string   "user_agent"
-    t.string   "name_seed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "ips", force: :cascade do |t|
     t.integer  "device_id"
     t.string   "ip"
@@ -156,6 +148,22 @@ ActiveRecord::Schema.define(version: 20160112111730) do
 
   add_index "models", ["brand_id"], name: "index_models_on_brand_id"
   add_index "models", ["device_type_id"], name: "index_models_on_device_type_id"
+
+  create_table "operating_system_histories", force: :cascade do |t|
+    t.integer  "device_id"
+    t.integer  "operating_system_id"
+    t.datetime "start_timestamp"
+    t.datetime "end_timestamp"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  create_table "operating_systems", force: :cascade do |t|
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "relationships", force: :cascade do |t|
     t.integer  "primary_id"
