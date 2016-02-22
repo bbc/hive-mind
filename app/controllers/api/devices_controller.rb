@@ -8,8 +8,11 @@ class Api::DevicesController < ApplicationController
     status = :created
     create_parameters = device_params
 
-    create_parameters[:ips] ||= []
-    create_parameters[:ips] = create_parameters[:ips].map{|i| Ip.find_or_create_by(ip: i)}
+    if create_parameters[:ips]
+      create_parameters[:ips] = create_parameters[:ips].map do |i|
+        mac = Ip.find_or_create_by(ip: i)
+      end
+    end
 
     # Find device if it already exists
     if create_parameters[:macs]
@@ -61,19 +64,27 @@ class Api::DevicesController < ApplicationController
           puts "Unknown device type"
         end
       end
-      @device= Device.create(create_parameters)
-      @device.set_os(
-        name: params[:device][:operating_system_name],
-        version: params[:device][:operating_system_version]
-      )
 
+      if create_parameters.length > 0
+        @device= Device.create(create_parameters)
+        @device.set_os(
+          name: params[:device][:operating_system_name],
+          version: params[:device][:operating_system_version]
+        )
+      else
+        status = params['device'].key?('id') ? :not_found : :unprocessable_entity
+      end
     end
 
-    if @device.save
-      @device.heartbeat
-      render 'devices/show', status: status
+    if [:accepted, :created].include?(status)
+      if @device.save
+        @device.heartbeat
+        render 'devices/show', status: status
+      else
+        render json: @device.errors, status: :unprocessable_entity
+      end
     else
-      render json: @device.errors, status: :unprocessable_entity
+      render json: { error: 'Registration failed' }, status: status
     end
   end
 
