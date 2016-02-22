@@ -26,9 +26,8 @@ integration:
 
 production:
   <<: *default
-  database: db/production.sqlite3
-  host: DATABASE_HOST
-  username: USERNAME
-  database: DATABASE_NAME
-  password: PASSWORD
+  host: ENV['DATABASE_HOST']
+  username: ENV['DATABASE_USERNAME']
+  database: ENV['DATABASE_NAME']
+  password: ENV['DATABASE_PASSWORD']
   adapter: mysql2
