@@ -45,6 +45,12 @@ RSpec.describe Api::DevicesController, type: :controller do
       }.to change(Device, :count).by(0)
     end
 
+    it 'does not register an unknown device only by id' do
+      expect {
+        post :register, {device: { id: 99 }}, valid_session
+      }.to change(Device, :count).by(0)
+    end
+
     it 'registers two devices with different MACs' do
       post :register, {device: device_with_mac1}, valid_session
       expect {
@@ -128,6 +134,8 @@ RSpec.describe Api::DevicesController, type: :controller do
 
       let(:device_with_os) {
         {
+          model: :test_model,
+          brand: :test_brand,
           operating_system_name: 'Test OS',
           operating_system_version: '1.2.3'
         }
