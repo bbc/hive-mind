@@ -26,8 +26,8 @@ integration:
 
 production:
   <<: *default
-  host: ENV['DATABASE_HOST']
-  username: ENV['DATABASE_USERNAME']
-  database: ENV['DATABASE_NAME']
-  password: ENV['DATABASE_PASSWORD']
+  host: <%=ENV['DATABASE_HOST']-%>
+  username: <%=ENV['DATABASE_USERNAME']-%>
+  database: <%=ENV['DATABASE_NAME']-%>
+  password: <%=ENV['DATABASE_PASSWORD']-%>
   adapter: mysql2
