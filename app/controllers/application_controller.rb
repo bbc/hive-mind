@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     redirect_to omniauth_origin || '/'
   end
 
+  def status
+    head :ok, content_type: "text/html"
+  end
+
   private
 
   def current_user
