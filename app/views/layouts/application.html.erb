@@ -9,6 +9,11 @@
     <title>Hive Mind</title>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <% Rails::Engine.subclasses.map{|e| e.name.split('::')[0].underscore}.select{|e| e =~ /^hive_mind_/}.each do |e| %>
+      <% if Rails.application.assets.find_asset "#{e}.js" %>
+        <%= javascript_include_tag e %>
+      <% end %>
+    <% end %>
   
     <%= csrf_meta_tags %>
 
