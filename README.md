@@ -70,7 +70,7 @@ To include engine specific javascript create a file
 //= require_tree './hive_mind_mydevice'
 ```
 
-and add the following lines to `lib/.../hive_mind_mydevice/engine.rb` inside
+and add the following lines to `lib/hive_mind_mydevice/engine.rb` inside
 the `Engine` class:
 
 ```ruby
