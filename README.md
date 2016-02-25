@@ -75,7 +75,7 @@ the `Engine` class:
 
 ```ruby
     initializer :assets do |app|
-      app.config.assets.precompile += %w( hive_mind_engine.js )
+      app.config.assets.precompile += %w( hive_mind_mydevice.js )
     end
 ```
 
