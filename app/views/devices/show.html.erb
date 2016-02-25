@@ -18,7 +18,16 @@
 
 <!-- Tab panes -->
 <div class="tab-content">
-  <div class="tab-pane fade in active" id="info">
+  <div role="tabpanel" class="tab-pane fade in active" id="info">
+    Info
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="logs">
+    Logs
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="actions">
+    <% if @device.plugin %>
+    <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
+    <% end %>
   </div>
 </div>
 

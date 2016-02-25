@@ -4,7 +4,7 @@
 
 For a device called 'mydevice' create a device engine with:
 
-```
+```bash
 rails plugin new hive_mind_mydevice --full --dummy-path=spec/dummy
 cd hive_mind_mydevice
 ```
@@ -15,7 +15,7 @@ Ensure that the tables created for the engine are correctly namespaced
 and make the migrations visible to the application by
 editing `lib/hive_mind_mydevice/engine.rb`:
 
-```
+```ruby
 module HiveMindMydevice
   class Engine < ::Rails::Engine
     isolate_namespace HiveMindMydevice
@@ -33,13 +33,13 @@ end
 
 Create a new model `Plugin` with relevant attributes:
 
-```
+```bash
 rails generate model plugin <attributes>
 ```
 
 Modify the `app/model/hive_mind_mydevice/plugin.rb` model:
 
-```
+```ruby
 module HiveMindMydevice
   class Plugin < ActiveRecord::Base
 
@@ -62,6 +62,16 @@ module HiveMindMydevice
   end
 end
 ```
+
+To include engine specific javascript create a file
+`app/assets/javascripts/hive_mind_mydevice.js` containing
+
+```ruby
+//= require_tree './hive_mind_mydevice'
+```
+
+and then put the javascript files in the directory
+`app/assets/javascripts/hive_mind_mydevice`.
 
 ### Using rspec to with engines
 
