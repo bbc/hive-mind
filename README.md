@@ -76,7 +76,7 @@ the `Engine` class:
 ```ruby
     initializer :assets do |app|
       app.config.assets.precompile += %w( hive_mind_engine.js )
-   end
+    end
 ```
 
 Now all the custom javascript files for the engine can be put in the directory
