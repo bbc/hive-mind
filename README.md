@@ -70,7 +70,16 @@ To include engine specific javascript create a file
 //= require_tree './hive_mind_mydevice'
 ```
 
-and then put the javascript files in the directory
+and add the following lines to `lib/.../hive_mind_mydevice/engine.rb` inside
+the `Engine` class:
+
+```ruby
+    initializer :assets do |app|
+      app.config.assets.precompile += %w( hive_mind_engine.js )
+   end
+```
+
+Now all the custom javascript files for the engine can be put in the directory
 `app/assets/javascripts/hive_mind_mydevice`.
 
 ### Using rspec to with engines
@@ -78,19 +87,19 @@ and then put the javascript files in the directory
 To use rspec for unit tests add `--skip-test-unit` to the
 `rails plugin new` command so that it is:
 
-```
+```bash
 rails plugin new hive_mind_mydevice --full --dummy-path=spec/dummy --skip-test-unit
 ```
 
 Then add the following line to the file `hive_mind_mydevice.gemspec`:
 
-```
+```ruby
 s.add_development_dependency 'rspec-rails'
 ```
 
 Edit the `lib/hive_mind_mydevice/engine.rb` file to include rspec:
 
-```
+```ruby
 module HiveMindMydevice
   class Engine < ::Rails::Engine
     config.generators do |g|
@@ -102,7 +111,7 @@ end
 
 Set up rspec with:
 
-```
+```bash
 bundle install
 rails generate rspec:install
 ```
@@ -110,7 +119,7 @@ rails generate rspec:install
 Finally, edit the `spec/rails_helper.rb` file to find the environment for the
 dummy Rails:
 
-```
+```ruby
 require File.expand_path('../dummy/config/environment', __FILE__)
 ```
 
@@ -119,13 +128,13 @@ require File.expand_path('../dummy/config/environment', __FILE__)
 Edit the file `config/database.yml` to specify the correct database
 credentials. Set up the assets:
 
-```
+```bash
 RAILS_ENV=production rake assets:precompile`
 ```
 
 Then run the server as:
 
-```
+```bash
 RAILS_ENV=production SECRET_KEY_BASE=YourSecret rails s -b 0.0.0.0
 ```
 
@@ -133,7 +142,7 @@ RAILS_ENV=production SECRET_KEY_BASE=YourSecret rails s -b 0.0.0.0
 
 To execute the integration tests run:
 
-```
+```bash
 RAILS_ENV=integration rspec spec_integration
 ```
 
