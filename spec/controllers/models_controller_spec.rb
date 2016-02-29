@@ -38,14 +38,6 @@ RSpec.describe ModelsController, type: :controller do
   # ModelsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all models as @models" do
-      model = Model.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:models)).to eq([model])
-    end
-  end
-
   describe "GET #show" do
     it "assigns the requested model as @model" do
       model = Model.create! valid_attributes
@@ -151,10 +143,10 @@ RSpec.describe ModelsController, type: :controller do
       }.to change(Model, :count).by(-1)
     end
 
-    it "redirects to the models list" do
+    it "redirects to /browse" do
       model = Model.create! valid_attributes
       delete :destroy, {:id => model.to_param}, valid_session
-      expect(response).to redirect_to(models_url)
+      expect(response).to redirect_to('/browse')
     end
   end
 

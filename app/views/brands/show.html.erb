@@ -3,12 +3,10 @@
 <% if @device_type %>
 <div class="row">
   <%= render("shared/device_type_card", device_type: @device_type, size: :condensed, card_link: '/browse?' ) -%>
-  <%= render("shared/hidden_cards", card_type: 'device-type') -%>
 </div>
 <% end %>
 <div class="row">
   <%= render("shared/brand_card", brand: @brand, size: :condensed, card_link: brands_path( device_type: @device_type) ) -%>
-  <%= render("shared/hidden_cards", card_type: :brand) -%>
 </div>
 
 

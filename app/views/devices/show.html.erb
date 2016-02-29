@@ -2,28 +2,48 @@
 
 <div class="row">
 <%= render("shared/device_card", device: @device, size: :condensed, card_link: '' ) -%>  
+<div class="btn btn-default pull-right"><%= link_to 'Edit', edit_device_path(@device) %></div>
 </div>
-
-
-
-
-<div class="row">
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
   <li class="active"><a href="#info" role="tab" data-toggle="tab">Details</a></li>
-  <li><a href="#logs" role="tab" data-toggle="tab">Logs</a></li>
   <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
 </ul>
 
 <!-- Tab panes -->
 <div class="tab-content">
+  
+<!-- Details tab -->
   <div role="tabpanel" class="tab-pane fade in active" id="info">
-    Info
+    
+    <br />
+    
+    <table class="table">
+    <% @device.details.each do |k,v| %>
+      <tr>
+      <th><%= k -%></th>
+      <td>
+      <% if v.class == Array %>
+        <% v.each do |i| %>
+          <%= i %><br />
+        <% end %>
+        
+      <% elsif v.class == Hash %>
+        <% v.each do |a,b| %>
+          <%= "#{a}: #{b}" %><br />
+        <% end %>
+        
+      <% else %>
+        <%= v -%>
+      <% end %>
+      </td>
+      </tr>
+    <% end %>
+    </table>
   </div>
-  <div role="tabpanel" class="tab-pane fade" id="logs">
-    Logs
-  </div>
+
+<!-- Actions tab -->
   <div role="tabpanel" class="tab-pane fade" id="actions">
     <% if @device.plugin %>
     <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
@@ -42,6 +62,3 @@
   </ul>
 </div>
 
-<div class="row">
-<%= link_to 'Edit', edit_device_path(@device) %>
-</div>

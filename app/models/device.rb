@@ -31,7 +31,17 @@ class Device < ActiveRecord::Base
   end
   
   def status
-    :unknown
+    # Very basic first implementation of statuses
+    last_hb = seconds_since_heartbeat
+    if last_hb.nil?   
+      :unknown
+    elsif last_hb > 90
+      :unresponsive
+    elsif last_hb > 600
+      :dead
+    else
+      :happy
+    end
   end
 
   def heartbeat options = {}
