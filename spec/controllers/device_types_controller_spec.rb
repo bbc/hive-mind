@@ -36,22 +36,6 @@ RSpec.describe DeviceTypesController, type: :controller do
   # DeviceTypesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "assigns all device_types as @device_types" do
-      device_type = DeviceType.create! valid_attributes
-      get :index, {}, valid_session
-      expect(assigns(:device_types)).to eq([device_type])
-    end
-  end
-
-  describe "GET #show" do
-    it "assigns the requested device_type as @device_type" do
-      device_type = DeviceType.create! valid_attributes
-      get :show, {:id => device_type.to_param}, valid_session
-      expect(assigns(:device_type)).to eq(device_type)
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new device_type as @device_type" do
       get :new, {}, valid_session
@@ -83,7 +67,7 @@ RSpec.describe DeviceTypesController, type: :controller do
 
       it "redirects to the created device_type" do
         post :create, {:device_type => valid_attributes}, valid_session
-        expect(response).to redirect_to(DeviceType.last)
+        expect(response).to redirect_to('/browse')
       end
     end
 
@@ -119,10 +103,10 @@ RSpec.describe DeviceTypesController, type: :controller do
         expect(assigns(:device_type)).to eq(device_type)
       end
 
-      it "redirects to the device_type" do
+      it "redirects to /browse" do
         device_type = DeviceType.create! valid_attributes
         put :update, {:id => device_type.to_param, :device_type => valid_attributes}, valid_session
-        expect(response).to redirect_to(device_type)
+        expect(response).to redirect_to('/browse')
       end
     end
 
