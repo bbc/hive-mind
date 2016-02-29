@@ -1,20 +1,20 @@
-<ul>
-  <li>Version: <%= device.plugin.version -%></li>
-  <li>Plugins:
-  <ul>
-  <% device.plugin.runner_plugins.each_pair do |p, v| %>
-    <li><%= p -%> (<%= v -%>)</li>
-  <% end %>
-  </ul></li>
-  <li>Connected devices:
-  <ul>
-  <% device.plugin.connected_devices.each do |d| %>
-    <li><%= link_to d.name, device_path(d) %> (<%= d.device_type %>)</li>
-    <ul>
-      <li><%= d.model.brand.name %>
-      <li><%= d.model.name %>
-    </ul>
-  <% end %>
-  </ul>
-  </li>
-</ul>
+<table>
+  <tr>
+    <th>Version:</th>
+    <td><%= device.plugin.version -%></td>
+  </tr>
+  <tr>
+    <th>Plugins:</th>
+    <td>
+    <% device.plugin.runner_plugins.each_pair do |p, v| %>
+      <%= p -%> (<%= v -%>)</br>
+    <% end %>
+    </td>
+  </tr>
+</table>
+
+<% device.plugin.connected_devices.each do |d| %>
+  <div class="inner-device col-xs-6">
+  <%= link_to d.name, device_path(d) %>
+  </div>
+<% end %>

@@ -1,23 +1,28 @@
     <div class="card card-device panel panel-default col-lg-3 col-md-4 col-sm-6 col-xs-12"
          href="<%= device_path(device) %>" >
-      <div class="panel-body">
+      <div class="card-body">
         
-        <% if size == :full %>
-        <div class="pull-right">
-        <span class="label label-default"><%= device.status -%></span>
-        <br />
-        <span class="label label-primary">Last seen: <%= device.seconds_since_heartbeat or '?' -%> s</span>
-        <br />
-        <span class="label label-primary"><%= device.asset_id -%></span>
+        <div class="col-xs-12">
+          <div class="pull-right">
+          <% if device.asset_id && !device.asset_id.empty? %>
+          <span class="label label-warning">Asset: <%= device.asset_id -%></span>
+          <% end %>
+          <%= status_label(device.status) %>
+          <span class="label label-primary"><span class="glyphicon glyphicon-eye-open"></span> <%= mini_duration(device.heartbeats.last.created_at) -%></span>
+          </div>
         </div>
-        <% end %>
+        
+        
         <h2><%= device.name -%></h2>
-        <% if device.serial && device.serial != '' %>
+        <% if device.serial && !device.serial.empty? %>
         <p class="lead"><code><%= device.serial -%></code></p>
         <% end %>
         
+        <% if device.operating_system && device.operating_system.name %>
+        <p><%= display_operating_system(device) %></p>
+        <% end %>
+        
         <% if size == :full %>
-        <p>[<%= display_operating_system(device) %>]</p>
         <% if device.plugin %>
         <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
         <% end %>

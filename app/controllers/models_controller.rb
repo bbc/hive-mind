@@ -37,7 +37,7 @@ class ModelsController < ApplicationController
 
     respond_to do |format|
       if @model.save
-        format.html { redirect_to models_url( brand: @model.brand, device_type: @model.device_type ), notice: 'Model was successfully created.' }
+        format.html { redirect_to @model, notice: 'Model was successfully created.' }
         format.json { render :show, status: :created, location: @model }
       else
         format.html { render :new }
@@ -65,7 +65,7 @@ class ModelsController < ApplicationController
   def destroy
     @model.destroy
     respond_to do |format|
-      format.html { redirect_to models_url, notice: 'Model was successfully destroyed.' }
+      format.html { redirect_to '/browse', notice: 'Model was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
