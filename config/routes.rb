@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback' => 'application#auth_callback'
 
   get 'api/devices/:id', to: 'devices#show', defaults: { format: :json }
+  get 'api/devices', to: 'devices#index', defaults: { format: :json }
   namespace :api, only: [ ], defaults: { format: :json } do
     resources :devices do
       collection do

@@ -6,6 +6,10 @@ RSpec.describe Api::DevicesController, type: :routing do
       expect(:get => "/api/devices/1").to route_to("devices#show", format: :json, id: "1")
     end
 
+    it "routes to #index in the devices controller" do
+      expect(:get => "/api/devices").to route_to("devices#index", format: :json)
+    end
+
     it 'routes to #register' do
       expect(post: '/api/devices/register').to route_to('api/devices#register', format: :json)
     end
