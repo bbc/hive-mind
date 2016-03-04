@@ -114,8 +114,14 @@ class Api::DevicesController < ApplicationController
 
   # PUT /action
   def action
-    action = DeviceAction.create(action_params)
-    render json: {}
+    status = :ok
+    if ( action = DeviceAction.find_by(action_params) ) && action.executed_at == nil
+      status = :already_reported
+    else
+      action = DeviceAction.create(action_params)
+    end
+
+    render json: {}, status: status
   end
 
   private
