@@ -21,8 +21,8 @@ class Device < ActiveRecord::Base
   def details
     details = ( self.plugin && self.plugin.methods.include?(:details) ) ? self.plugin.details : {}
     {
-      brand: self.model.brand.name,
-      model: self.model.name,
+      brand: self.model && self.model.brand && self.model.brand.name,
+      model: self.model && self.model.name,
       macs: mac_addresses,
       ips: ip_addresses
     }.merge(details)

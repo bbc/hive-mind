@@ -518,11 +518,36 @@ RSpec.describe Api::DevicesController, type: :controller do
 
   describe 'PUT #action' do
     let(:device) { Device.create(name: 'Test device') }
+    let(:device2) { Device.create(name: 'Test device 2') }
     let(:valid_options) {
       {
         device_id: device.id,
         action_type: 'redirect',
         body: 'http://test_url.com'
+      }
+    }
+
+    let(:valid_options_2) {
+      {
+        device_id: device2.id,
+        action_type: 'redirect',
+        body: 'http://test_url.com'
+      }
+    }
+
+    let(:valid_options_3) {
+      {
+        device_id: device.id,
+        action_type: 'display',
+        body: 'http://test_url.com'
+      }
+    }
+
+    let(:valid_options_4) {
+      {
+        device_id: device.id,
+        action_type: 'redirect',
+        body: 'http://test_url_2.com'
       }
     }
 
@@ -546,6 +571,43 @@ RSpec.describe Api::DevicesController, type: :controller do
     it 'sets the executed time to nil' do
       put :action, { device_action: valid_options }
       expect(DeviceAction.last.executed_at).to be_nil
+    end
+
+    it 'adds a second action for a different device' do
+      put :action, { device_action: valid_options }
+      expect {
+        put :action, { device_action: valid_options_2 }
+      }.to change(DeviceAction, :count).by 1
+    end
+
+    it 'adds a second action of a different type action' do
+      put :action, { device_action: valid_options }
+      expect {
+        put :action, { device_action: valid_options_3 }
+      }.to change(DeviceAction, :count).by 1
+    end
+
+    it 'adds a second action with a different body' do
+      put :action, { device_action: valid_options }
+      expect {
+        put :action, { device_action: valid_options_4 }
+      }.to change(DeviceAction, :count).by 1
+    end
+
+    it 'does not duplicate an action before it is executed' do
+      put :action, { device_action: valid_options }
+      expect {
+        put :action, { device_action: valid_options }
+      }.to change(DeviceAction, :count).by 0
+      expect(response).to have_http_status(:already_reported)
+    end
+
+    it 'allows a duplicate action after it has been executed' do
+      put :action, { device_action: valid_options }
+      put :poll, { poll: { id: device.id } }
+      expect {
+        put :action, { device_action: valid_options }
+      }.to change(DeviceAction, :count).by 1
     end
   end
 end
