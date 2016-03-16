@@ -9,6 +9,7 @@
 <ul class="nav nav-tabs" role="tablist">
   <li class="active"><a href="#info" role="tab" data-toggle="tab">Details</a></li>
   <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
+  <li><a href="#hive" role="tab" data-toggle="tab">Hive</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -16,9 +17,7 @@
   
 <!-- Details tab -->
   <div role="tabpanel" class="tab-pane fade in active" id="info">
-    
     <br />
-    
     <table class="table">
     <% @device.details.each do |k,v| %>
       <tr>
@@ -28,12 +27,10 @@
         <% v.each do |i| %>
           <%= i %><br />
         <% end %>
-        
       <% elsif v.class == Hash %>
         <% v.each do |a,b| %>
           <%= "#{a}: #{b}" %><br />
         <% end %>
-        
       <% else %>
         <%= v -%>
       <% end %>
@@ -49,8 +46,32 @@
     <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
     <% end %>
   </div>
-</div>
 
+<!-- Hive tab -->
+  <div role="tabpanel" class="tab-pane fade" id="hive">
+    <br />
+    <table class="table">
+      <tr>
+        <th>Queues</th>
+        <td>
+          <input type="hidden" id="device_id" value="<%= @device.id %>">
+          <select id="hive-queues" multiple="multiple" onchange="hive_queues_update()">
+          <% HiveQueue.all.each do |hq| %>
+            <option value="<%= hq.name %>"<%= (@device.hive_queues.include? hq) ? ' selected="selected"' : '' %>><%= hq.name %></option>
+          <% end %>
+            <option id="new-hive-queue" value="Enter new queue name ...">Enter new queue name ...</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#hive-queues').multiselect('select', null, true);
+      });
+    </script>
+  </div>
+
+</div>
 
 
 

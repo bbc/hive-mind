@@ -610,4 +610,105 @@ RSpec.describe Api::DevicesController, type: :controller do
       }.to change(DeviceAction, :count).by 1
     end
   end
+
+  describe 'PUT #hive_queues' do
+    let(:device) { Device.create(name: 'Test device') }
+    let(:hive_queue_1) { HiveQueue.create(name: 'queue_one', description: 'First test queue') }
+    let(:hive_queue_2) { HiveQueue.create(name: 'queue_two', description: 'Second test queue') }
+    let(:device_with_queue) { Device.create(name: 'Test device', hive_queues: [hive_queue_1]) }
+
+    it 'set a single hive queue for a device' do
+      put :hive_queues, {
+        device_id: device.id,
+        hive_queues: [
+          hive_queue_1.name
+        ]
+      }
+      device.reload
+      expect(device.hive_queues.length).to be 1
+      expect(device.hive_queues[0]).to eq hive_queue_1
+    end
+
+    it 'removes a single hive queue from a device' do
+      put :hive_queues, {
+        device_id: device_with_queue.id,
+        hive_queues: []
+      }
+      device_with_queue.reload
+      expect(device_with_queue.hive_queues.length).to be 0
+    end
+
+    it 'removes hive queues from a device if nil' do
+      put :hive_queues, {
+        device_id: device_with_queue.id
+      }
+      device_with_queue.reload
+      expect(device_with_queue.hive_queues.length).to be 0
+    end
+
+    it 'change hive queue for a device' do
+      put :hive_queues, {
+        device_id: device_with_queue.id,
+        hive_queues: [
+          hive_queue_2.name
+        ]
+      }
+      device_with_queue.reload
+      expect(device_with_queue.hive_queues.length).to be 1
+      expect(device_with_queue.hive_queues[0]).to eq hive_queue_2
+    end
+
+    it 'sets two hive queues for a device' do
+      put :hive_queues, {
+        device_id: device.id,
+        hive_queues: [
+          hive_queue_1.name,
+          hive_queue_2.name
+        ]
+      }
+      device.reload
+      expect(device.hive_queues.length).to be 2
+      expect(device.hive_queues.map{ |q| q.name }).to match_array([hive_queue_1.name, hive_queue_2.name])
+    end
+
+    it 'adds an unknown queue to a device' do
+      expect {
+        put :hive_queues, {
+          device_id: device.id,
+          hive_queues: [
+            'unknown queue'
+          ]
+        }
+      }.to change(HiveQueue, :count).by 1
+      device.reload
+      expect(device.hive_queues.length).to be 1
+      expect(device.hive_queues[0].name).to eq 'unknown queue'
+    end
+
+    it 'silently ignores a nil queue name' do
+      expect {
+        put :hive_queues, {
+          device_id: device.id,
+          hive_queues: [
+            nil
+          ]
+        }
+      }.to change(HiveQueue, :count).by 0
+      device.reload
+      expect(device.hive_queues.length).to be 0
+    end
+
+    it 'silently ignores an empty queue name' do
+      expect {
+        put :hive_queues, {
+          device_id: device.id,
+          hive_queues: [
+            ''
+          ]
+        }
+      }.to change(HiveQueue, :count).by 0
+      device.reload
+      expect(device.hive_queues.length).to be 0
+    end
+  end
 end

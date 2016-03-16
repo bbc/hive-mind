@@ -7,6 +7,7 @@ class Device < ActiveRecord::Base
   has_many :heartbeats, dependent: :delete_all
   has_many :device_actions
   has_many :operating_system_histories
+  has_and_belongs_to_many :hive_queues
   
   accepts_nested_attributes_for :groups
 
