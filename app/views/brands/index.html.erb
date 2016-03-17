@@ -14,8 +14,9 @@
     <%= render("shared/brand_card", brand: brand, size: :detailed, card_link: brand_path(brand, device_type: @device_type), device_type: @device_type) -%>
   <% end %>
 
-  <%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_brand_path ) %>
-
+  <% if Rails.application.config.manual_creation %>
+    <%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_brand_path ) %>
+  <% end %>
   
 </div>
 

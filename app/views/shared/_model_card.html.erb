@@ -3,14 +3,17 @@
   <div class="panel-body">
     
     <span class="badge pull-right"><%= model.device_count -%></span>
-    <h2><%= model.name -%></h2>
+    
+    <h1><%= model.best_name -%></h1>
     <% if size != :condensed %>
-  
-    <% if model.code %>
-    <p><code><%= model.code -%></code></p>
+    <% if model.display_name && !model.display_name.empty? && model.display_name != brand.name %>
+    <p class="lead"><code><%= model.name -%></code></p>
     <% end %>
-
-
-<% end %>
+    <% end %>
+  
+    <div class="card-buttons pull-right">
+    <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_model_path(model) %>
+    </div>
+  
   </div>
 </div>

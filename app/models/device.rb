@@ -1,4 +1,7 @@
 class Device < ActiveRecord::Base
+  
+  include DeviceStatus
+  
   belongs_to :model
   has_many :macs, dependent: :delete_all
   has_many :ips, dependent: :delete_all
@@ -30,20 +33,6 @@ class Device < ActiveRecord::Base
 
   def device_type
     self.model and self.model.device_type.classification
-  end
-  
-  def status
-    # Very basic first implementation of statuses
-    last_hb = seconds_since_heartbeat
-    if last_hb.nil?   
-      :unknown
-    elsif last_hb > 90
-      :unresponsive
-    elsif last_hb > 600
-      :dead
-    else
-      :happy
-    end
   end
 
   def heartbeat options = {}
@@ -94,7 +83,7 @@ class Device < ActiveRecord::Base
           return obj.identify_existing(options)
         end
       rescue NameError
-        puts "Unknown device type"
+        logger.info "Unknown device type"
       end
     end
 

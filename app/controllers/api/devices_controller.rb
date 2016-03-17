@@ -61,7 +61,7 @@ class Api::DevicesController < ApplicationController
           create_parameters[:plugin] = obj.create(obj.plugin_params(filtered_params))
           create_parameters[:name] ||= create_parameters[:plugin].name
         rescue NameError
-          puts "Unknown device type"
+          logger.debug "Unknown device type"
         end
       end
 

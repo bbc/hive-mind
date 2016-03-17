@@ -2,13 +2,14 @@
          href="<%= device_path(device) %>" >
       <div class="card-body">
         
-        <div class="col-xs-12">
+        <div class="row card-info-banner">
           <div class="pull-right">
           <% if device.asset_id && !device.asset_id.empty? %>
           <span class="label label-warning">Asset: <%= device.asset_id -%></span>
           <% end %>
           <%= status_label(device.status) %>
           <span class="label label-primary"><span class="glyphicon glyphicon-eye-open"></span> <%= mini_duration(device.heartbeats.last.created_at) -%></span>
+          <span class="device-id label"><%= device.id -%></span>
           </div>
         </div>
         
@@ -22,7 +23,7 @@
         <p><%= display_operating_system(device) %></p>
         <% end %>
         
-        <% if size == :full %>
+        <% if size != :condensed %>
         <% if device.plugin %>
         <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
         <% end %>
@@ -34,6 +35,12 @@
           </li>
           </ul>
         </p>
-        <% end %>
+      <% end %>
+      
+      <div class="card-buttons pull-right">
+      <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_device_path(device) %>
+      </div>
+
+      
       </div>
     </div>

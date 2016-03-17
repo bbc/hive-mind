@@ -1,26 +1,44 @@
 <p id="notice"><%= notice %></p>
 
+<div class="">
+
+
+
+<div>
 <% if @device_type %>
-<div class="row">
+  <div class="row">
   <%= render("shared/device_type_card", device_type: @device_type, size: :condensed, card_link: '/browse?' ) -%>
-</div>
+  </div>
 <% end %>
 
 <% if @brand %>
-<div class="row">
+  <div class="row">
   <%= render("shared/brand_card", brand: @brand, size: :condensed, card_link: brands_path( device_type: @device_type) ) -%>
-</div>
-<div class="row">
-  <%= render("shared/model_card", model: @model, size: :condensed, card_link: brand_path( @brand, device_type: @device_type ) ) -%>
-  <div class="pull-right">
-  <%= link_to raw('<button class="btn btn-default">Edit <span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_model_path(@model.id) %>
   </div>
-</div>
-<% else %>
-  <%= render("shared/model_card", model: @model, size: :condensed, card_link: '' ) -%>
-  <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_model_path(@model.id) %>
 <% end %>
 
+<div class="row">
+<div class="col-lg-5 col-md-6 col-sm-5 pull-right">
+  <% if @model.img_url %>
+  <img src="<%= @model.img_url %>" class="img-responsive model-image"></img>
+  <% end %>
+</div>
+
+<%= render("shared/model_card", model: @model, size: :condensed, card_link: brand_path( @brand, device_type: @device_type ) ) -%>
+
+
+<div class="col-lg-6 col-md-6 col-sm-7 col-xs-12">
+  <br />
+  <p><%= @model.description -%></p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<br />
+<hr />
 
 <div class="row">
   <div class="col-md-8 col-sm-6">
@@ -31,8 +49,6 @@
       <p class="lead">All <%= @model.name -%> devices</p>      
     <% end %>
   </div>
-  
-
 
   <div class="col-md-4 col-sm-6">
   <ul class="list-unstyled list-group">

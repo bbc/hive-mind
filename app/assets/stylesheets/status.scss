@@ -1,11 +1,23 @@
 .label-status {
 }
 
+.label-unknown {
+  background-color: #666666;  
+}
+
 .label-happy {
   background-color: #5cb85c;
 }
 
+.label-unhappy {
+  background-color: #d9534f;
+}
+
 .label-dead {
+  background-color: #d9534f;
+}
+
+.label-disconnected {
   background-color: #d9534f;
 }
 

@@ -10,15 +10,22 @@
 </div>
 
 
+<% if @models %>
 <div class="row">
-  <% @brand.models.each do |model| %>
+  <% @models.each do |model| %>
     <%= render("shared/model_card", model: model, size: :full, card_link: model_path(model.id, device_type: @device_type, brand: @brand) )  -%>
   <% end %>
-<%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_model_path( brand: @brand, device_type: @device_type) ) %>
+
+  <% if Rails.application.config.manual_creation %>  
+  <%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_model_path( brand: @brand, device_type: @device_type) ) %>
+  <% end %>
+
 </div>
 
 <br />
 <hr />
+
+<% end %>
 
 <% if @devices %>
 <div class="row device-row">
