@@ -45,7 +45,6 @@
     <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
     <% end %>
   </div>
-</div>
 
 
 <!-- Actions tab -->
@@ -79,15 +78,5 @@
     </script>
   </div>
 
-</div>
-
-
-
-  <ul class="list-unstyled">
-  <% @device.groups.each do |group| %>
-  <li><%= group.name %>: <strong><%= group.value %></strong></li>
-  <% end %>
-  </li>
-  </ul>
 </div>
 
