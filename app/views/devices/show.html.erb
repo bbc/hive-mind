@@ -80,7 +80,24 @@
     <br />
     <table class="table">
       <tr>
-        <th class="col-md-4">Queues</th>
+        <th class="col-md-1">Hive</th>
+        <td>
+          <div class="dropdown">
+            <% h = HiveMindHive::Plugin.find_by_connected_device(@device) %>
+            <button id="select-hive" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><%= h.nil? ? '[Disconnected]' : h.name %>
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu hive-select-menu">
+              <input type="hidden" class="hive_id" value="<%= h.nil? ? nil : h.id     %>">
+              <li><a href="#" id="disconnect">[Disconnected]</a></li>
+              <% Device.all.select{ |d| d.device_type == 'Hive' }.each do |h| %>
+              <li><a href="#" id="<%=h.id %>"><%= h.name %></a></li>
+              <% end %>
+            </ul>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th class="col-md-1">Queues</th>
         <td>
           <select id="hive-queues" multiple="multiple" onchange="hive_queues_update()">
           <% HiveQueue.all.each do |hq| %>
