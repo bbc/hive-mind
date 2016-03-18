@@ -4,7 +4,7 @@ class DevicesController < ApplicationController
   # GET /devices
   # GET /devices.json
   def index
-    @devices = Device.all.group_by { |d| d.model.device_type }
+    @devices = Device.all.group_by { |d| d.model && d.model.device_type }
   end
   
   def search
