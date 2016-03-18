@@ -115,7 +115,7 @@ class Api::DevicesController < ApplicationController
   # PUT /action
   def action
     status = :ok
-    if ( action = DeviceAction.find_by(action_params) ) && action.executed_at == nil
+    if ( action = DeviceAction.order(id: :desc).find_by(action_params) ) && action.executed_at == nil
       status = :already_reported
     else
       action = DeviceAction.create(action_params)
