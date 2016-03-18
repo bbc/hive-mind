@@ -124,6 +124,15 @@ class Api::DevicesController < ApplicationController
     render json: {}, status: status
   end
 
+  # PUT /hive_queues
+  def hive_queues
+    status = :ok
+    device = Device.find(params[:device_id])
+    device.hive_queues = params[:hive_queues] ? params[:hive_queues].select { |q| q.to_s != '' }.map { |q| hq = HiveQueue.find_or_create_by(name: q) } : []
+    device.save
+    render json: {}, status: status
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
