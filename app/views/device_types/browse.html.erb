@@ -3,8 +3,11 @@
 <div class="row">
   <% @device_types.each do |device_type| %>
   <%= render("shared/device_type_card", device_type: device_type, size: :large, card_link: brands_path( device_type: device_type.id )) -%>
-  <% end %>
+<% end %>
+
+<% if Rails.application.config.manual_creation %>
   <%= link_to( raw('<button class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></button>'), new_device_type_path ) %>
+<% end %>
 
 </div>
 

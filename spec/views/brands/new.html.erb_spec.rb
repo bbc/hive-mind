@@ -4,7 +4,7 @@ RSpec.describe "brands/new", type: :view do
   before(:each) do
     assign(:brand, Brand.new(
       :name => "MyString",
-      :code => "MyString",
+      :display_name => "MyString",
       :alternative => "MyString"
     ))
   end
@@ -16,7 +16,7 @@ RSpec.describe "brands/new", type: :view do
 
       assert_select "input#brand_name[name=?]", "brand[name]"
 
-      assert_select "input#brand_code[name=?]", "brand[code]"
+      assert_select "input#brand_display_name[name=?]", "brand[display_name]"
 
       assert_select "input#brand_alternative[name=?]", "brand[alternative]"
     end

@@ -4,7 +4,7 @@ class BrandsController < ApplicationController
   # GET /brands
   # GET /brands.json
   def index
-    @brands = Brand.all
+    @brands = Brand.all    
     if params[:device_type] && params[:device_type] != ''
       @device_type = DeviceType.find(params[:device_type].to_i)
       @brands = @brands.select { |b| b.models.collect { |m| m.device_type }.include? @device_type }
@@ -16,8 +16,11 @@ class BrandsController < ApplicationController
   def show
     if params[:device_type] && params[:device_type] != ''
       @device_type = DeviceType.find(params[:device_type].to_i)
+      @models = @brand.models.where( device_type: @device_type )
+      @devices = @models.collect {|m| m.devices }.flatten.uniq
+    else
+      @devices = @brand.models.collect {|m| m.devices }.flatten.uniq
     end
-    @devices = @brand.models.collect {|m| m.devices }.flatten.uniq
   end
 
   # GET /brands/new
@@ -77,6 +80,6 @@ class BrandsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def brand_params
-      params.require(:brand).permit(:name, :code, :alternative)
+      params.require(:brand).permit(:name, :display_name, :alternative)
     end
 end

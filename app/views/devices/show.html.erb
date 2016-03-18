@@ -1,8 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="row">
-<%= render("shared/device_card", device: @device, size: :condensed, card_link: '' ) -%>  
-<div class="btn btn-default pull-right"><%= link_to 'Edit', edit_device_path(@device) %></div>
+<%= render("shared/device_card", device: @device, size: :condensed, card_link: '' ) -%>
 </div>
 
 <!-- Nav tabs -->
@@ -39,6 +38,15 @@
     <% end %>
     </table>
   </div>
+
+<!-- Associations tab -->
+  <div role="tabpanel" class="tab-pane fade" id="actions">
+    <% if @device.plugin %>
+    <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
+    <% end %>
+  </div>
+</div>
+
 
 <!-- Actions tab -->
   <div role="tabpanel" class="tab-pane fade" id="actions">

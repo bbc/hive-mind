@@ -11,31 +11,45 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :brand_id %><br>
+  <div>
+
+  <div class="field form-group row">
+    <%= f.label :brand_id, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
     <%= f.collection_select(:brand_id, Brand.all, :id, :name) %>
+    </div>
   </div>
   
-  <div class="field">
-    <%= f.label :device_type_id %><br>
+  <div class="field form-group row">
+    <%= f.label :device_type_id, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
     <%= f.collection_select(:device_type_id, DeviceType.all, :id, :classification) -%>
+    </div>
   </div>
   
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :alternative %><br>
-    <%= f.text_field :alternative %>
+  <div class="field form-group row">
+    <%= f.label :name, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
+    <%= f.text_field :name, disabled: true, class: :form_control %>
+    </div>
   </div>
   
+  <div class="field form-group row">
+    <%= f.label :display_name, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
+    <%= f.text_field :display_name %>
+    </div>
+  </div> 
+
+  <div class="field form-group row">
+    <%= f.label :description, class: 'col-sm-2 form-control-label' %>
+    <div class="col-sm-10">
+    <%= f.text_field :description, class: :form_control %>
+    </div>
+  </div> 
   
   <div class="actions">
     <%= f.submit %>
+  </div>
   </div>
 <% end %>

@@ -1,18 +1,28 @@
 <p id="notice"><%= notice %></p>
 
-<% @devices.each do |device| %>
-    
-  <div class="row">
-  <%= render("shared/device_card", device: device, size: :condensed, card_link: '' ) -%>
+<% @devices.each do |type, devices| %>
 
-    <div class="btn-group">
-      <div class="btn btn-default"><%= link_to 'Show', device %></div>
-      <div class="btn btn-default"><%= link_to 'Edit', edit_device_path(device) %></div>
-      <div class="btn btn-default"><%= link_to 'Delete', device, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title"><%= type.classification %></h1>
+      </div>
+      <div class="panel-body">
+
+        <% devices.each do |device| %>
+        <%= render("shared/device_card", device: device, size: :condensed, card_link: device_url(device) ) -%>
+        <% end %>
+  
+      </div>
     </div>
-    </div>
-<% end %>
+  </div>
+
+  <% end %>
 
 <br>
 
-<%= link_to 'New Device', new_device_path %>
+
+<script>
+  add_links_to_cards();
+  equalize_card_heights('.card-device');
+</script>

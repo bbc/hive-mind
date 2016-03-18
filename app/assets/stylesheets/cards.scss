@@ -86,10 +86,15 @@ li.list-group-item {
   padding-bottom: 2px;
 }
 
-
-.card-buttons {
+span.device-id {
+  border-color: white;
+  border: solid;
+  border-width: 1px;
 }
 
+.card-info-banner {
+  margin-top: 5px;
+}
 
 .card-slip {
   width: 10px;
