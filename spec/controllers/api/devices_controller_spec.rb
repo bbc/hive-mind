@@ -609,6 +609,17 @@ RSpec.describe Api::DevicesController, type: :controller do
         put :action, { device_action: valid_options }
       }.to change(DeviceAction, :count).by 1
     end
+
+    it 'does not duplicate a retried action before it is executed' do
+      put :action, { device_action: valid_options }
+      put :poll, { poll: { id: device.id } }
+      put :action, { device_action: valid_options }
+      expect {
+        put :action, { device_action: valid_options }
+      }.to change(DeviceAction, :count).by 0
+      expect(response).to have_http_status(:already_reported)
+    end
+
   end
 
   describe 'PUT #hive_queues' do
