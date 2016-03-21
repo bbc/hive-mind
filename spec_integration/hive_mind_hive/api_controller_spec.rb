@@ -25,6 +25,20 @@ RSpec.describe HiveMindHive::ApiController, type: :controller do
       }.to change(Relationship, :count).by 0
       expect(response.status).to eq 422
     end
+
+    it 'returns an unprocessable entity status for missing hive_id' do
+      expect {
+        put :connect, { connection: { device_id: device.id } }
+      }.to change(Relationship, :count).by 0
+      expect(response.status).to eq 422
+    end
+
+    it 'returns an unprocessable entity status for missing device_id' do
+      expect {
+        put :connect, { connection: { hive_id: hive.id } }
+      }.to change(Relationship, :count).by 0
+      expect(response.status).to eq 422
+    end
   end
 
   describe '#disconnect' do
@@ -48,6 +62,22 @@ RSpec.describe HiveMindHive::ApiController, type: :controller do
       hive.plugin.connect(device)
       expect {
         put :disconnect, { connection: { hive_id: non_hive.id, device_id: device.id } }
+      }.to change(Relationship, :count).by 0
+      expect(response.status).to eq 422
+    end
+
+    it 'returns an unprocessable entity status for missing hive_id' do
+      hive.plugin.connect(device)
+      expect {
+        put :disconnect, { connection: { device_id: device.id } }
+      }.to change(Relationship, :count).by 0
+      expect(response.status).to eq 422
+    end
+
+    it 'returns an unprocessable entity status for missing device_id' do
+      hive.plugin.connect(device)
+      expect {
+        put :disconnect, { connection: { hive_id: hive.id } }
       }.to change(Relationship, :count).by 0
       expect(response.status).to eq 422
     end

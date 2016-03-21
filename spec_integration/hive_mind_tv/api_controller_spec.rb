@@ -22,5 +22,10 @@ RSpec.describe HiveMindTv::ApiController, type: :controller do
       put :set_application, { device: { id: 999, application: 'Test app' } }
       expect(response).to have_http_status(:not_found)
     end
+
+    it 'returns unprocessable entity status if id is missing' do
+      put :set_application, { device: { application: 'Test app' } }
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 end
