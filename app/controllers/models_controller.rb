@@ -12,6 +12,8 @@ class ModelsController < ApplicationController
     
     if params[:brand] && params[:brand] != ""
       @brand = Brand.find(params[:brand].to_i)
+    else
+      @brand = @model.brand
     end
     
     
