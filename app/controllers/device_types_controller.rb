@@ -22,7 +22,7 @@ class DeviceTypesController < ApplicationController
 
     respond_to do |format|
       if @device_type.save
-        format.html { redirect_to '/browse', notice: 'Device type was successfully created.' }
+        format.html { redirect_to '/browse', notice: 'Device type was successfully created.', protocol: redirect_protocol }
         format.json { render :show, status: :created, location: @device_type }
       else
         format.html { render :new }
@@ -36,7 +36,7 @@ class DeviceTypesController < ApplicationController
   def update
     respond_to do |format|
       if @device_type.update(device_type_params)
-        format.html { redirect_to '/browse', notice: 'Device type was successfully updated.' }
+        format.html { redirect_to '/browse', notice: 'Device type was successfully updated.', protocol: redirect_protocol }
         format.json { render :show, status: :ok, location: @device_type }
       else
         format.html { render :edit }
@@ -50,7 +50,7 @@ class DeviceTypesController < ApplicationController
   def destroy
     @device_type.destroy
     respond_to do |format|
-      format.html { redirect_to device_types_url, notice: 'Device type was successfully destroyed.' }
+      format.html { redirect_to device_types_url, notice: 'Device type was successfully destroyed.', protocol: redirect_protocol }
       format.json { head :no_content }
     end
   end

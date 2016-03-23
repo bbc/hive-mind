@@ -33,7 +33,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-        format.html { redirect_to @device, notice: 'Device was successfully created.' }
+        format.html { redirect_to @device, notice: 'Device was successfully created.', protocol: redirect_protocol  }
         format.json { render :show, status: :created, location: @device }
       else
         format.html { render :new }
@@ -47,7 +47,7 @@ class DevicesController < ApplicationController
   def update
     respond_to do |format|
       if @device.update(device_params)
-        format.html { redirect_to @device, notice: 'Device was successfully updated.' }
+        format.html { redirect_to @device, notice: 'Device was successfully updated.', protocol: redirect_protocol }
         format.json { render :show, status: :ok, location: @device }
       else
         format.html { render :edit }
@@ -61,7 +61,7 @@ class DevicesController < ApplicationController
   def destroy
     @device.destroy
     respond_to do |format|
-      format.html { redirect_to devices_url, notice: 'Device was successfully destroyed.' }
+      format.html { redirect_to devices_url, notice: 'Device was successfully destroyed.', protocol: redirect_protocol }
       format.json { head :no_content }
     end
   end

@@ -16,6 +16,14 @@ class ApplicationController < ActionController::Base
     head :ok, content_type: "text/html"
   end
 
+  def redirect_protocol
+    if request.ssl? || Rails.configuration.x.https_redirects
+      'https://'
+    else
+      'http://'
+    end
+  end
+
   private
 
   def current_user

@@ -37,9 +37,11 @@
         </p>
       <% end %>
       
+      <% if size == :edit %>
       <div class="card-buttons pull-right">
       <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_device_path(device) %>
       </div>
+      <% end %>
 
       
       </div>

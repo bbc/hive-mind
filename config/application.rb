@@ -22,5 +22,8 @@ module HiveMind
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    # Override https redirects
+    config.x.https_redirects = ENV['RAILS_HTTPS_REDIRECTS'].present?
   end
 end
