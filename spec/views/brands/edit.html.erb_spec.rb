@@ -4,8 +4,7 @@ RSpec.describe "brands/edit", type: :view do
   before(:each) do
     @brand = assign(:brand, Brand.create!(
       :name => "MyString",
-      :code => "MyString",
-      :alternative => "MyString"
+      :display_name => "MyString",
     ))
   end
 
@@ -16,9 +15,8 @@ RSpec.describe "brands/edit", type: :view do
 
       assert_select "input#brand_name[name=?]", "brand[name]"
 
-      assert_select "input#brand_code[name=?]", "brand[code]"
+      assert_select "input#brand_display_name[name=?]", "brand[display_name]"
 
-      assert_select "input#brand_alternative[name=?]", "brand[alternative]"
     end
   end
 end

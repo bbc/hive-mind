@@ -18,7 +18,6 @@ RSpec.describe "brands/new", type: :view do
 
       assert_select "input#brand_display_name[name=?]", "brand[display_name]"
 
-      assert_select "input#brand_alternative[name=?]", "brand[alternative]"
     end
   end
 end

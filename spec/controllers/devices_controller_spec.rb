@@ -18,10 +18,10 @@ RSpec.describe DevicesController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #index" do
-    it "assigns all devices as @devices" do
+    it "assigns all devices as @devices grouped by type" do
       device = Device.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:devices)).to eq([device])
+      expect(assigns(:devices)).to eq(nil => [device])
     end
   end
 
