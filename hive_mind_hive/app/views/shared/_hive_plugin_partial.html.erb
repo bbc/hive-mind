@@ -14,7 +14,10 @@
 </table>
 
 <% device.plugin.connected_devices.each do |d| %>
-  <div class="inner-device col-xs-6">
+  <div class="inner-device col-xs-6 label-status label-<%=d.status.to_s-%>">
   <%= link_to d.name, device_path(d) %>
+  <% if d.status != :happy %>
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <% end %>
   </div>
 <% end %>
