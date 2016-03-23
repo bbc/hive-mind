@@ -37,7 +37,7 @@ class ModelsController < ApplicationController
 
     respond_to do |format|
       if @model.save
-        format.html { redirect_to @model, notice: 'Model was successfully created.' }
+        format.html { redirect_to @model, notice: 'Model was successfully created.', protocol: redirect_protocol }
         format.json { render :show, status: :created, location: @model }
       else
         format.html { render :new }
@@ -51,7 +51,7 @@ class ModelsController < ApplicationController
   def update
     respond_to do |format|
       if @model.update(model_params)
-        format.html { redirect_to @model, notice: 'Model was successfully updated.' }
+        format.html { redirect_to @model, notice: 'Model was successfully updated.', protocol: redirect_protocol }
         format.json { render :show, status: :ok, location: @model }
       else
         format.html { render :edit }
@@ -65,7 +65,7 @@ class ModelsController < ApplicationController
   def destroy
     @model.destroy
     respond_to do |format|
-      format.html { redirect_to '/browse', notice: 'Model was successfully destroyed.' }
+      format.html { redirect_to '/browse', notice: 'Model was successfully destroyed.', protocol: redirect_protocol }
       format.json { head :no_content }
     end
   end
