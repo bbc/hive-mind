@@ -18,10 +18,12 @@
         <% if device.serial && !device.serial.empty? %>
         <p class="lead"><code><%= device.serial -%></code></p>
         <% end %>
-        
+      
+        <p><%= device.model.brand.name %> <%= device.model.name %>
         <% if device.operating_system && device.operating_system.name %>
-        <p><%= display_operating_system(device) %></p>
+        - <em><%= display_operating_system(device) %></em>
         <% end %>
+        </p>
         
         <% if size != :condensed %>
         <% if device.plugin %>

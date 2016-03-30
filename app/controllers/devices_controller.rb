@@ -8,8 +8,8 @@ class DevicesController < ApplicationController
   end
   
   def search
-    @search_string = params[:name_cont]
-    @devices = Device.search(params).result.distinct(:true)
+    @search_string = params[:search_string]
+    @devices = Device.search(name_or_serial_or_model_name_cont: @search_string).result.distinct(:true)
   end
 
   # GET /devices/1
