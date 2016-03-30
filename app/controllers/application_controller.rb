@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
+  helper_method :automatic_refresh
 
   def auth_callback
     current_user
@@ -14,6 +15,12 @@ class ApplicationController < ActionController::Base
 
   def status
     head :ok, content_type: "text/html"
+  end
+  
+  def automatic_refresh
+    if params[:refresh] && params[:refresh].to_i > 0
+      params[:refresh].to_i * 1000
+    end
   end
 
   def redirect_protocol
