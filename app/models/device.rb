@@ -89,7 +89,7 @@ class Device < ActiveRecord::Base
     end
 
     if options.has_key?(:macs)
-      options[:macs].each do |m|
+      options[:macs].compact.each do |m|
         return Device.find(m.device_id) if m.device_id
       end
     end

@@ -9,14 +9,14 @@ class Api::DevicesController < ApplicationController
     create_parameters = device_params
 
     if create_parameters[:ips]
-      create_parameters[:ips] = create_parameters[:ips].map do |i|
+      create_parameters[:ips] = create_parameters[:ips].compact.map do |i|
         mac = Ip.find_or_create_by(ip: i)
       end
     end
 
     # Find device if it already exists
     if create_parameters[:macs]
-      create_parameters[:macs] = create_parameters[:macs].map do |m|
+      create_parameters[:macs] = create_parameters[:macs].compact.map do |m|
         mac = Mac.find_or_create_by(mac: m)
       end
     end
