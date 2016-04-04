@@ -90,20 +90,27 @@ class Api::DevicesController < ApplicationController
 
   # PUT /poll
   def poll
+    poll_type = params[:poll][:poll_type] || 'active'
     begin
       reporting_device = Device.find(params[:poll][:id])
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
         # Reporting a list of devices
+        @device_actions = {}
         args = { reported_by: reporting_device }
         @devices = params[:poll][:devices].map { |d| Device.find(d) }
         @devices.each do |d|
           d.heartbeat( reported_by: reporting_device )
+          if poll_type == 'active'
+            @device_actions[d.id] = d.execute_action
+          end
         end
         render 'devices/index', status: :ok
       else
         # Reporting a single device
         reporting_device.heartbeat
-        @device_action = reporting_device.execute_action
+        if poll_type == 'active'
+          @device_action = reporting_device.execute_action
+        end
         @device = reporting_device
         render 'devices/show', status: :ok
       end
@@ -118,7 +125,7 @@ class Api::DevicesController < ApplicationController
     if ( action = DeviceAction.order(id: :desc).find_by(action_params) ) && action.executed_at == nil
       status = :already_reported
     else
-      action = DeviceAction.create(action_params)
+      status = DeviceAction.create(action_params).valid? ? :ok : :unprocessable_entity
     end
 
     render json: {}, status: status

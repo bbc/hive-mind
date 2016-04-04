@@ -510,8 +510,40 @@ RSpec.describe Api::DevicesController, type: :controller do
 
       it 'returns an action with the poll response' do
         put :action, { device_action: valid_options }
+        put :poll, { poll: { id: device.id, poll_type: 'active' } }
+        expect(assigns(:device_action)).to eq DeviceAction.last
+      end
+
+      it 'returns an action with the poll response (default poll type)' do
+        put :action, { device_action: valid_options }
         put :poll, { poll: { id: device.id } }
         expect(assigns(:device_action)).to eq DeviceAction.last
+      end
+
+      it 'does not return an action for a passive poll' do
+        put :action, { device_action: valid_options }
+        put :poll, { poll: { id: device.id, poll_type: 'passive' } }
+        expect(assigns(:device_action)).to be_nil
+      end
+
+      context 'polled by another device' do
+        it 'returns an action with the poll response' do
+          put :action, { device_action: valid_options }
+          put :poll, { poll: { id: device2.id, devices: [ device.id], poll_type: 'active' } }
+          expect(assigns(:device_actions)[device.id]).to eq DeviceAction.last
+        end
+
+        it 'returns an action with the poll response (default poll type)' do
+          put :action, { device_action: valid_options }
+          put :poll, { poll: { id: device2.id, devices: [ device.id] } }
+          expect(assigns(:device_actions)[device.id]).to eq DeviceAction.last
+        end
+
+        it 'does not return an action for a passive poll' do
+          put :action, { device_action: valid_options }
+          put :poll, { poll: { id: device2.id, devices: [ device.id ],  poll_type: 'passive' } }
+          expect(assigns(:device_actions)[device.id]).to be_nil
+        end
       end
     end
   end
@@ -524,6 +556,24 @@ RSpec.describe Api::DevicesController, type: :controller do
         device_id: device.id,
         action_type: 'redirect',
         body: 'http://test_url.com'
+      }
+    }
+    let(:missing_device_id) {
+      {
+        action_type: 'redirect',
+        body: 'http://test_url.com'
+      }
+    }
+    let(:missing_type) {
+      {
+        device_id: device.id,
+        body: 'http://test_url.com'
+      }
+    }
+    let(:missing_body) {
+      {
+        device_id: device.id,
+        action_type: 'redirect',
       }
     }
 
@@ -620,6 +670,26 @@ RSpec.describe Api::DevicesController, type: :controller do
       expect(response).to have_http_status(:already_reported)
     end
 
+    it 'does not add an action with a missing device id' do
+      expect {
+        put :action, { device_action: missing_device_id }
+      }.to change(DeviceAction, :count).by 0
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'does not add an action with a missing type' do
+      expect {
+        put :action, { device_action: missing_type }
+      }.to change(DeviceAction, :count).by 0
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'does not add an action with a missing body' do
+      expect {
+        put :action, { device_action: missing_body }
+      }.to change(DeviceAction, :count).by 0
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 
   describe 'PUT #hive_queues' do
