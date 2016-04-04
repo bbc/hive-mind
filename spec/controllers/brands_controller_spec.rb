@@ -83,7 +83,7 @@ RSpec.describe BrandsController, type: :controller do
 
       it "redirects to the created brand" do
         post :create, {:brand => valid_attributes}, valid_session
-        expect(response).to redirect_to('/brands')
+        expect(response).to redirect_to(Brand.last)
       end
     end
 
