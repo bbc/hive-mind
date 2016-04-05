@@ -1,4 +1,4 @@
-json.extract! device, :id, :name, :serial, :asset_id, :alternative, :model_id, :created_at, :updated_at, :device_type, :hive_queues, :status
+json.extract! device, :id, :name, :serial, :asset_id, :alternative, :model_id, :created_at, :updated_at, :device_type, :hive_queues, :status, :ip_addresses, :mac_addresses
 
 if device.model
   json.model device.model.name
