@@ -98,7 +98,7 @@ module HiveMindHive
     end
 
     def connected_devices
-      Relationship.where(primary: self.device).map { |r| r.secondary }
+      Device.where( id: Relationship.where(primary: self.device).pluck(:secondary_id) )
     end
 
     def self.plugin_params params
