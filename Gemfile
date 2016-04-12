@@ -10,7 +10,6 @@ gem 'hive_mind_generic', path: 'hive_mind_generic'
 ##############################################################################
 gem 'rails', '4.2.4'
 gem 'thin', '~> 1.6'
-gem 'mysql2', '~> 0.3.20'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_flash_messages', '~> 1.0.1'
@@ -38,4 +37,8 @@ group :integration do
   gem 'hive_mind_hive', path: 'hive_mind_hive'
   gem 'hive_mind_mobile', git: 'https://github.com/bbc/hive_mind_mobile'
   gem 'hive_mind_tv', git: 'https://github.com/bbc/hive_mind_tv'
+end
+
+group :production do
+  gem 'mysql2', '~> 0.3.20'
 end
