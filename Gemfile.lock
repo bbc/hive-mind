@@ -217,7 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-multiselect-rails
+  bootstrap-multiselect-rails (~> 0.9)
   bootstrap-sass (~> 3.3.5)
   bootstrap_flash_messages (~> 1.0.1)
   hive_mind_generic!
