@@ -1,10 +1,10 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: [:show, :edit, :update, :destroy]
+  before_action :set_device, only: [:edit, :update, :destroy]
 
   # GET /devices
   # GET /devices.json
   def index
-    @devices = Device.all.group_by { |d| d.model && d.model.device_type }
+    @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).all.group_by { |d| d.model && d.model.device_type }
   end
   
   def search
@@ -15,6 +15,7 @@ class DevicesController < ApplicationController
   # GET /devices/1
   # GET /devices/1.json
   def show
+    @device = Device.includes(:ips, :macs, :model, :brand, :plugin, :hive_queues, :related_devices => [ :ips, :macs, :model, :brand, :plugin, :hive_queues ]).find(params['id'])
   end
 
   # GET /devices/new
