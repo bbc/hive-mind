@@ -3,6 +3,7 @@ class Device < ActiveRecord::Base
   include DeviceStatus
   
   belongs_to :model
+  has_one :brand, through: :model
   has_many :macs, dependent: :delete_all
   has_many :ips, dependent: :delete_all
   has_and_belongs_to_many :groups
@@ -10,9 +11,11 @@ class Device < ActiveRecord::Base
   has_many :heartbeats, dependent: :delete_all
   has_many :device_actions
   has_many :operating_system_histories
+  has_many :operating_systems, through: :operating_system_histories
   has_and_belongs_to_many :hive_queues
-  
   accepts_nested_attributes_for :groups
+  has_many :relationships, foreign_key: :primary_id
+  has_many :related_devices, through: :relationships, foreign_key: :primary_id, primary_key: :secondary_id, class_name: "Device", source: :secondary
 
   def mac_addresses
     self.macs.map { |m| m.mac }
@@ -33,7 +36,7 @@ class Device < ActiveRecord::Base
   end
 
   def device_type
-    self.model and self.model.device_type.classification
+    model.device_type.classification
   end
 
   def heartbeat options = {}
@@ -112,7 +115,8 @@ class Device < ActiveRecord::Base
     end
   end
 
+
   def operating_system
-    self.operating_system_histories.last.operating_system if self.operating_system_histories.count > 0
+    self.operating_systems.last
   end
 end

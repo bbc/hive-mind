@@ -92,7 +92,7 @@ class Api::DevicesController < ApplicationController
   def poll
     poll_type = params[:poll][:poll_type] || 'active'
     begin
-      reporting_device = Device.find(params[:poll][:id])
+      reporting_device = Device.includes(:model, :brand).find(params[:poll][:id])
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
         # Reporting a list of devices
         @device_actions = {}
