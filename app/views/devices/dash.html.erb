@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+
+  <% @devices.each do |device| %>
+    <%= render("shared/device_card", device: device, size: :full, card_link: device_url(device) ) -%>
+  <% end %>
+
+</div>
+
+<script>
+  add_links_to_cards();
+  equalize_card_heights('.card-device');
+  setTimeout( function() { toggleMiniViewDetails('data-device-model') }, 5000 )
+</script>
+

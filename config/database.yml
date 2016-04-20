@@ -9,7 +9,7 @@ default: &default
   pool: 5
   timeout: 5000
 
-development:
+production:
   <<: *default
   database: db/development.sqlite3
 
@@ -24,10 +24,10 @@ integration:
   <<: *default
   database: db/integration.sqlite3
 
-production:
+development:
   <<: *default
   host: <%=ENV['DATABASE_HOST'] || 'localhost' %>
   username: <%=ENV['DATABASE_USERNAME'] || 'root' %>
-  database: <%=ENV['DATABASE_NAME'] || 'hivemind' %>
+  database: <%=ENV['DATABASE_NAME'] || 'hivemind_live' %>
   password: <%=ENV['DATABASE_PASSWORD']%>
   adapter: mysql2
