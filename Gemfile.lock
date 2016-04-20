@@ -1,11 +1,13 @@
-PATH
-  remote: ../hive_mind_mobile
+GIT
+  remote: https://github.com/bbc/hive_mind_mobile
+  revision: 426f7642a10550f3bc8f5c26c2e0978adbfe7794
   specs:
     hive_mind_mobile (0.0.1)
       rails (~> 4.2.4)
 
-PATH
-  remote: ../hive_mind_tv
+GIT
+  remote: https://github.com/bbc/hive_mind_tv
+  revision: bbb750762ef0a483b02cec5e2ae9b9573f498abb
   specs:
     hive_mind_tv (0.0.1)
       elite_universe
@@ -62,7 +64,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
-    autoprefixer-rails (6.3.4)
+    autoprefixer-rails (6.3.3.1)
       execjs
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -97,12 +99,10 @@ GEM
     json (1.8.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
-    mail (2.6.4)
-      mime-types (>= 1.16, < 4)
+    mail (2.6.3)
+      mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (3.0)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2016.0221)
+    mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
@@ -204,8 +204,9 @@ GEM
     timecop (0.8.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.0)
-      execjs (>= 0.3.0, < 3)
+    uglifier (2.7.2)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     web-console (2.3.0)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -216,7 +217,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-multiselect-rails (~> 0.9)
+  bootstrap-multiselect-rails
   bootstrap-sass (~> 3.3.5)
   bootstrap_flash_messages (~> 1.0.1)
   hive_mind_generic!
@@ -241,4 +242,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.11.0
+   1.10.6
