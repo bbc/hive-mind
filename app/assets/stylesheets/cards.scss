@@ -41,7 +41,10 @@
   border-width: 2px;
   border-color: black;
   padding-left: 2px;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
 
 .card .inner-device a {
   color: white;

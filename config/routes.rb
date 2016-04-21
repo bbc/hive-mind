@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   
   get '/' => "device_types#browse"
   get '/devices/search' => "devices#search"
+  get '/dash/:ids' => "devices#dash"
   get 'browse' => "device_types#browse"
   get '/status' => 'application#status'
 
