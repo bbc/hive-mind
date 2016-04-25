@@ -24,6 +24,7 @@ Rails.application.routes.draw do
         put 'poll'
         put 'action'
         put 'hive_queues'
+        put 'screenshot'
       end
     end
   end

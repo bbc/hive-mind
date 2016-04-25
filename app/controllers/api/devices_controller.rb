@@ -140,6 +140,16 @@ class Api::DevicesController < ApplicationController
     render json: {}, status: status
   end
 
+  def screenshot
+
+    status = :ok
+    device = Device.find(params[:device_action][:device_id])
+    device.plugin.screenshot = "data:image/png;base64, #{params[:device_action][:screenshot]}"
+    device.plugin.save
+
+    render json: {}, status: status
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
@@ -159,7 +169,8 @@ class Api::DevicesController < ApplicationController
       params.require(:device_action).permit(
         :device_id,
         :action_type,
-        :body
+        :body,
+        :screenshot
       )
     end
 end
