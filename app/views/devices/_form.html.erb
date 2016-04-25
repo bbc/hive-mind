@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :model_id %><br>
-    <%= f.collection_select(:model_id, Model.all, :id, :name) %>
+    <%= f.collection_select(:model_id, Model.all, :id, :name, {}, {disabled: true}) %>
   </div>
   
   <div class="field">
@@ -22,7 +22,7 @@
   </div>
   <div class="field">
     <%= f.label :serial %><br>
-    <%= f.text_field :serial %>
+    <%= f.text_field :serial, disabled: true %>
   </div>
   <div class="field">
     <%= f.label :asset_id %><br>

@@ -16,3 +16,4 @@
 //= require bootstrap-multiselect
 //= require cards
 //= require_tree .
+//= require d3

@@ -19,30 +19,30 @@
         <p class="lead"><code><%= device.serial -%></code></p>
         <% end %>
       
-        <p><%= device.model.brand.name %> <%= device.model.name %>
+        <p><%= device.model.brand.best_name %> <%= device.model.best_name %>
         <% if device.operating_system && device.operating_system.name %>
         - <em><%= display_operating_system(device) %></em>
         <% end %>
         </p>
         
         <% if size != :condensed %>
-        <% if device.plugin %>
-        <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
-        <% end %>
-        <p>
-          <ul class="list-unstyled">
-          <% device.groups.each do |group| %>
-          <li><%= group.name %>: <strong><%= group.value %></strong></li>
+          <% if device.plugin %>
+            <%= render("shared/#{device.device_type.downcase}_plugin_partial", device: device) rescue nil -%>
           <% end %>
-          </li>
-          </ul>
-        </p>
-      <% end %>
+          <p>
+            <ul class="list-unstyled">
+            <% device.groups.each do |group| %>
+              <li><%= group.name %>: <strong><%= group.value %></strong></li>
+            <% end %>
+            </li>
+            </ul>
+          </p>
+        <% end %>
       
       <% if size == :edit %>
-      <div class="card-buttons pull-right">
+        <div class="card-buttons pull-right">
       <%= link_to raw('<button class="btn btn-default"><span class="glyphicon glyphicon-edit" aria-hidden="true"></button>'), edit_device_path(device) %>
-      </div>
+        </div>
       <% end %>
 
       

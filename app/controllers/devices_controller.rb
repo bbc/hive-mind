@@ -7,6 +7,11 @@ class DevicesController < ApplicationController
     @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).all.group_by { |d| d.model && d.model.device_type }
   end
   
+  def dash
+    ids = params[:ids].split(',').collect { |id| id.to_i }
+    @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).where( id: ids )
+  end
+  
   def search
     @search_string = params[:search_string]
     @devices = Device.search(name_or_serial_or_model_name_cont: @search_string).result.distinct(:true)
