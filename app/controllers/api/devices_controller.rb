@@ -141,9 +141,9 @@ class Api::DevicesController < ApplicationController
   end
 
   def screenshot
-    render json: {}, status: :unprocessable_entity unless ( self.plugin && self.plugin.methods.include?(:screenshot))
-    status = :ok
     device = Device.find(params[:device_action][:device_id])
+    render json: {}, status: :unprocessable_entity unless ( device.plugin && device.plugin.methods.include?(:screenshot))
+    status = :ok
     device.plugin.screenshot = "data:image/png;base64, #{params[:device_action][:screenshot]}"
     device.plugin.save
 
