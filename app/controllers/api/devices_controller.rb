@@ -97,8 +97,8 @@ class Api::DevicesController < ApplicationController
         # Reporting a list of devices
         @device_actions = {}
         args = { reported_by: reporting_device }
-        @devices = params[:poll][:devices].map { |d| Device.find(d) }
-        @devices.each do |d|
+        @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).where( id: params[:poll][:devices] ).group_by { |d| d.model && d.model.device_type }
+        @devices.collect{|_,v| v }.flatten.each do |d|
           d.heartbeat( reported_by: reporting_device )
           if poll_type == 'active'
             @device_actions[d.id] = d.execute_action
