@@ -20,6 +20,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'omniauth'
 gem 'ransack'
+gem 'paperclip', '~> 4.3'
+gem 'd3-rails'
 
 group :development, :test, :integration do
   gem 'sqlite3'

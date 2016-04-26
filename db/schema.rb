@@ -80,68 +80,6 @@ ActiveRecord::Schema.define(version: 20160315134526) do
 
   add_index "heartbeats", ["device_id"], name: "index_heartbeats_on_device_id"
 
-  create_table "hive_mind_generic_characteristics", force: :cascade do |t|
-    t.string   "key"
-    t.string   "value"
-    t.integer  "plugin_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hive_mind_hive_plugins", force: :cascade do |t|
-    t.string   "hostname"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hive_mind_hive_runner_plugin_version_histories", force: :cascade do |t|
-    t.integer  "plugin_id"
-    t.integer  "runner_plugin_version_id"
-    t.datetime "start_timestamp"
-    t.datetime "end_timestamp"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  create_table "hive_mind_hive_runner_plugin_versions", force: :cascade do |t|
-    t.string   "name"
-    t.string   "version"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hive_mind_hive_runner_version_histories", force: :cascade do |t|
-    t.integer  "plugin_id"
-    t.integer  "runner_version_id"
-    t.datetime "start_timestamp"
-    t.datetime "end_timestamp"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  create_table "hive_mind_hive_runner_versions", force: :cascade do |t|
-    t.string   "version"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hive_mind_mobile_plugins", force: :cascade do |t|
-    t.integer  "device_id"
-    t.string   "imei"
-    t.string   "serial"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "hive_mind_tv_plugins", force: :cascade do |t|
-    t.string   "range"
-    t.string   "user_agent"
-    t.string   "name_seed"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "application"
-  end
-
   create_table "hive_queues", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
