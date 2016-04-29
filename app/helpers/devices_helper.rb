@@ -2,7 +2,7 @@ module DevicesHelper
   
   def last_heartbeat_display(device)
     if last = device.heartbeats.last
-      last.created_at
+      mini_duration(last.created_at)
     else
       '-'
     end
