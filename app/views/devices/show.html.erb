@@ -89,7 +89,7 @@
             <ul class="dropdown-menu hive-select-menu">
               <input type="hidden" class="hive_id" value="<%= h.nil? ? nil : h.id     %>">
               <li><a href="#" id="disconnect">[Disconnected]</a></li>
-              <% Device.all.select{ |d| d.device_type == 'Hive' }.each do |h| %>
+              <% all_hives.each do |h| %>
               <li><a href="#" id="<%=h.id %>"><%= h.name %></a></li>
               <% end %>
             </ul>
