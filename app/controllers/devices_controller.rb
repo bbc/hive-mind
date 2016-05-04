@@ -20,7 +20,26 @@ class DevicesController < ApplicationController
   # GET /devices/1
   # GET /devices/1.json
   def show
-    @device = Device.includes(:ips, :macs, :model, :brand, :plugin, :hive_queues, :related_devices => [ :ips, :macs, :model, :brand, :plugin, :hive_queues ]).find(params['id'])
+    respond_to do |format|
+      format.html do
+        @device = Device.includes(:ips, :macs, :model, :brand, :plugin, :hive_queues, :related_devices => [ :ips, :macs, :model, :brand, :plugin, :hive_queues ]).find(params['id'])
+      end
+      format.json do
+        if params[:view].present? && params[:view] == 'simple'
+          device = Device.includes(:model, :brand).find(params['id'])
+          @device = {
+            id: device.id,
+            name: device.name,
+            model: device.model ? device.model.name : nil,
+            brand: device.model && device.model.brand ? device.model.brand.name : nil,
+            device_type: device.device_type
+          }
+          render json: @device
+        else
+          @device = Device.includes(:ips, :macs, :model, :brand, :plugin, :hive_queues, :related_devices => [ :ips, :macs, :model, :brand, :plugin, :hive_queues ]).find(params['id'])
+        end
+      end
+    end
   end
 
   # GET /devices/new
