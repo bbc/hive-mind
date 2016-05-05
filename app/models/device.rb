@@ -37,7 +37,7 @@ class Device < ActiveRecord::Base
   end
 
   def device_type
-    model.device_type.classification
+    model && model.device_type && model.device_type.classification
   end
 
   def heartbeat options = {}
