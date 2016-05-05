@@ -35,7 +35,7 @@ RSpec.describe DevicesController, type: :controller do
     it "returns a simple view" do
       device = Device.create! valid_attributes
       get :show, {id: device.to_param, format: :json, view: 'simple'}, valid_session
-      expect(assigns(:device).keys).to match_array([:id, :name, :model, :brand, :device_type])
+      expect(assigns(:device).keys).to match_array([:id, :serial, :asset_id, :name, :model, :brand, :model_display_name, :brand_display_name, :device_type])
     end
   end
 

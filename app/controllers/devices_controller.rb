@@ -26,12 +26,16 @@ class DevicesController < ApplicationController
       end
       format.json do
         if params[:view].present? && params[:view] == 'simple'
-          device = Device.includes(:model, :brand).find(params['id'])
+          device = Device.includes(:brand, model: :device_type).find(params['id'])
           @device = {
             id: device.id,
+            serial: device.serial,
+            asset_id: device.asset_id,
             name: device.name,
             model: device.model ? device.model.name : nil,
-            brand: device.model && device.model.brand ? device.model.brand.name : nil,
+            brand: device.brand ? device.brand.name : nil,
+            model_display_name: device.model ? device.model.best_name : nil,
+            brand_display_name: device.brand ? device.brand.best_name : nil,
             device_type: device.device_type
           }
           render json: @device
