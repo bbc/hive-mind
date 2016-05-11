@@ -4,7 +4,11 @@
 
 <div class="row">
 <%= render("shared/device_card", device: @device, size: :edit, card_link: '' ) -%>
+  <% if @device.plugin %>
+  <div><%= render("shared/#{@device.device_type.downcase}_plugin_screenshot_partial", device: @device) rescue nil -%></div>
+  <% end %>
 </div>
+
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
@@ -43,36 +47,9 @@
 
 <!-- Actions tab -->
   <div role="tabpanel" class="tab-pane fade" id="actions">
-
     <% if @device.plugin %>
-    <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
+        <%= render("shared/#{@device.device_type.downcase}_plugin_action_partial", device: @device) rescue nil -%>
     <% end %>
-
-    <table id="actions_table" class="table">
-      <thead>
-        <tr>
-          <th class="col-md-1">Executed</th>
-          <th class="col-md-1">Type</th>
-          <th class="redo_action">Body</th>
-          <th class="col-md-1"></th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @device.device_actions.reverse[0..4].each do |a| %>
-        <tr>
-          <td><%= a.executed_at || 'Pending' %></td>
-          <td id="action_type-<%= a.id %>"><%= a.action_type %></td>
-          <td id="body-<%= a.id %>"><%= a.body %></td>
-          <td><% if a.executed_at %><button type="button" id="<%= a.id %>" class="btn btn-primary redo_action">
-            <input type="hidden" class="redo_action_type" value="<%= a.action_type %>">
-            <input type="hidden" class="redo_body" value="<%= a.body %>">
-            Redo
-          </button></span><% end %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
   </div>
 
 <!-- Hive tab -->
