@@ -22,6 +22,7 @@ gem 'omniauth'
 gem 'ransack'
 gem 'paperclip', '~> 4.3'
 gem 'd3-rails'
+gem 'chamber'
 
 group :development, :test, :integration do
   gem 'sqlite3'
@@ -42,5 +43,6 @@ group :integration do
 end
 
 group :production do
+  gem 'aws-sdk', '>= 2.0.34'
   gem 'mysql2', '~> 0.3.20'
 end
