@@ -96,7 +96,6 @@ class Api::DevicesController < ApplicationController
       if params[:poll][:devices].present? and params[:poll][:devices].length > 0
         # Reporting a list of devices
         @device_actions = {}
-        args = { reported_by: reporting_device }
         @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).where( id: params[:poll][:devices] ).group_by { |d| d.model && d.model.device_type }
         @devices.collect{|_,v| v }.flatten.each do |d|
           d.heartbeat( reported_by: reporting_device )
