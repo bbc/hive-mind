@@ -1,0 +1,15 @@
+defaults: &defaults
+  attachment:
+    storage: filesystem
+    s3_bucket:
+    path_base:
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
