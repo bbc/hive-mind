@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/bbc/hive_mind_mobile
-  revision: 57b9f524e87a4154fa310c19c553ddc1953f0775
-  specs:
-    hive_mind_mobile (0.0.1)
-      paperclip (~> 4.3)
-      rails (~> 4.2.4)
-
-GIT
   remote: https://github.com/bbc/hive_mind_tv
   revision: 7e5375c35912bfa729d254b31bddfa882f92d68f
   specs:
@@ -24,6 +16,13 @@ PATH
   remote: hive_mind_hive
   specs:
     hive_mind_hive (0.0.1)
+      rails (~> 4.2.4)
+
+PATH
+  remote: hive_mind_mobile
+  specs:
+    hive_mind_mobile (0.0.1)
+      paperclip (~> 4.3)
       rails (~> 4.2.4)
 
 GEM
