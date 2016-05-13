@@ -13,3 +13,5 @@ test:
 production:
   <<: *defaults
 
+integration:
+  <<: *defaults
