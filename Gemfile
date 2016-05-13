@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # Add device plugins here
 gem 'hive_mind_hive', path: 'hive_mind_hive'
 gem 'hive_mind_generic', path: 'hive_mind_generic'
-#gem 'hive_mind_mobile', git: 'https://github.com/bbc/hive_mind_mobile'
+gem 'hive_mind_mobile', path: 'hive_mind_mobile'
 ##############################################################################
 # Do not change anything below this line
 ##############################################################################
