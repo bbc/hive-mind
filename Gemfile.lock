@@ -137,6 +137,13 @@ GEM
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.1)
+    coffee-rails (4.1.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.1.x)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.10.0)
     concurrent-ruby (1.0.2)
     d3-rails (3.5.16)
       railties (>= 3.1)
@@ -196,6 +203,7 @@ GEM
     pry-byebug (3.4.0)
       byebug (~> 9.0)
       pry (~> 0.10)
+    puma (3.4.0)
     rack (2.0.0.rc1)
       json
     rack-test (0.6.3)
@@ -297,6 +305,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   bootstrap_flash_messages (~> 1.0.1)
   chamber
+  coffee-rails (~> 4.1.0)
   d3-rails
   hive_mind_generic!
   hive_mind_hive!
@@ -308,6 +317,7 @@ DEPENDENCIES
   omniauth
   paperclip (~> 4.3)
   pry-byebug
+  puma (~> 3.0)
   rails (= 5.0.0.rc1)
   rails-controller-testing
   railties (= 5.0.0.rc1)

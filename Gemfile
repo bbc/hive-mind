@@ -12,6 +12,7 @@ gem 'rails', '5.0.0.rc1'
 gem 'railties', '5.0.0.rc1'
 # Won't work due to Rack issues
 #gem 'thin' #, '~> 1.6'
+gem 'puma', '~> 3.0'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
 gem 'bootstrap_flash_messages', '~> 1.0.1'
@@ -26,6 +27,8 @@ gem 'paperclip', '~> 4.3'
 gem 'd3-rails'
 gem 'chamber'
 gem 'rbtrace'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 4.1.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 3.0'
 
