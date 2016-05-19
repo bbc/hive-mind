@@ -25,6 +25,10 @@ gem 'ransack'
 gem 'paperclip', '~> 4.3'
 gem 'd3-rails'
 gem 'chamber'
+gem 'rbtrace'
+# Use Redis adapter to run Action Cable in production
+gem 'redis', '~> 3.0'
+
 
 group :development, :test, :integration do
   gem 'sqlite3'
@@ -36,6 +40,8 @@ group :development, :test, :integration do
   gem "rspec-mocks", git: "https://github.com/rspec/rspec-mocks.git", branch: "master"
   gem 'rails-controller-testing'
   gem 'timecop'
+  gem 'spring'
+  gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :development do
