@@ -20,7 +20,7 @@ class Api::DevicesController < ApplicationController
         mac = Mac.find_or_create_by(mac: m)
       end
     end
-    @device = Device.identify_existing(params[:device].merge(create_parameters))
+    @device = Device.identify_existing(params[:device].merge(create_parameters.to_h))
     device_id = @device ? @device.id : nil
 
     device_type = params[:device][:device_type] || 'unknown'
