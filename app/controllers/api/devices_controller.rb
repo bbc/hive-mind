@@ -127,7 +127,11 @@ class Api::DevicesController < ApplicationController
       status = DeviceAction.create(action_params).valid? ? :ok : :unprocessable_entity
     end
 
-    render json: {}, status: status
+    respond_to do |format|
+      format.html {
+      redirect_to device_url(Device.find(action_params["device_id"]), protocol: redirect_protocol), notice: 'Action was successfully queued.' }
+      format.json { render json: {}, status: status }
+    end
   end
 
   # PUT /hive_queues
