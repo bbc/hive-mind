@@ -98,18 +98,12 @@ class Api::DevicesController < ApplicationController
         @device_actions = {}
         @devices = Device.includes(:ips, :macs, :brand, :plugin, :model => [:device_type] ).where( id: params[:poll][:devices] ).group_by { |d| d.model && d.model.device_type }
         @devices.collect{|_,v| v }.flatten.each do |d|
-          d.heartbeat( reported_by: reporting_device )
-          if poll_type == 'active'
-            @device_actions[d.id] = d.execute_action
-          end
+          @device_actions[d.id] = poll_device d, reported_by: reporting_device, poll_type: poll_type
         end
         render 'devices/index', status: :ok
       else
         # Reporting a single device
-        reporting_device.heartbeat
-        if poll_type == 'active'
-          @device_action = reporting_device.execute_action
-        end
+        @device_action = poll_device reporting_device, poll_type: poll_type
         @device = reporting_device
         render 'devices/show', status: :ok
       end
@@ -171,5 +165,12 @@ class Api::DevicesController < ApplicationController
         :body,
         :screenshot
       )
+    end
+
+    def poll_device d, options = {}
+      opts = {}
+      opts[:reported_by] = options[:reported_by] if options.has_key? :reported_by
+      d.heartbeat opts
+      options[:poll_type] == 'active' ? d.execute_action : nil
     end
 end
