@@ -42,6 +42,6 @@ group :integration do
 end
 
 group :production do
-  gem 'aws-sdk', '>= 2.0.34'
+  gem 'aws-sdk', '~> 1.6'
   gem 'mysql2', '~> 0.3.20'
 end
