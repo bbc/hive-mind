@@ -16,6 +16,8 @@ class Device < ActiveRecord::Base
   accepts_nested_attributes_for :groups
   has_many :relationships, foreign_key: :primary_id
   has_many :related_devices, through: :relationships, foreign_key: :primary_id, primary_key: :secondary_id, class_name: "Device", source: :secondary
+  has_many :device_statistics
+
   scope :classification, ->(classification){joins( model: :device_type).where('device_types.classification=?', classification) }
 
   def mac_addresses

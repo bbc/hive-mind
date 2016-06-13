@@ -159,6 +159,7 @@ Poll device | PUT | `api/devices/poll`
 Add device action | PUT | `api/devices/action`
 Connect device | PUT | `api/plugin/hive/connect`
 Disconnect device | PUT | `api/plugin/hive/disconnect`
+Upload statistical data | POST | `api/device_statistics/upload`
 
 ### View device
 
@@ -213,6 +214,23 @@ To poll multiple devices:
     "action_type": "Type of action",
     "body": "Body of the action"
   }
+}
+```
+
+### Upload statistical data
+
+```json
+{
+  "data": [
+    {
+      "device_id": 99,
+      "timestamp": "Timestamp for data value",
+      "label": "Label for data value",
+      "value": 123.456
+      "format": "integer" or "float"
+    },
+    ...
+  ]
 }
 ```
 
