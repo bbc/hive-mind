@@ -25,5 +25,9 @@ RSpec.describe Api::DevicesController, type: :routing do
     it 'routes to #hive_queues' do
       expect(put: 'api/devices/hive_queues').to route_to('api/devices#hive_queues', format: :json)
     end
+
+    it 'routes to #upload in the device_statistics controller' do
+      expect(post: '/api/device_statistics/upload').to route_to('api/device_statistics#upload', format: :json)
+    end
   end
 end

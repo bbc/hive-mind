@@ -28,5 +28,10 @@ Rails.application.routes.draw do
         put 'screenshot'
       end
     end
+    resources :device_statistics do
+      collection do
+        post 'upload'
+      end
+    end
   end
 end
