@@ -4,6 +4,10 @@
     <td><%= device.plugin.version -%></td>
   </tr>
   <tr>
+    <th>Load average:</th>
+    <td><%= device.latest_stat('Load average', '%.2f') -%></td>
+  </tr>
+  <tr>
     <th>Plugins:</th>
     <td>
     <% device.plugin.runner_plugins.each_pair do |p, v| %>
