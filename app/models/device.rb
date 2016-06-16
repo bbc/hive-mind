@@ -29,8 +29,8 @@ class Device < ActiveRecord::Base
   end
 
   def latest_stat stat, format = nil
-    if value = self.device_statistics.where(label: stat).last.value
-      format ? format % value : value
+    if stat = self.device_statistics.where(label: stat).last
+      format ? format % stat.value : stat.value
     else
       '?'
     end
