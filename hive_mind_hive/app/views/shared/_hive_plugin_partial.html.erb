@@ -1,21 +1,57 @@
-<table>
-  <tr>
-    <th>Version:</th>
-    <td><%= device.plugin.version -%></td>
-  </tr>
-  <tr>
-    <th>Load average:</th>
-    <td><%= device.latest_stat('Load average', '%.2f') -%></td>
-  </tr>
-  <tr>
-    <th>Plugins:</th>
-    <td>
+<div class="row">
+  <div class="col-xs-2"><span class="label label-default">Version</span></div>
+  <div class="col-xs-2"><span class="label label-primary"><%= device.plugin.version -%></span></div>
+</div>
+
+<div class="row">
+  <div id="load_label" class="col-xs-2"><span class="label label-default">Load</span></div>
+  <% ld = device.device_statistics.where(label: 'Load average').last %>
+  <% state = ld ? ( ld.value < 0.7 ? 'success' : ld.value < 1.5 ? 'warning' : 'danger' ) : 'info' %>
+  <div class="col-xs-2"><span class="label label-<%= state -%>"><%= device.latest_stat('Load average', '%.2f') -%></span></div>
+  <div class="col-xs-8"><svg id="load_chart" width="20px" height="5px"></svg></div>
+</div>
+
+<script type="text/javascript">
+  var dataset = [
+    <%= device.device_statistics.where(label: 'Load average').map{|stat| stat.value}.last(60).join(',') -%>
+  ];
+  var svg = d3.select("#load_chart")
+  var width = document.getElementById('load_chart').parentNode.offsetWidth * 0.9;
+  var height = document.getElementById('load_label').offsetHeight * 0.85;
+  var bar_width = width / dataset.length;
+  svg
+    .attr('width', width + 'px')
+    .attr('height', height + 'px');
+  svg.selectAll("rect")
+    .data(dataset)
+    .enter()
+    .append('rect')
+    .attr('x', function(d,i) {return i * bar_width })
+    .attr('y', function(d) { return height - d*height })
+    .attr('width', bar_width)
+    .attr('height', function(d) {return d*height})
+    .attr('fill', function(d) {
+      if (d>=1.5) {
+        return 'red';
+      } else if (d>=0.7) {
+        return 'yellow';
+      } else {
+        return 'green'
+      }
+    });
+
+</script>
+
+<div class="row">
+  <div class="col-xs-2"><span class="label label-default">Plugins</span></div>
+  <div class="col-xs-10">
+    <div class="row">
     <% device.plugin.runner_plugins.each_pair do |p, v| %>
-      <%= p -%> (<%= v -%>)</br>
+      <div class="col-xs-12"><span class="label label-primary"><%= p -%> (<%= v -%>)</span></div>
     <% end %>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>
 
 <% device.plugin.connected_devices.each do |d| %>
   <div class="inner-device col-xs-6 label-status label-<%=d.status.to_s-%>">
