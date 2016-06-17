@@ -15,5 +15,8 @@ module HiveMindHive
       end
     end
 
+    initializer :assets do |app|
+      app.config.assets.precompile += %w( hive_mind_hive.js )
+    end
   end
 end
