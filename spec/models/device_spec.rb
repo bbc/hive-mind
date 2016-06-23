@@ -555,4 +555,60 @@ RSpec.describe Device, type: :model do
       }.to change(OperatingSystemHistory, :count).by 0
     end
   end
+
+  describe '#latest_stat' do
+    let(:device1) { Device.create }
+    let(:device2) { Device.create }
+    let(:latest_stat_1) {
+      {
+        device: device1,
+        timestamp: '2016-06-23 10:13:05 +0100',
+        label: 'Test label',
+        value: 1.23,
+        format: 'float'
+      }
+    }
+    let(:not_latest_stat_1) {
+      {
+        device: device1,
+        timestamp: '2016-06-22 10:13:05 +0100',
+        label: 'Test label',
+        value: 2.34,
+        format: 'float'
+      }
+    }
+    let(:latest_stat_2) {
+      {
+        device: device1,
+        timestamp: '2016-06-23 12:13:05 +0100',
+        label: 'Test label 2',
+        value: 2.34,
+        format: 'float'
+      }
+    }
+
+    it 'returns the latest value for a given statistic' do
+      DeviceStatistic.create latest_stat_1
+      DeviceStatistic.create not_latest_stat_1
+
+      expect(device1.latest_stat(label: latest_stat_1[:label])).to be_within(0.0001).of latest_stat_1[:value]
+    end
+
+    it 'returns the latest value for the correct statistic' do
+      DeviceStatistic.create latest_stat_1
+      DeviceStatistic.create latest_stat_2
+
+      expect(device1.latest_stat(label: latest_stat_1[:label])).to be_within(0.0001).of latest_stat_1[:value]
+    end
+
+    it 'returns nil' do
+      expect(device1.latest_stat(label: 'No data')).to eq nil
+    end
+
+    it 'returns a default value' do
+      expect(device1.latest_stat(label: 'No data', default: 9.99)).to be_within(0.0001).of 9.99
+      expect(device1.latest_stat(label: 'No data', default: 999)).to eq 999
+      expect(device1.latest_stat(label: 'No data', default: '?')).to eq '?'
+    end
+  end
 end

@@ -1,4 +1,4 @@
-load_graph = function(svg_class, dataset, cpu_count, width, height) {
+load_graph = function(svg_class, dataset, cpu_count, load_warn, load_err, width, height) {
   var svg = d3.select(svg_class);
   var bar_width = width / dataset.length;
   svg
@@ -13,9 +13,9 @@ load_graph = function(svg_class, dataset, cpu_count, width, height) {
     .attr('width', bar_width)
     .attr('height', function(d) {return d*height/cpu_count})
     .attr('fill', function(d) {
-      if (d/cpu_count>=1.5) {
+      if (d/cpu_count>=load_err) {
         return 'red';
-      } else if (d/cpu_count>=0.7) {
+      } else if (d/cpu_count>=load_warn) {
         return 'yellow';
       } else {
         return 'green'
