@@ -28,11 +28,11 @@ class Device < ActiveRecord::Base
     self.ips.map { |i| i.ip }
   end
 
-  def latest_stat stat, format = nil
-    if stat = self.device_statistics.where(label: stat).last
-      format ? format % stat.value : stat.value
+  def latest_stat options
+    if stat = self.device_statistics.where(label: options[:label]).order(:timestamp).last
+      stat.value
     else
-      '?'
+      options[:default] || nil
     end
   end
 

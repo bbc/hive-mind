@@ -5,10 +5,23 @@
 
 <div class="row">
   <div id="load_label_<%= device.id -%>" class="col-xs-2"><span class="label label-default">Load</span></div>
-  <% ld = device.device_statistics.where(label: 'Load average').last %>
+  <% ld = device.latest_stat(label: 'Load average') %>
+  <% nproc = device.latest_stat(label: 'Processor count', default: 1) %>
+  <% load_warn = device.latest_stat(label: 'Load average warning threshold', default: 0.7) %>
+  <% load_err = device.latest_stat(label: 'Load average error threshold', default: 1.5) %>
   <% chart_svg = "load_chart_#{device.id}" %>
-  <% state = ld ? ( ld.value < 0.7 ? 'success' : ld.value < 1.5 ? 'warning' : 'danger' ) : 'info' %>
-  <div class="col-xs-2"><span class="label label-<%= state -%>"><%= device.latest_stat('Load average', '%.2f') -%></span></div>
+
+  <% if ld.nil? %>
+    <% state = 'info' %>
+  <% elsif ld/nproc < load_warn %>
+    <% state = 'success' %>
+  <% elsif ld/nproc < load_err %>
+    <% state = 'warning' %>
+  <% else %>
+    <% state = 'danger' %>
+  <% end %>
+
+  <div class="col-xs-2"><span class="label label-<%= state -%>"><%= ld ? '%.2f' % ld : '?' -%> / <%= nproc -%></span></div>
   <div class="col-xs-8"><svg id="<%= chart_svg -%>" width="20px" height="5px"></svg></div>
 </div>
 
@@ -16,6 +29,9 @@
   load_graph(
     "#load_chart_" + <%= device.id -%>,
     [<%= device.device_statistics.where(label: 'Load average').map{|stat| stat.value}.last(60).join(',') -%>],
+    <%= nproc -%>,
+    <%= load_warn -%>,
+    <%= load_err -%>,
     document.getElementById("load_chart_" + <%= device.id -%>).parentNode.offsetWidth * 0.9,
     document.getElementById("load_label_" + <%= device.id -%>).parentNode.offsetHeight * 0.85
   );
