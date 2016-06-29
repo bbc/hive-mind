@@ -5,6 +5,8 @@ load_graph = function(svg_class, dataset, cpu_count, load_warn, load_err, width,
     .attr('width', width + 'px')
     .attr('height', height + 'px');
   svg.selectAll("rect")
+    .remove();
+  svg.selectAll("rect")
     .data(dataset)
     .enter()
     .append('rect')

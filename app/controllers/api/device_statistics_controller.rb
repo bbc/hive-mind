@@ -11,6 +11,21 @@ class Api::DeviceStatisticsController < ApplicationController
     render json: {}, status: :ok
   end
 
+  # GET /stat
+  def get_stats
+    data = Device
+      .find(params[:device_id])
+      .device_statistics
+      .where(label: params[:key])
+      .order(:timestamp)
+      .last(params[:npoints].to_i)
+      .map{ |ds| ds.value }
+
+    render json: {
+        data: data
+      }, status: :ok
+  end
+
   private
   def upload_params(datum)
     datum.permit(
