@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315134526) do
+ActiveRecord::Schema.define(version: 20160616094245) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 20160315134526) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "device_statistics", force: :cascade do |t|
+    t.integer  "device_id"
+    t.datetime "timestamp"
+    t.string   "label"
+    t.decimal  "value",      precision: 16, scale: 8
+    t.string   "format"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+  end
+
+  add_index "device_statistics", ["device_id", "label"], name: "index_device_statistics_on_device_id_and_label"
+  add_index "device_statistics", ["device_id"], name: "index_device_statistics_on_device_id"
 
   create_table "device_types", force: :cascade do |t|
     t.string   "classification"
@@ -80,6 +93,68 @@ ActiveRecord::Schema.define(version: 20160315134526) do
 
   add_index "heartbeats", ["device_id"], name: "index_heartbeats_on_device_id"
 
+  create_table "hive_mind_generic_characteristics", force: :cascade do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "plugin_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_generic_plugins", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_hive_plugins", force: :cascade do |t|
+    t.string   "hostname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_hive_runner_plugin_version_histories", force: :cascade do |t|
+    t.integer  "plugin_id"
+    t.integer  "runner_plugin_version_id"
+    t.datetime "start_timestamp"
+    t.datetime "end_timestamp"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  create_table "hive_mind_hive_runner_plugin_versions", force: :cascade do |t|
+    t.string   "name"
+    t.string   "version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_hive_runner_version_histories", force: :cascade do |t|
+    t.integer  "plugin_id"
+    t.integer  "runner_version_id"
+    t.datetime "start_timestamp"
+    t.datetime "end_timestamp"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  create_table "hive_mind_hive_runner_versions", force: :cascade do |t|
+    t.string   "version"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hive_mind_mobile_plugins", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "imei"
+    t.string   "serial"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "screenshot_file_name"
+    t.string   "screenshot_content_type"
+    t.integer  "screenshot_file_size"
+    t.datetime "screenshot_updated_at"
+  end
+
   create_table "hive_queues", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -94,12 +169,16 @@ ActiveRecord::Schema.define(version: 20160315134526) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "ips", ["device_id"], name: "index_ips_on_device_id"
+
   create_table "macs", force: :cascade do |t|
     t.integer  "device_id"
     t.string   "mac"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "macs", ["device_id"], name: "index_macs_on_device_id"
 
   create_table "models", force: :cascade do |t|
     t.string   "name"
@@ -125,6 +204,8 @@ ActiveRecord::Schema.define(version: 20160315134526) do
     t.datetime "updated_at",          null: false
   end
 
+  add_index "operating_system_histories", ["device_id"], name: "index_operating_system_histories_on_device_id"
+
   create_table "operating_systems", force: :cascade do |t|
     t.string   "name"
     t.string   "version"
@@ -139,6 +220,9 @@ ActiveRecord::Schema.define(version: 20160315134526) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  add_index "relationships", ["primary_id"], name: "index_relationships_on_primary_id"
+  add_index "relationships", ["secondary_id"], name: "index_relationships_on_secondary_id"
 
   create_table "users", force: :cascade do |t|
     t.string "name"
