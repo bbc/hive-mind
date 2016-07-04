@@ -28,7 +28,7 @@
 <script type="text/javascript">
   load_graph(
     "#load_chart_" + <%= device.id -%>,
-    [<%= device.device_statistics.where(label: 'Load average').map{|stat| stat.value}.last(60).join(',') -%>],
+    [<%= device.device_statistics.where(label: 'Load average').order(timestamp: :desc).first(60).map{|stat| stat.value}.reverse,join(',') -%>],
     <%= nproc -%>,
     <%= load_warn -%>,
     <%= load_err -%>,
