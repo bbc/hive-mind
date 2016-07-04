@@ -5,10 +5,11 @@ source 'https://rubygems.org'
 gem 'hive_mind_hive', path: 'hive_mind_hive'
 gem 'hive_mind_generic', path: 'hive_mind_generic'
 gem 'hive_mind_mobile', path: 'hive_mind_mobile'
+gem 'hive_mind_tv', git: 'https://github.com/bbc/hive_mind_tv'
 ##############################################################################
 # Do not change anything below this line
 ##############################################################################
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.6'
 gem 'thin', '~> 1.6'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
