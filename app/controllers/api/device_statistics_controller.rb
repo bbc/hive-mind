@@ -17,9 +17,10 @@ class Api::DeviceStatisticsController < ApplicationController
       .find(params[:device_id])
       .device_statistics
       .where(label: params[:key])
-      .order(:timestamp)
-      .last(params[:npoints].to_i)
+      .order(timestamp: :desc)
+      .first(params[:npoints].to_i)
       .map{ |ds| ds.value }
+      .reverse
 
     render json: {
         data: data
