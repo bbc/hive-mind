@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :device_statistics do
       collection do
         post 'upload'
+        get 'stats/:device_id/:key/:npoints' => 'device_statistics#get_stats'
       end
     end
   end
