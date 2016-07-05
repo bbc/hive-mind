@@ -26,40 +26,6 @@
 </div>
 
 <script type="text/javascript">
-
-//  updateGraph = function(device_id) {
-//    data_url = "/api/device_statistics/stats/" + device_id + "/Load average/60";
-//    $.ajax({
-//      type: 'GET',
-//      url: data_url + '#' + (Math.floor(Math.random() * 1000000) + 1),
-//      success: function(data) {
-//        load_graph(
-//          "#load_chart_" + device_id,
-//          data['data'],
-//          <%= nproc -%>,
-//          <%= load_warn -%>,
-//          <%= load_err -%>,
-//          document.getElementById("load_chart_" + device_id).parentNode.offsetWidth * 0.9,
-//          document.getElementById("load_label_" + device_id).parentNode.offsetHeight * 0.85
-//        );
-//        currentLoad =  parseFloat(data['data'][data['data'].length - 1]);
-//        loadBox = document.getElementById("stat_box_" + device_id);
-//        if (currentLoad/<%= nproc -%> < <%= load_warn -%> ) {
-//          loadBox.className = 'label label-success';
-//        } else if (currentLoad/<%= nproc -%> < <%= load_err -%> ) {
-//          loadBox.className = 'label label-warning';
-//        } else {
-//          loadBox.className = 'label label-danger';
-//        }
-//
-//        document.getElementById("stat_figure_" + device_id).innerHTML = parseFloat(data['data'][data['data'].length - 1]).toFixed(2);
-//        setTimeout(updateGraph, 5000, device_id);
-//      },
-//    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
-//      loadBox = document.getElementById("stat_box_" + device_id).className = 'label label-default';
-//      setTimeout(updateGraph, 5000, device_id);
-//    });
-//  };
   initialize_graph("#load_chart_" + <%= device.id -%>,
           document.getElementById("load_chart_" + <%= device.id -%>).parentNode.offsetWidth * 0.9,
           document.getElementById("load_label_" + <%= device.id -%>).parentNode.offsetHeight * 0.85
