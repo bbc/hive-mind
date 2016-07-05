@@ -57,10 +57,10 @@ updateGraph = function(device_id, nproc, load_warn, load_err) {
       }
 
       document.getElementById("stat_figure_" + device_id).innerHTML = parseFloat(data['data'][data['data'].length - 1]).toFixed(2);
-      setTimeout(updateGraph, 5000, device_id, nproc, load_warn, load_err);
+      setTimeout(updateGraph, 30000, device_id, nproc, load_warn, load_err);
     },
   }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
     loadBox = document.getElementById("stat_box_" + device_id).className = 'label label-default';
-    setTimeout(updateGraph, 5000, device_id, nproc, load_warn, load_err);
+    setTimeout(updateGraph, 30000, device_id, nproc, load_warn, load_err);
   });
 };
