@@ -18,6 +18,9 @@ Rails.application.routes.draw do
 
   get 'api/devices/:id', to: 'devices#show', defaults: { format: :json }
   get 'api/devices', to: 'devices#index', defaults: { format: :json }
+
+  get '/status' => 'api/status#show'
+
   namespace :api, only: [ ], defaults: { format: :json } do
     resources :devices do
       collection do
