@@ -4,13 +4,14 @@ $(function(){
     var device_id = $('#device_id').val();
     var hive_id = null;
     event.preventDefault();
-    if (event.toElement.id === 'disconnect') {
+    var element = event.currentTarget || event.toElement;
+    if (element.id === 'disconnect') {
       url = '/api/plugin/hive/disconnect';
       hive_id = hive.val();
       var new_hive_id = null;
     } else {
       url = '/api/plugin/hive/connect';
-      hive_id = event.toElement.id
+      hive_id = event.currentTarget.id || event.toElement.id;
       var new_hive_id = hive_id;
     }
     var label = $("#select-hive:first-child");
