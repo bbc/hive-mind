@@ -1,5 +1,7 @@
 # Hive Mind
 
+For a full list of release notes, see the [change log](CHANGELOG.md)
+
 ## Device Engines
 
 For a device called 'mydevice' create a device engine with:
