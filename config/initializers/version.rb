@@ -1,1 +1,1 @@
-VERSION = `git describe --tags` #'1.0.0'
+VERSION = `git describe --tags` || '1.0.0'
