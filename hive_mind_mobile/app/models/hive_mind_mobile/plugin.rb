@@ -13,11 +13,11 @@ module HiveMindMobile
     end
 
     def self.plugin_params params
-      params.permit(:imei, :model, :serial)
+      params.permit(:imei, :model, :serial, :qualifier)
     end
 
     def self.identify_existing options
-      Plugin.find_by(serial: options[:serial]).device
+      Plugin.find_by(serial: options[:qualifier]).device
     end
   end
 end
