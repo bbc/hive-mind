@@ -6,6 +6,19 @@ class Api::DevicesController < ApplicationController
   # POST /register
   def register
     status = :created
+
+    filtered_params = params[:device].clone
+    aux_params = auxiliary_device_params
+#    extra_params = {}
+#    [
+#        :brand,
+#        :device_type,
+#        :model,
+#        :operating_system_name,
+#        :operating_system_version,
+#        :version ].each do |p|
+#      extra_params[p] = params[:device].delete(p)
+#    end
     create_parameters = device_params
 
     if create_parameters[:ips]
@@ -23,11 +36,11 @@ class Api::DevicesController < ApplicationController
     @device = Device.identify_existing(params[:device].merge(create_parameters))
     device_id = @device ? @device.id : nil
 
-    device_type = params[:device][:device_type] || 'unknown'
-    if params[:device][:brand] and params[:device][:model]
+    device_type = aux_params[:device_type] || 'unknown'
+    if aux_params[:brand] and aux_params[:model]
       create_parameters[:model] = Model.find_or_create_by(
-        name: params[:device][:model],
-        brand: Brand.find_or_create_by(name: params[:device][:brand]),
+        name: aux_params[:model],
+        brand: Brand.find_or_create_by(name: aux_params[:brand]),
         device_type: DeviceType.find_or_create_by(classification: device_type),
       )
     end
@@ -37,24 +50,22 @@ class Api::DevicesController < ApplicationController
       status = :accepted
       @device.update(create_parameters)
       @device.set_os(
-        name: params[:device][:operating_system_name],
-        version: params[:device][:operating_system_version]
-      ) if params[:device].has_key?(:operating_system_name) || params[:device].has_key?(:operating_system_version)
+        name: aux_params[:operating_system_name],
+        version: aux_params[:operating_system_version]
+      ) if aux_params.has_key?(:operating_system_name) || aux_params.has_key?(:operating_system_version)
       if @device.plugin
-        filtered_params = params[:device].clone
         filtered_params.delete(:id)
         filtered_params[:id] = filtered_params[:plugin_id] if filtered_params.has_key?(:plugin_id)
         obj = @device.plugin.class
         @device.plugin.update(obj.plugin_params(filtered_params))
       end
     else
-      if params[:device].has_key?(:device_type)
+      if aux_params.has_key?(:device_type)
         begin
-          obj = Object.const_get("HiveMind#{params[:device][:device_type].capitalize}::Plugin")
+          obj = Object.const_get("HiveMind#{aux_params[:device_type].capitalize}::Plugin")
           # Filter parameters for plugin
           #   id removed (this is the id in Device)
           #   plugin_id -> id
-          filtered_params = params[:device].clone
           filtered_params.delete(:id)
           filtered_params[:id] = filtered_params[:plugin_id] if filtered_params.has_key?(:plugin_id)
 
@@ -68,8 +79,8 @@ class Api::DevicesController < ApplicationController
       if create_parameters.length > 0
         @device= Device.create(create_parameters)
         @device.set_os(
-          name: params[:device][:operating_system_name],
-          version: params[:device][:operating_system_version]
+          name: aux_params[:operating_system_name],
+          version: aux_params[:operating_system_version]
         )
       else
         status = params['device'].key?('id') ? :not_found : :unprocessable_entity
@@ -156,6 +167,21 @@ class Api::DevicesController < ApplicationController
         macs: [],
         ips: [],
       )
+    end
+
+    # Parameters for registration that are not part of the white list
+    def auxiliary_device_params
+      extra_params = {}
+      [
+          :brand,
+          :device_type,
+          :model,
+          :operating_system_name,
+          :operating_system_version,
+          :version ].each do |p|
+        extra_params[p] = params[:device].delete(p)
+      end
+      extra_params
     end
 
     def action_params
