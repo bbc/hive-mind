@@ -9,16 +9,6 @@ class Api::DevicesController < ApplicationController
 
     filtered_params = params[:device].clone
     aux_params = auxiliary_device_params
-#    extra_params = {}
-#    [
-#        :brand,
-#        :device_type,
-#        :model,
-#        :operating_system_name,
-#        :operating_system_version,
-#        :version ].each do |p|
-#      extra_params[p] = params[:device].delete(p)
-#    end
     create_parameters = device_params
 
     if create_parameters[:ips]
