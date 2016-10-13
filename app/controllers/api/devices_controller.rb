@@ -23,7 +23,7 @@ class Api::DevicesController < ApplicationController
         mac = Mac.find_or_create_by(mac: m)
       end
     end
-    @device = Device.identify_existing(params[:device].merge(create_parameters))
+    @device = Device.identify_existing(filtered_params.merge(create_parameters))
     device_id = @device ? @device.id : nil
 
     device_type = aux_params[:device_type] || 'unknown'
@@ -147,7 +147,7 @@ class Api::DevicesController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
-      params.require(:device).permit(
+      params.fetch(:device).permit(
         :name,
         :serial,
         :asset_id,
@@ -168,8 +168,8 @@ class Api::DevicesController < ApplicationController
           :model,
           :operating_system_name,
           :operating_system_version,
-          :version ].each do |p|
-        extra_params[p] = params[:device].delete(p)
+      ].each do |p|
+        extra_params[p] = params[:device].delete(p) if params[:device].has_key? p
       end
       extra_params
     end
