@@ -159,6 +159,21 @@ class Api::DevicesController < ApplicationController
       )
     end
 
+    def filter_device_params
+      filtered_params = {}
+      [
+        :name,
+        :serial,
+        :asset_id,
+        :alternative,
+        :model_id,
+        macs: [],
+        ips: [],
+      ].each do |k|
+        filtered_params[k] = params[k] if params.has_key? k
+      end
+    end
+
     # Parameters for registration that are not part of the white list
     def auxiliary_device_params
       extra_params = {}
