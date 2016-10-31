@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         put 'hive_queues'
         put 'screenshot'
       end
+      put 'update_state'
     end
     resources :device_statistics do
       collection do
