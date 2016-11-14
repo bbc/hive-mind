@@ -35,7 +35,8 @@ RSpec.describe Api::DevicesController, type: :routing do
     end
 
     it 'routes to #update_state' do
-      expect(put: '/api/devices/1/update_state').to route_to('api/devices#update_state', format: :json, device_id: '1')
+      #expect(put: '/api/devices/1/update_state').to route_to('api/devices#update_state', format: :json, device_id: '1')
+      expect(put: '/api/devices/update_state').to route_to('api/devices#update_state', format: :json)
     end
   end
 end

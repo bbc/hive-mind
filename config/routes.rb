@@ -29,8 +29,8 @@ Rails.application.routes.draw do
         put 'action'
         put 'hive_queues'
         put 'screenshot'
+        put 'update_state'
       end
-      put 'update_state'
     end
     resources :device_statistics do
       collection do

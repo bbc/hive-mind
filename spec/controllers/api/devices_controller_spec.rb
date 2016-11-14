@@ -792,4 +792,85 @@ RSpec.describe Api::DevicesController, type: :controller do
       expect(device.hive_queues.length).to be 0
     end
   end
+
+  describe 'PUT #device_state' do
+    let(:device) { Device.create(name: 'Test device') }
+    let(:device2) { Device.create(name: 'Test device 2') }
+
+    ['debug', 'info', 'warn', 'error', 'fatal'].each do |status|
+      context "status is '#{status}'" do
+        it 'adds an  log message' do
+          expect {
+            put :update_state, {
+              device_state: {
+                device_id: device.id,
+                component: 'Test component',
+                state: status,
+                message: 'Test message'
+              }
+            }
+          }.to change(DeviceState, :count).by 1
+          expect(response).to have_http_status :ok
+        end
+      end
+    end
+
+    it 'fails to set an unknown state' do
+      put :update_state, {
+        device_state: {
+          device_id: device.id,
+          component: 'Test component',
+          state: 'bad_status',
+          message: 'Test message'
+        }
+      }
+      expect(response).to have_http_status :unprocessable_entity
+    end
+
+    it 'fails to set the state of an unknown device' do
+      id = device.id
+      device.destroy
+      put :update_state, {
+        device_state: {
+          device_id: id,
+          component: 'Test component',
+          state: 'info',
+          message: 'Test message'
+        }
+      }
+      expect(response).to have_http_status :unprocessable_entity
+    end
+
+    it 'clears the device state for a device' do
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      expect {
+        put :update_state, {
+          device_state: {
+            device_id: device.id,
+            state: 'clear'
+          }
+        }
+      }.to change(DeviceState, :count).by -5
+    end
+
+    it 'only clears the state of the correct device' do
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device2, state: 'info')
+      DeviceState.create(device: device2, state: 'info')
+      expect {
+        put :update_state, {
+          device_state: {
+            device_id: device.id,
+            state: 'clear'
+          }
+        }
+      }.to change(DeviceState, :count).by -3
+    end
+  end
 end

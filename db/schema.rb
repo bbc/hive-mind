@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(version: 20161031112822) do
   create_table "device_states", force: :cascade do |t|
     t.integer  "device_id"
     t.string   "component"
-    t.string   "state"
+    t.integer  "state",      limit: 1, null: false
     t.string   "message"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   add_index "device_states", ["device_id"], name: "index_device_states_on_device_id"
