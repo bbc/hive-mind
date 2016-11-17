@@ -44,15 +44,29 @@
   </div>
 </div>
 
+<div class="row">
+<% side = 0 %>
 <% device.plugin.connected_devices.each do |d| %>
-  <div class="inner-device col-xs-6 label-status label-<%=d.status.to_s-%>">
-  <% if d.status != :happy %>
-    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <% if side == 2 %>
+</div>
+<div class="row">
+    <% side = 1 %>
+  <% else %>
+    <% side += 1 %>
   <% end %>
-  <span id="device-<%=d.id-%>"
-        data-device-name="<%=d.name-%>"
-        data-device-model="<%=d.model.best_name-%>"
-        class="mini-device-details" >
-        <%= link_to d.name, device_path(d) %></span>
-  </div>
+    <div class="btn-group btn-group-xs col-xs-6" role="group">
+      <a href="<%= device_path(d) %>" role="button" class="btn btn-<%= state_to_bootstrap_label d.log_state_level %> col-xs-2">
+        <span class="glyphicon glyphicon-info-sign" aria-hidden="false">
+          <span class="sr-only">Runner state of <%= d.name %> is <%= d.log_state_label %></span>
+        </span>
+      </a>
+      <a href="<%= device_path(d) %>" role="button" class="btn btn-default col-xs-10">
+        <span id="device-<%=d.id-%>"
+          data-device-name="<%=d.name-%>"
+          data-device-model="<%=d.model.best_name-%>"
+          class="mini-device-details" >
+          <%= d.name %></span>
+      </a>
+    </div>
 <% end %>
+</div>

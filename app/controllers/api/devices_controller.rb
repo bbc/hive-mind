@@ -146,7 +146,11 @@ class Api::DevicesController < ApplicationController
   def update_state
     status = :ok
     if state_params[:state] == 'clear'
-      DeviceState.destroy_all(device_id: state_params[:device_id])
+      if state_params.has_key? :device_id
+        DeviceState.destroy_all(device_id: state_params[:device_id])
+      else
+        status = :unprocessable_entity
+      end
     else
       DeviceState.create(state_params).valid? || status = :unprocessable_entity
     end

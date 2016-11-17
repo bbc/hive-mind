@@ -17,4 +17,25 @@ class DeviceState < ActiveRecord::Base
       write_attribute(:state, s)
     end
   end
+
+  def state_label
+    case state
+    when Logger::Severity::DEBUG
+      'debug'
+    when Logger::Severity::INFO
+      'info'
+    when Logger::Severity::WARN
+      'warn'
+    when Logger::Severity::ERROR
+      'error'
+    when Logger::Severity::FATAL
+      'fatal'
+    else
+      'unknown'
+    end
+  end
+
+  def <=> other
+    self.state <=> other.state
+  end
 end

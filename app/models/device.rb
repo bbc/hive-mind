@@ -17,6 +17,7 @@ class Device < ActiveRecord::Base
   has_many :relationships, foreign_key: :primary_id
   has_many :related_devices, through: :relationships, foreign_key: :primary_id, primary_key: :secondary_id, class_name: "Device", source: :secondary
   has_many :device_statistics
+  has_many :device_states
 
   scope :classification, ->(classification){joins( model: :device_type).where('device_types.classification=?', classification) }
 

@@ -872,5 +872,21 @@ RSpec.describe Api::DevicesController, type: :controller do
         }
       }.to change(DeviceState, :count).by -3
     end
+
+    it 'fails to clear state for all devices' do
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device, state: 'info')
+      DeviceState.create(device: device2, state: 'info')
+      DeviceState.create(device: device2, state: 'info')
+      expect {
+        put :update_state, {
+          device_state: {
+            state: 'clear'
+          }
+        }
+      }.to change(DeviceState, :count).by 0
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
   end
 end
