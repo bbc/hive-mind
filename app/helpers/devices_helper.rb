@@ -10,7 +10,7 @@ module DevicesHelper
 
   def state_span state, message
     "<span class='col-sm-12 label label-".html_safe +
-      [ 'info', 'success', 'warning', 'danger', 'default'][state] +
+      state_to_bootstrap_label(state) +
       "'>".html_safe +
       message +
       "</span>".html_safe
