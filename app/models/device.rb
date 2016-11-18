@@ -17,6 +17,7 @@ class Device < ActiveRecord::Base
   has_many :relationships, foreign_key: :primary_id
   has_many :related_devices, through: :relationships, foreign_key: :primary_id, primary_key: :secondary_id, class_name: "Device", source: :secondary
   has_many :device_statistics
+  has_many :device_states
 
   scope :classification, ->(classification){joins( model: :device_type).where('device_types.classification=?', classification) }
 
@@ -58,9 +59,10 @@ class Device < ActiveRecord::Base
   end
 
   def seconds_since_heartbeat
-    if hb = self.heartbeats.last
-      (Time.now - hb.created_at).to_i
+    if ! @seconds_since_heartbeat && hb = self.heartbeats.last
+      @seconds_since_heartbeat = (Time.now - hb.created_at).to_i
     end
+    @seconds_since_heartbeat
   end
 
   def execute_action

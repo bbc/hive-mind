@@ -33,5 +33,10 @@ RSpec.describe Api::DevicesController, type: :routing do
     it 'routes to #stats in the device_statistics controller' do
       expect(get: '/api/device_statistics/stats/1/test_key/99').to route_to('api/device_statistics#get_stats', device_id: '1', key: 'test_key', npoints: '99', format: :json)
     end
+
+    it 'routes to #update_state' do
+      #expect(put: '/api/devices/1/update_state').to route_to('api/devices#update_state', format: :json, device_id: '1')
+      expect(put: '/api/devices/update_state').to route_to('api/devices#update_state', format: :json)
+    end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160616094245) do
+ActiveRecord::Schema.define(version: 20161031112822) do
 
   create_table "brands", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +30,19 @@ ActiveRecord::Schema.define(version: 20160616094245) do
     t.datetime "updated_at",  null: false
   end
 
+  add_index "device_actions", ["device_id", "executed_at"], name: "index_device_actions_on_device_id_and_executed_at"
+
+  create_table "device_states", force: :cascade do |t|
+    t.integer  "device_id"
+    t.string   "component"
+    t.integer  "state",      limit: 1, null: false
+    t.string   "message"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "device_states", ["device_id"], name: "index_device_states_on_device_id"
+
   create_table "device_statistics", force: :cascade do |t|
     t.integer  "device_id"
     t.datetime "timestamp"
@@ -40,8 +53,7 @@ ActiveRecord::Schema.define(version: 20160616094245) do
     t.datetime "updated_at",                          null: false
   end
 
-  add_index "device_statistics", ["device_id", "label"], name: "index_device_statistics_on_device_id_and_label"
-  add_index "device_statistics", ["device_id"], name: "index_device_statistics_on_device_id"
+  add_index "device_statistics", ["device_id", "label", "timestamp"], name: "index_device_statistics_on_device_id_and_label_and_timestamp"
 
   create_table "device_types", force: :cascade do |t|
     t.string   "classification"

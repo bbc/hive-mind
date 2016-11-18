@@ -143,6 +143,21 @@ class Api::DevicesController < ApplicationController
     render json: {}, status: status
   end
 
+  def update_state
+    status = :ok
+    if state_params[:state] == 'clear'
+      if state_params.has_key? :device_id
+        DeviceState.destroy_all(device_id: state_params[:device_id])
+      else
+        status = :unprocessable_entity
+      end
+    else
+      DeviceState.create(state_params).valid? || status = :unprocessable_entity
+    end
+
+    render json: {}, status: status
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def device_params
@@ -164,6 +179,15 @@ class Api::DevicesController < ApplicationController
         :action_type,
         :body,
         :screenshot
+      )
+    end
+
+    def state_params
+      params.require(:device_state).permit(
+        :device_id,
+        :component,
+        :state,
+        :message
       )
     end
 
