@@ -60,7 +60,7 @@
           <span class="sr-only">Runner state of <%= d.name %> is <%= d.log_state_label %></span>
         </span>
       </a>
-      <a href="<%= device_path(d) %>" role="button" class="btn btn-default col-xs-10">
+      <a href="<%= device_path(d) %>" role="button" class="btn btn-info col-xs-10">
         <span id="device-<%=d.id-%>"
           data-device-name="<%=d.name-%>"
           data-device-model="<%=d.model.best_name-%>"
