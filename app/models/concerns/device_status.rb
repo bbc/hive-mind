@@ -43,12 +43,6 @@ module DeviceStatus
     end
   end
 
-  private
-  def max_state
-    @max_state ||= self.device_states.max
-    @max_state ? @max_state : DeviceState.new(state: 'info')
-  end
-
   def heartbeat_state
     last_hb = seconds_since_heartbeat
     if last_hb.nil? || last_hb > 600
@@ -58,5 +52,11 @@ module DeviceStatus
     else
       DeviceState.new(state: 'info')
     end
+  end
+
+  private
+  def max_state
+    @max_state ||= self.device_states.max
+    @max_state ? @max_state : DeviceState.new(state: 'info')
   end
 end

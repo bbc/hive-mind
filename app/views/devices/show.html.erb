@@ -98,14 +98,30 @@
 <!-- Status tab -->
   <div role="tabpanel" class="tab-pane fade" id="status">
     <table class="table">
+      <thead>
+        <tr>
+          <th class='col-sm-1'>Severity</th>
+          <th class='col-sm-3'>Component</th>
+          <th class='col-sm-6'>Message</th>
+          <th class='col-sm-2'>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class='col-sm-1'><%= state_span @device.heartbeat_state.state, @device.heartbeat_state.state_label %></td>
+          <td class='col-sm-3'>Heartbeat</td>
+          <td class='col-sm-6'>Time since last heartbeat: <%= distance_of_time_in_words @device.heartbeats.last.created_at, Time.now %></td>
+          <td class='col-sm-2'><%= @device.heartbeats.last.created_at %></td>
+        </tr>
     <% @device.device_states.each do |s| %>
-      <tr>
-        <td class='col-sm-2'><%= s.created_at %></td>
-        <td class='col-sm-1'><%= state_span s.state, s.state_label %></td>
-        <td class='col-sm-3'><%= state_span s.state, s.component %></td>
-        <td class='col-sm-6'><%= s.message %></td>
-      </tr>
+        <tr>
+          <td class='col-sm-1'><%= state_span s.state, s.state_label %></td>
+          <td class='col-sm-3'><%= s.component %></td>
+          <td class='col-sm-6'><%= s.message %></td>
+          <td class='col-sm-2'><%= s.created_at %></td>
+        </tr>
     <% end %>
+      </tbody>
     </table>
   </div>
 
