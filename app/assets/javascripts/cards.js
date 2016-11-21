@@ -28,13 +28,13 @@ function equalize_card_heights(selector) {
   
 function toggleMiniViewDetails( data_type ) {
     
-    d3.selectAll(".mini-device-details a")
+    d3.selectAll(".mini-device-details")
         .transition()
         .duration(300)
         .style("opacity", 0)
         .transition().duration(300)
         .style("opacity", 1)
-        .text( function(d,i) { return this.parentNode.getAttribute(data_type) } )
+        .text( function(d,i) { return this.getAttribute(data_type) } )
   
     var next_data_type = data_type == 'data-device-model' ? 'data-device-name' : 'data-device-model'
   
