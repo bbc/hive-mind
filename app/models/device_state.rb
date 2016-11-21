@@ -5,6 +5,7 @@ class DeviceState < ActiveRecord::Base
 
   validates :state, inclusion: { in: Logger::Severity::DEBUG..Logger::Severity::FATAL }
   validates :device, presence: true
+  validates_lengths_from_database only: [ :message ]
 
   def state= s
     if s.is_a? String

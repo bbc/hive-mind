@@ -23,6 +23,7 @@ gem 'ransack'
 gem 'paperclip', '~> 4.3'
 gem 'd3-rails'
 gem 'chamber'
+gem 'validates_lengths_from_database'
 
 group :development, :test, :integration do
   gem 'sqlite3'
