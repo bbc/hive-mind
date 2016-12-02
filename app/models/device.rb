@@ -130,6 +130,8 @@ class Device < ActiveRecord::Base
 
 
   def operating_system
-    self.operating_systems.last
+    # Note, .last gets the most recently created entry in the OperatingSystem
+    # model and this is not necessarily the latest in the history of the device
+    self.operating_systems[-1]
   end
 end
