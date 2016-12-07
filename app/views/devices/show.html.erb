@@ -121,15 +121,15 @@
         <% if last && last.message == s.message %>
            <script type="text/javascript">
              $msg = $("#status .table .col-sm-6").last()
-             regex = /\d$/
+             regex = /\d+ times$/
              str = $msg[0].innerHTML
              if(str.match(regex) === null){
                 count = 1;
-                $msg[0].innerHTML = str + " " + count;
+                $msg[0].innerHTML = str + " ... Repeated " + count + " times";
                }
              else{
                 count = count + 1;
-                $msg[0].innerHTML = str.replace(regex, count);
+                $msg[0].innerHTML = str.replace(regex, count+" times");
               }
            </script>
         <% else %>
