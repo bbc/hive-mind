@@ -116,7 +116,7 @@
     <% prev = nil %>
     <% i = 0 %>
 
-    <% @device.device_states.each do |s| %>
+    <% @device.device_states.reverse.each do |s| %>
         <% if !prev %>
             <% i = i + 1 %>
         <% elsif prev.message == s.message %>
