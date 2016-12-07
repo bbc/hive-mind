@@ -113,13 +113,34 @@
           <td class='col-sm-6'>Time since last heartbeat: <%= @device.heartbeats.last ? distance_of_time_in_words(@device.heartbeats.last.created_at, Time.now) : '?' %></td>
           <td class='col-sm-2'><%= @device.heartbeats.last ? @device.heartbeats.last.created_at : '?' %></td>
         </tr>
+    <% last = nil %>
+    <script type="text/javascript">
+      count = 1
+    </script>
     <% @device.device_states.each do |s| %>
-        <tr>
-          <td class='col-sm-1'><%= state_span s.state, s.state_label %></td>
-          <td class='col-sm-3'><%= s.component %></td>
-          <td class='col-sm-6'><%= s.message %></td>
-          <td class='col-sm-2'><%= s.created_at %></td>
-        </tr>
+        <% if last && last.message == s.message %>
+           <script type="text/javascript">
+             $msg = $("#status .table .col-sm-6").last()
+             regex = /\d$/
+             str = $msg[0].innerHTML
+             if(str.match(regex) === null){
+                $msg[0].innerHTML = str + " " + count;
+                count = 1;
+               }
+             else{
+                count = count + 1;
+                $msg[0].innerHTML = str.replace(regex, count);
+              }
+           </script>
+        <% else %>
+          <tr>
+            <td class='col-sm-1'><%= state_span s.state, s.state_label %></td>
+            <td class='col-sm-3'><%= s.component %></td>
+            <td class='col-sm-6'><%= s.message %></td>
+            <td class='col-sm-2'><%= s.created_at %></td>
+          </tr>
+        <% end %>
+        <% last = s %>
     <% end %>
       </tbody>
     </table>
