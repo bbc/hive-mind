@@ -113,14 +113,30 @@
           <td class='col-sm-6'>Time since last heartbeat: <%= @device.heartbeats.last ? distance_of_time_in_words(@device.heartbeats.last.created_at, Time.now) : '?' %></td>
           <td class='col-sm-2'><%= @device.heartbeats.last ? @device.heartbeats.last.created_at : '?' %></td>
         </tr>
-    <% @device.device_states.each do |s| %>
-        <tr>
-          <td class='col-sm-1'><%= state_span s.state, s.state_label %></td>
-          <td class='col-sm-3'><%= s.component %></td>
-          <td class='col-sm-6'><%= s.message %></td>
-          <td class='col-sm-2'><%= s.created_at %></td>
-        </tr>
+    <% prev = nil %>
+    <% i = 0 %>
+
+    <% @device.device_states.reverse.each do |s| %>
+        <% if !prev %>
+            <% i = i + 1 %>
+        <% elsif prev.message == s.message %>
+            <% i = i + 1 %>
+        <% else %>
+          <tr>
+            <td class='col-sm-1'><%= state_span prev.state, prev.state_label %></td>
+            <td class='col-sm-3'><%= prev.component %></td>
+             <% if i > 1 %>
+              <td class='col-sm-6'><%= prev.message %> (Repeated <%= i %> times) </td>
+             <% else %>
+              <td class='col-sm-6'><%= prev.message %> </td>
+             <% end %>
+            <td class='col-sm-2'><%= prev.created_at %></td>
+            <% i = 0 %>
+          </tr>
+        <% end %>
+        <% prev = s %>
     <% end %>
+
       </tbody>
     </table>
   </div>
