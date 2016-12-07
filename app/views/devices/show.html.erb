@@ -124,8 +124,8 @@
              regex = /\d$/
              str = $msg[0].innerHTML
              if(str.match(regex) === null){
-                $msg[0].innerHTML = str + " " + count;
                 count = 1;
+                $msg[0].innerHTML = str + " " + count;
                }
              else{
                 count = count + 1;
