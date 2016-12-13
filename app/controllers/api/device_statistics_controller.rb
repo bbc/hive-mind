@@ -34,7 +34,8 @@ class Api::DeviceStatisticsController < ApplicationController
       :timestamp,
       :label,
       :value,
-      :format
+      :format,
+      :unit
     )
   end
 end
