@@ -14,6 +14,7 @@
   <li><a href="#actions" role="tab" data-toggle="tab">Actions</a></li>
   <li><a href="#hive" role="tab" data-toggle="tab">Hive</a></li>
   <li><a href="#status" role="tab" data-toggle="tab">Status</a></li>
+  <li><a href="#diagnostic" role="tab" data-toggle="tab">Diagnostics</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -137,6 +138,27 @@
         <% prev = s %>
     <% end %>
 
+      </tbody>
+    </table>
+  </div>
+
+
+<!-- Diagnostic tab -->
+  <div role="tabpanel" class="tab-pane fade" id="diagnostic">
+    <table class="table">
+      <thead>
+          <tr> 
+            <th class='col-sm-1'>Parameter</th>
+            <th class='col-sm-3'>Value</th>
+          </tr>
+      </thead>
+      <tbody>
+         <% @device.device_statistics.select(:label, :value, :format, :unit).group(:label).to_ary.each do |stat| %> 
+          <tr>
+            <td class='col-sm-1'> <%= stat.label %> </td>
+            <td class='col-sm-3'> <%= stat.value %> <% %> <%= stat.unit %></td>
+          </tr>
+         <% end %>
       </tbody>
     </table>
   </div>
