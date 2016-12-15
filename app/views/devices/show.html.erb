@@ -153,10 +153,10 @@
           </tr>
       </thead>
       <tbody>
-         <% @device.device_statistics.select(:label, :value, :format, :unit).group(:label).to_ary.each do |stat| %> 
+         <% @device.device_statistics.select(:label).distinct.each do |a| %>
           <tr>
-            <td class='col-sm-1'> <%= stat.label %> </td>
-            <td class='col-sm-3'> <%= stat.value %> <%= stat.unit %></td>
+            <td class='col-sm-1'> <%= @device.device_statistics.where(:label => a.label).last.label %> </td>
+            <td class='col-sm-3'> <%= @device.device_statistics.where(:label => a.label).last.value %> <%= @device.device_statistics.where(:label => a.label).last.unit %></td>
           </tr>
          <% end %>
       </tbody>
