@@ -1,6 +1,6 @@
 $(function(){
   $("#clear-all-device-states").click(function(event) {
-    var device_id = this.href.substr(this.href.lastIndexOf('/') + 1);
+    var device_id = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
     $.ajax({
       type: 'PUT',
@@ -11,7 +11,8 @@ $(function(){
           'state': 'clear'
         },
         success: function(data){
-          // TODO Clear the table
+          $('.status-log-line').remove();
+          // TODO Reset overall status of device
         },
       }
     }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
@@ -22,22 +23,5 @@ $(function(){
     });
 
 
-
-
-    var hive = $(".hive-select-menu .hive_id");
-    var hive_id = null;
-    event.preventDefault();
-    var element = event.currentTarget || event.toElement;
-    if (element.id === 'disconnect') {
-      url = '/api/plugin/hive/disconnect';
-      hive_id = hive.val();
-      var new_hive_id = null;
-    } else {
-      url = '/api/plugin/hive/connect';
-      hive_id = event.currentTarget.id || event.toElement.id;
-      var new_hive_id = hive_id;
-    }
-    var label = $("#select-hive:first-child");
-    var text = $(this).text();
   });
 });

@@ -125,7 +125,7 @@
         <% elsif prev.message == s.message %>
             <% i = i + 1 %>
         <% else %>
-          <tr>
+          <tr class='status-log-line'>
             <td class='col-sm-1'><%= state_span prev.state, prev.state_label %></td>
             <td class='col-sm-3'><%= prev.component %></td>
              <% if i > 1 %>
@@ -134,7 +134,7 @@
               <td class='col-sm-5'><%= prev.message %> </td>
              <% end %>
             <td class='col-sm-2'><%= prev.created_at %></td>
-            <th class='col-sm-1'><button type='button' class='btn btn-default' name='clear-device-state-<%= s.id %>'>Clear</button></th>
+            <th class='col-sm-1'><button type='button' class='btn btn-default' name='clear-device-state-<%= s.id %>' disabled>Clear</button></th>
             <% i = 0 %>
           </tr>
         <% end %>
