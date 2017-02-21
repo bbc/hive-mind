@@ -160,6 +160,11 @@ class Api::DevicesController < ApplicationController
           args << state_params[:component]
         end
 
+        # Eg, [
+        #       'device_id = ? AND component = ?',
+        #       state_params[:device_id],
+        #       state_params[:component]
+        #     ]
         args.unshift(conditions.join(' AND '))
         DeviceState.delete_all(args)
       elsif state_params.has_key? :state_id
