@@ -925,11 +925,20 @@ RSpec.describe Api::DevicesController, type: :controller do
     end
 
     it 'clears messages for a component' do
-      @component_1 = DeviceState.create(device: device, component: 'one', state: 'info')
-      @component_2 = DeviceState.create(device: device, component: 'two', state: 'info')
-      @component_3 = DeviceState.create(device: device, component: 'three', state: 'info')
+      component_1 = DeviceState.create(device: device, component: 'one', state: 'info')
+      component_2 = DeviceState.create(device: device, component: 'two', state: 'info')
+      component_3 = DeviceState.create(device: device, component: 'three', state: 'info')
       put :update_state, { device_state: { device_id: device.id, state: 'clear', component: 'one' } }
-      expect(device.reload.device_states).to match_array([@component_2, @component_3])
+      expect(device.reload.device_states).to match_array([component_2, component_3])
+    end
+
+    it 'clears a message by state id' do
+      state_one = DeviceState.create(device: device, state: 'info')
+      state_two = DeviceState.create(device: device, state: 'info')
+      state_three = DeviceState.create(device: device, state: 'info')
+
+      put :update_state, { device_state: { state_id: state_one.id, state: 'clear' } }
+      expect(device.reload.device_states).to match_array([state_two, state_three])
     end
   end
 end

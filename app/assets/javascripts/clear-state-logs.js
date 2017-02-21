@@ -21,7 +21,31 @@ $(function(){
       }
       alert("Failed to clear status log\nError: " + errorThrown);
     });
+  });
+});
 
+$(function(){
+  $(".clear-device-state").click(function(event) {
+    var state_id = this.id.substr(this.id.lastIndexOf('-') + 1);
+    var self = this;
 
+    $.ajax({
+      type: 'PUT',
+      url: '/api/devices/update_state',
+      data: {
+        'device_state': {
+          'state_id': state_id,
+          'state': 'clear'
+        },
+        success: function(data){
+          self.closest('tr').remove();
+        },
+      }
+    }).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+      if (XMLHttpRequest.status == 0 ) {
+        errorThrown = 'No response from server';
+      }
+      alert("Failed to clear status log\nError: " + errorThrown);
+    });
   });
 });

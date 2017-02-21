@@ -134,7 +134,7 @@
               <td class='col-sm-5'><%= prev.message %> </td>
              <% end %>
             <td class='col-sm-2'><%= prev.created_at %></td>
-            <th class='col-sm-1'><button type='button' class='btn btn-default' name='clear-device-state-<%= s.id %>' disabled>Clear</button></th>
+            <td class='col-sm-1'><button type='button' class='btn btn-default clear-device-state' id='state-id-<%= s.id %>'>Clear</button></td>
             <% i = 0 %>
           </tr>
         <% end %>
