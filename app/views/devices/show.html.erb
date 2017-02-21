@@ -103,16 +103,18 @@
         <tr>
           <th class='col-sm-1'>Severity</th>
           <th class='col-sm-3'>Component</th>
-          <th class='col-sm-6'>Message</th>
+          <th class='col-sm-5'>Message</th>
           <th class='col-sm-2'>Timestamp</th>
+          <th class='col-sm-1'><button type='button' class='btn btn-default' id='clear-all-device-states'>Clear all</button></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class='col-sm-1'><%= state_span @device.heartbeat_state.state, @device.heartbeat_state.state_label %></td>
           <td class='col-sm-3'>Heartbeat</td>
-          <td class='col-sm-6'>Time since last heartbeat: <%= @device.heartbeats.last ? distance_of_time_in_words(@device.heartbeats.last.created_at, Time.now) : '?' %></td>
+          <td class='col-sm-5'>Time since last heartbeat: <%= @device.heartbeats.last ? distance_of_time_in_words(@device.heartbeats.last.created_at, Time.now) : '?' %></td>
           <td class='col-sm-2'><%= @device.heartbeats.last ? @device.heartbeats.last.created_at : '?' %></td>
+          <td class='col-sm-1'></td>
         </tr>
     <% prev = nil %>
     <% i = 0 %>
@@ -127,11 +129,12 @@
             <td class='col-sm-1'><%= state_span prev.state, prev.state_label %></td>
             <td class='col-sm-3'><%= prev.component %></td>
              <% if i > 1 %>
-              <td class='col-sm-6'><%= prev.message %> (Repeated <%= i %> times) </td>
+              <td class='col-sm-5'><%= prev.message %> (Repeated <%= i %> times) </td>
              <% else %>
-              <td class='col-sm-6'><%= prev.message %> </td>
+              <td class='col-sm-5'><%= prev.message %> </td>
              <% end %>
             <td class='col-sm-2'><%= prev.created_at %></td>
+            <th class='col-sm-1'><button type='button' class='btn btn-default' name='clear-device-state-<%= s.id %>'>Clear</button></th>
             <% i = 0 %>
           </tr>
         <% end %>
