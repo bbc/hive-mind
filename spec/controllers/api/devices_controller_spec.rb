@@ -888,5 +888,40 @@ RSpec.describe Api::DevicesController, type: :controller do
       }.to change(DeviceState, :count).by 0
       expect(response).to have_http_status(:unprocessable_entity)
     end
+
+    context 'limit cleared states' do
+      before(:each) do
+        @debug =  DeviceState.create(device: device, state: 'debug')
+        @info = DeviceState.create(device: device, state: 'info')
+        @warn = DeviceState.create(device: device, state: 'warn')
+        @error = DeviceState.create(device: device, state: 'error')
+        @fatal = DeviceState.create(device: device, state: 'fatal')
+      end
+
+      it 'clears only debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'debug' } }
+        expect(device.reload.device_states).to match_array([@info, @warn, @error, @fatal])
+      end
+
+      it 'clears only info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'info' } }
+        expect(device.reload.device_states).to match_array([@warn, @error, @fatal])
+      end
+
+      it 'clears only warn, info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'warn' } }
+        expect(device.reload.device_states).to match_array([@error, @fatal])
+      end
+
+      it 'clears only error, warn, info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'error' } }
+        expect(device.reload.device_states).to match_array([@fatal])
+      end
+
+      it 'clears all messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'fatal' } }
+        expect(device.reload.device_states).to match_array([])
+      end
+    end
   end
 end
