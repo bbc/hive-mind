@@ -11,7 +11,7 @@ module DeviceStatus
       :unknown
     elsif last_hb > 600
       in_a_hive? ? :dead : :unknown
-    elsif last_hb > 90
+    elsif last_hb > 180
       in_a_hive? ? :unhappy : :unresponsive
     else
       in_a_hive? ? :happy : :visible
@@ -47,7 +47,7 @@ module DeviceStatus
     last_hb = seconds_since_heartbeat
     if last_hb.nil? || last_hb > 600
       DeviceState.new(state: 'error')
-    elsif last_hb > 90
+    elsif last_hb > 180
       DeviceState.new(state: 'warn')
     else
       DeviceState.new(state: 'info')

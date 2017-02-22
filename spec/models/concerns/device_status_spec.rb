@@ -16,13 +16,13 @@ RSpec.describe Device, type: :model do
         expect(device.status).to eq :unknown
       end
       
-      it "has a 'visible' status when the device has been seen in the last 90 seconds" do
+      it "has a 'visible' status when the device has been seen in the last 180 seconds" do
         device.heartbeat
         expect(device.status).to eq :visible
       end
       
-      it "has an unresponsive status when the device hasn't been seen in 90 seconds" do
-        Timecop.freeze(Time.now - 91) do
+      it "has an unresponsive status when the device hasn't been seen in 180 seconds" do
+        Timecop.freeze(Time.now - 181) do
           device.heartbeat
         end
         expect(device.status).to eq :unresponsive
@@ -47,13 +47,13 @@ RSpec.describe Device, type: :model do
         expect(device.status).to eq :unknown
       end
       
-      it "has a 'happy' status when the device has been seen in the last 90 seconds" do
+      it "has a 'happy' status when the device has been seen in the last 180 seconds" do
         device.heartbeat
         expect(device.status).to eq :happy
       end
       
-      it "has an 'unhappy' status when the device hasn't been seen in 90 seconds" do
-        Timecop.freeze(Time.now - 91) do
+      it "has an 'unhappy' status when the device hasn't been seen in 180 seconds" do
+        Timecop.freeze(Time.now - 181) do
           device.heartbeat
         end
         expect(device.status).to eq :unhappy
@@ -116,9 +116,9 @@ RSpec.describe Device, type: :model do
       end
     end
 
-    context 'device has been unresponsive for between 90 and 180 seconds' do
+    context 'device has been unresponsive for between 180 and 600 seconds' do
       before(:each) do
-        Timecop.freeze(Time.now - 91) do
+        Timecop.freeze(Time.now - 181) do
           device.heartbeat
         end
       end
@@ -259,9 +259,9 @@ RSpec.describe Device, type: :model do
       end
     end
 
-    context 'device has been unresponsive for between 90 and 180 seconds' do
+    context 'device has been unresponsive for between 180 and 600 seconds' do
       before(:each) do
-        Timecop.freeze(Time.now - 91) do
+        Timecop.freeze(Time.now - 181) do
           device.heartbeat
         end
       end
