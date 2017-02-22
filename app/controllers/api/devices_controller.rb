@@ -147,7 +147,28 @@ class Api::DevicesController < ApplicationController
     status = :ok
     if state_params[:state] == 'clear'
       if state_params.has_key? :device_id
-        DeviceState.delete_all(device_id: state_params[:device_id])
+        conditions = [ 'device_id = ?' ]
+        args = [ state_params[:device_id] ]
+
+        if state_params.has_key? :level
+          conditions << 'state <= ?'
+          args << Object.const_get("Logger::Severity::#{state_params[:level].upcase}")
+        end
+
+        if state_params.has_key? :component
+          conditions << 'component = ?'
+          args << state_params[:component]
+        end
+
+        # Eg, [
+        #       'device_id = ? AND component = ?',
+        #       state_params[:device_id],
+        #       state_params[:component]
+        #     ]
+        args.unshift(conditions.join(' AND '))
+        DeviceState.delete_all(args)
+      elsif state_params.has_key? :state_ids
+        DeviceState.delete(state_params[:state_ids])
       else
         status = :unprocessable_entity
       end
@@ -187,7 +208,9 @@ class Api::DevicesController < ApplicationController
         :device_id,
         :component,
         :state,
-        :message
+        :level,
+        :message,
+        state_ids: []
       )
     end
 

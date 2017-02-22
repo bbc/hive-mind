@@ -888,5 +888,68 @@ RSpec.describe Api::DevicesController, type: :controller do
       }.to change(DeviceState, :count).by 0
       expect(response).to have_http_status(:unprocessable_entity)
     end
+
+    context 'limit cleared states' do
+      before(:each) do
+        @debug =  DeviceState.create(device: device, state: 'debug')
+        @info = DeviceState.create(device: device, state: 'info')
+        @warn = DeviceState.create(device: device, state: 'warn')
+        @error = DeviceState.create(device: device, state: 'error')
+        @fatal = DeviceState.create(device: device, state: 'fatal')
+      end
+
+      it 'clears only debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'debug' } }
+        expect(device.reload.device_states).to match_array([@info, @warn, @error, @fatal])
+      end
+
+      it 'clears only info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'info' } }
+        expect(device.reload.device_states).to match_array([@warn, @error, @fatal])
+      end
+
+      it 'clears only warn, info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'warn' } }
+        expect(device.reload.device_states).to match_array([@error, @fatal])
+      end
+
+      it 'clears only error, warn, info and debug messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'error' } }
+        expect(device.reload.device_states).to match_array([@fatal])
+      end
+
+      it 'clears all messages' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'fatal' } }
+        expect(device.reload.device_states).to match_array([])
+      end
+    end
+
+    it 'clears messages for a component' do
+      component_1 = DeviceState.create(device: device, component: 'one', state: 'info')
+      component_2 = DeviceState.create(device: device, component: 'two', state: 'info')
+      component_3 = DeviceState.create(device: device, component: 'three', state: 'info')
+      put :update_state, { device_state: { device_id: device.id, state: 'clear', component: 'one' } }
+      expect(device.reload.device_states).to match_array([component_2, component_3])
+    end
+
+    it 'clears a message by state id' do
+      state_one = DeviceState.create(device: device, state: 'info')
+      state_two = DeviceState.create(device: device, state: 'info')
+      state_three = DeviceState.create(device: device, state: 'info')
+
+      put :update_state, { device_state: { state_ids: [ state_one.id ], state: 'clear' } }
+      expect(device.reload.device_states).to match_array([state_two, state_three])
+    end
+
+    it 'clears multiple messages by state id' do
+      state_one = DeviceState.create(device: device, state: 'info')
+      state_two = DeviceState.create(device: device, state: 'info')
+      state_three = DeviceState.create(device: device, state: 'info')
+
+      put :update_state, { device_state: { state_ids: [ state_one.id, state_two.id ], state: 'clear' } }
+      expect(device.reload.device_states).to_not include(state_one)
+      expect(device.reload.device_states).to_not include(state_two)
+      expect(device.reload.device_states).to match_array([state_three])
+    end
   end
 end

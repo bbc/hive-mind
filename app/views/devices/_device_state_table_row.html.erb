@@ -1,0 +1,11 @@
+<tr class='status-log-line'>
+  <td class='col-sm-1'><%= state_span state.state, state.state_label %></td>
+  <td class='col-sm-3'><%= state.component %></td>
+   <% if id_list.count > 1 %>
+    <td class='col-sm-5'><%= state.message %> (Repeated <%= id_list.count %> times) </td>
+   <% else %>
+    <td class='col-sm-5'><%= state.message %> </td>
+   <% end %>
+  <td class='col-sm-2'><%= state.created_at %></td>
+  <td class='col-sm-1'><button type='button' class='btn btn-default clear-device-state' id='state-id-<%= id_list.join(':') %>'>Clear</button></td>
+</tr>
