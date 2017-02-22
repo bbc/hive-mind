@@ -167,8 +167,8 @@ class Api::DevicesController < ApplicationController
         #     ]
         args.unshift(conditions.join(' AND '))
         DeviceState.delete_all(args)
-      elsif state_params.has_key? :state_id
-        DeviceState.delete(state_params[:state_id])
+      elsif state_params.has_key? :state_ids
+        DeviceState.delete(state_params[:state_ids])
       else
         status = :unprocessable_entity
       end
@@ -206,11 +206,11 @@ class Api::DevicesController < ApplicationController
     def state_params
       params.require(:device_state).permit(
         :device_id,
-        :state_id,
         :component,
         :state,
         :level,
-        :message
+        :message,
+        state_ids: []
       )
     end
 

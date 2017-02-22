@@ -937,8 +937,19 @@ RSpec.describe Api::DevicesController, type: :controller do
       state_two = DeviceState.create(device: device, state: 'info')
       state_three = DeviceState.create(device: device, state: 'info')
 
-      put :update_state, { device_state: { state_id: state_one.id, state: 'clear' } }
+      put :update_state, { device_state: { state_ids: [ state_one.id ], state: 'clear' } }
       expect(device.reload.device_states).to match_array([state_two, state_three])
+    end
+
+    it 'clears multiple messages by state id' do
+      state_one = DeviceState.create(device: device, state: 'info')
+      state_two = DeviceState.create(device: device, state: 'info')
+      state_three = DeviceState.create(device: device, state: 'info')
+
+      put :update_state, { device_state: { state_ids: [ state_one.id, state_two.id ], state: 'clear' } }
+      expect(device.reload.device_states).to_not include(state_one)
+      expect(device.reload.device_states).to_not include(state_two)
+      expect(device.reload.device_states).to match_array([state_three])
     end
   end
 end

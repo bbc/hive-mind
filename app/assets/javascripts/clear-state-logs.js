@@ -26,7 +26,7 @@ $(function(){
 
 $(function(){
   $(".clear-device-state").click(function(event) {
-    var state_id = this.id.substr(this.id.lastIndexOf('-') + 1);
+    var state_ids = this.id.substr(this.id.lastIndexOf('-') + 1).split(':');
     var self = this;
 
     $.ajax({
@@ -34,7 +34,7 @@ $(function(){
       url: '/api/devices/update_state',
       data: {
         'device_state': {
-          'state_id': state_id,
+          'state_ids': state_ids,
           'state': 'clear'
         },
         success: function(data){
