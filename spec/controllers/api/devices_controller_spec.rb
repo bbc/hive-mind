@@ -922,6 +922,11 @@ RSpec.describe Api::DevicesController, type: :controller do
         put :update_state, { device_state: { device_id: device.id, state: 'clear', level: 'fatal' } }
         expect(device.reload.device_states).to match_array([])
       end
+
+      it 'clears all messages with nil level' do
+        put :update_state, { device_state: { device_id: device.id, state: 'clear', level: nil } }
+        expect(device.reload.device_states).to match_array([])
+      end
     end
 
     it 'clears messages for a component' do
@@ -930,6 +935,14 @@ RSpec.describe Api::DevicesController, type: :controller do
       component_3 = DeviceState.create(device: device, component: 'three', state: 'info')
       put :update_state, { device_state: { device_id: device.id, state: 'clear', component: 'one' } }
       expect(device.reload.device_states).to match_array([component_2, component_3])
+    end
+
+    it 'clears all messages for a nil component' do
+      component_1 = DeviceState.create(device: device, component: 'one', state: 'info')
+      component_2 = DeviceState.create(device: device, component: 'two', state: 'info')
+      component_3 = DeviceState.create(device: device, component: 'three', state: 'info')
+      put :update_state, { device_state: { device_id: device.id, state: 'clear', component: nil } }
+      expect(device.reload.device_states.count).to eq 0
     end
 
     it 'clears a message by state id' do

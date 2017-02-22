@@ -150,12 +150,12 @@ class Api::DevicesController < ApplicationController
         conditions = [ 'device_id = ?' ]
         args = [ state_params[:device_id] ]
 
-        if state_params.has_key? :level
+        if state_params[:level].present?
           conditions << 'state <= ?'
           args << Object.const_get("Logger::Severity::#{state_params[:level].upcase}")
         end
 
-        if state_params.has_key? :component
+        if state_params[:component].present?
           conditions << 'component = ?'
           args << state_params[:component]
         end
