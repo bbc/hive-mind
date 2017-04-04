@@ -65,6 +65,21 @@ RSpec.describe Api::DevicesController, type: :controller do
       }.to change(Device, :count).by(0)
     end
 
+    it 'does not create an empty MAC for an empty string' do
+      post :register, {device: { macs: [ '' ] } }, valid_session
+      expect(Device.last.macs.length).to be 0
+    end
+
+    it 'does not create an empty MAC for nil value' do
+      post :register, {device: { macs: [ nil ] } }, valid_session
+      expect(Device.last.macs.length).to be 0
+    end
+
+    it 'does not create an empty MAC for missing macs array' do
+      post :register, {device: { name: 'Device' } }, valid_session
+      expect(Device.last.macs.length).to be 0
+    end
+
     it 'sets the heartbeat' do
       post :register, {device: valid_attributes}, valid_session
       Timecop.freeze(Time.now + 30) do
@@ -195,6 +210,10 @@ RSpec.describe Api::DevicesController, type: :controller do
           expect(device_instance.operating_system.name).to eq 'Old OS'
           expect(device_instance.operating_system.version).to eq '1.2.3'
         end
+      end
+
+      describe 'mac addresses' do
+
       end
     end
 
