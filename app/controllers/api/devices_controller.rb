@@ -17,8 +17,8 @@ class Api::DevicesController < ApplicationController
     # Find device if it already exists
     if create_parameters[:macs]
       create_parameters[:macs] = create_parameters[:macs].compact.map do |m|
-        mac = Mac.find_or_create_by(mac: m)
-      end
+        mac = Mac.find_or_create_by(mac: m) if m.present?
+      end.compact
     end
     @device = Device.identify_existing(params[:device].merge(create_parameters))
     device_id = @device ? @device.id : nil
