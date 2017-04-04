@@ -211,10 +211,6 @@ RSpec.describe Api::DevicesController, type: :controller do
           expect(device_instance.operating_system.version).to eq '1.2.3'
         end
       end
-
-      describe 'mac addresses' do
-
-      end
     end
 
     context 'device models, types and brands' do
