@@ -8,7 +8,7 @@ gem 'hive_mind_mobile', path: 'hive_mind_mobile'
 ##############################################################################
 # Do not change anything below this line
 ##############################################################################
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.7.1'
 gem 'thin', '~> 1.6'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.5'
